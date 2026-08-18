@@ -1,0 +1,12 @@
+.DS_Store
+*.log
+node_modules/
+.vscode/
+.idea/
+
+# local preview config (machine-specific absolute paths)
+.claude/
+
+# image backups & scratch assets
+*-original.*
+*.bak
