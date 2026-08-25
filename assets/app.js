@@ -3,6 +3,50 @@
   'use strict';
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var LINE_OA = 'https://line.me/R/ti/p/~@nessyexplores';
+
+  /* ---------- inject shared overlays (scam warning + cookie consent) ----------
+     Injected here, before the language module snapshots [data-en] nodes, so these
+     overlays translate like the rest of the page. Kept in JS so every page gets
+     them without duplicating markup. */
+  (function () {
+    if (!document.body) return;
+    var html =
+      '<div class="modal modal-warn" id="scam-modal" aria-hidden="true">' +
+        '<div class="modal-backdrop" data-close></div>' +
+        '<div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="scam-title">' +
+          '<button class="modal-x" type="button" data-close aria-label="ปิด" data-en-label="Close"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>' +
+          '<div class="modal-body">' +
+            '<div class="warn-head">' +
+              '<span class="warn-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span>' +
+              '<h3 id="scam-title" data-en="Before you pay, please read">ก่อนโอนเงิน อ่านสักนิด</h3>' +
+            '</div>' +
+            '<ul class="warn-list">' +
+              '<li><svg class="ic" aria-hidden="true"><use href="#i-badge-check"/></svg><span data-en="We\'re a registered company — GAL-SHAI TOUR CO., LTD.">จดทะเบียนนิติบุคคล — บริษัท กาล-ไช ทัวร์ จำกัด (GAL-SHAI TOUR CO., LTD)</span></li>' +
+              '<li><svg class="ic" aria-hidden="true"><use href="#i-bank"/></svg><span data-en="We only take payment <strong>into the company\'s corporate account</strong> — the account name matches the company name exactly.">รับชำระผ่าน<strong>บัญชีนิติบุคคลของบริษัทเท่านั้น</strong> ชื่อบัญชีต้องตรงกับชื่อบริษัทเป๊ะ</span></li>' +
+              '<li><svg class="ic" aria-hidden="true"><use href="#i-ban"/></svg><span data-en="We <strong>never</strong> accept transfers to a personal account, and we <strong>never</strong> ask for an OTP or password.">เรา<strong>ไม่รับ</strong>โอนเข้าบัญชีบุคคล และ<strong>ไม่เคย</strong>ขอ OTP หรือรหัสผ่าน</span></li>' +
+            '</ul>' +
+            '<div class="warn-bank">' +
+              '<span class="tag" aria-hidden="true">KBank</span>' +
+              '<div><b data-en="GAL-SHAI TOUR CO., LTD">บจก. กาล-ไช ทัวร์</b> · <span data-en="Kasikornbank · Acct. no. 332-2-83353-8">ธนาคารกสิกรไทย · เลขที่ 332-2-83353-8</span></div>' +
+            '</div>' +
+            '<div class="modal-actions">' +
+              '<a class="btn btn-primary btn-sm" href="' + LINE_OA + '" target="_blank" rel="noopener" data-en="Verify on LINE">ตรวจสอบทาง LINE</a>' +
+              '<button class="btn btn-outline btn-sm" type="button" data-close data-en="Got it">รับทราบ</button>' +
+            '</div>' +
+            '<p class="modal-note" data-en="If anyone asks you to transfer to a personal account, it is a scam.">หากมีผู้อ้างชื่อเราแล้วให้โอนเข้าบัญชีบุคคล นั่นคือมิจฉาชีพ</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="cookie" id="cookie-banner" role="dialog" aria-live="polite" aria-label="การใช้คุกกี้" data-en-label="Cookie notice">' +
+        '<p data-en="We use cookies to give you a better browsing experience. See our <a href=\'#\'>privacy policy</a>.">เว็บไซต์นี้ใช้คุกกี้เพื่อมอบประสบการณ์การใช้งานที่ดีขึ้น อ่านเพิ่มเติมได้ที่<a href="#">นโยบายความเป็นส่วนตัว</a></p>' +
+        '<div class="cookie-actions">' +
+          '<button class="btn btn-primary btn-sm" type="button" data-cookie="accept" data-en="Accept">ยอมรับ</button>' +
+          '<button class="btn btn-outline btn-sm" type="button" data-cookie="decline" data-en="Decline">ปฏิเสธ</button>' +
+        '</div>' +
+      '</div>';
+    document.body.insertAdjacentHTML('beforeend', html);
+  })();
 
   /* ---------- language toggle (TH / EN) ---------- */
   // Thai is the DOM default; English lives in data-en / data-en-* attributes.
@@ -348,6 +392,218 @@
       watched.forEach(function (el) { spy.observe(el); });
     }
   }
+
+  /* ---------- modals (shared shell: tour detail + scam warning) ---------- */
+  var Modal = (function () {
+    var openEl = null;
+    var lastFocus = null;
+
+    function open(modal, focusEl) {
+      if (openEl) close();
+      openEl = modal;
+      lastFocus = document.activeElement;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      var f = focusEl || modal.querySelector('.modal-x, [data-close], button, a');
+      // element just switched from display:none → focus on next frame so it lands
+      if (f && f.focus) {
+        requestAnimationFrame(function () { try { f.focus(); } catch (e) {} });
+      }
+    }
+
+    function close() {
+      if (!openEl) return;
+      openEl.classList.remove('is-open');
+      openEl.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+      openEl = null;
+      lastFocus = null;
+    }
+
+    // click on any [data-close] (backdrop or X) closes the current modal
+    document.addEventListener('click', function (e) {
+      if (openEl && e.target.closest('[data-close]')) { e.preventDefault(); close(); }
+    });
+    // Esc closes
+    document.addEventListener('keydown', function (e) {
+      if (openEl && (e.key === 'Escape' || e.key === 'Esc')) close();
+    });
+
+    return { open: open, close: close, current: function () { return openEl; } };
+  })();
+
+  /* ---------- tour detail modal ---------- */
+  (function () {
+    var modal = document.getElementById('tour-modal');
+    if (!modal) return;
+
+    var img   = document.getElementById('tm-img');
+    var rib   = document.getElementById('tm-ribbons');
+    var title = document.getElementById('tm-title');
+    var meta  = document.getElementById('tm-meta');
+    var desc  = document.getElementById('tm-desc');
+    var price = document.getElementById('tm-price');
+
+    var copy = function (from, to, prop) {
+      if (from) { to[prop] = from[prop]; } else { to[prop] = ''; }
+    };
+
+    // Capture phase on document → runs before each card button's bubble-phase
+    // data-loading handler; stopPropagation() neutralises that navigation so the
+    // card (and its "สอบถาม" button) opens the detail modal instead.
+    document.addEventListener('click', function (e) {
+      var card = e.target.closest('article.tour');
+      if (!card) return;
+      // let modifier / middle clicks behave normally
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      var cImg = card.querySelector('.tour-media img');
+      img.src = cImg ? cImg.getAttribute('src') : '';
+      img.alt = cImg ? (cImg.getAttribute('alt') || '') : '';
+
+      var cRib = card.querySelector('.ribbons');
+      rib.innerHTML = cRib ? cRib.innerHTML : '';
+
+      copy(card.querySelector('h3'), title, 'innerHTML');
+      copy(card.querySelector('.tour-meta'), meta, 'innerHTML');
+      copy(card.querySelector('.tour-desc'), desc, 'innerHTML');
+      copy(card.querySelector('.tour-foot .price'), price, 'innerHTML');
+
+      Modal.open(modal);
+    }, true);
+  })();
+
+  /* ---------- scam-warning modal (once per session, after reaching packages) ---------- */
+  (function () {
+    var modal = document.getElementById('scam-modal');
+    if (!modal) return;
+    var KEY = 'nessy-scam-seen';
+    var seen;
+    try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) { seen = false; }
+    if (seen) return;
+
+    // Only surface the warning once the visitor has actually scrolled down to
+    // the packages section (where paying becomes relevant). On pages without
+    // that section, fall back to a plain scroll-depth threshold.
+    var target = document.getElementById('packages') || document.getElementById('catalog');
+
+    var fired = false;
+    var trigger = function () {
+      if (fired) return;
+      var reached;
+      if (target) {
+        // fire when the top of the packages section has scrolled into view
+        reached = target.getBoundingClientRect().top <= window.innerHeight * 0.6;
+      } else {
+        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+        reached = y >= Math.max(600, window.innerHeight * 0.6);
+      }
+      if (!reached) return;
+      fired = true;
+      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      window.removeEventListener('scroll', trigger);
+      Modal.open(modal);
+    };
+    window.addEventListener('scroll', trigger, { passive: true });
+  })();
+
+  /* ---------- cookie consent (localStorage, once) ---------- */
+  (function () {
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+    var KEY = 'nessy-cookie-consent';
+    var choice;
+    try { choice = localStorage.getItem(KEY); } catch (e) { choice = null; }
+    if (choice) return; // already accepted/declined
+
+    // slide in shortly after load so it doesn't fight first paint
+    setTimeout(function () { banner.classList.add('is-open'); }, 800);
+
+    banner.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-cookie]');
+      if (!btn) return;
+      try { localStorage.setItem(KEY, btn.getAttribute('data-cookie')); } catch (err) {}
+      banner.classList.remove('is-open');
+    });
+  })();
+
+  /* ---------- Google-style review marquee ---------- */
+  (function () {
+    var track = document.getElementById('greviews-track');
+    if (!track) return;
+
+    var COLORS = ['#087F83', '#F47A5B', '#F5BE4F', '#123B4A', '#017E87', '#EA4335'];
+    // Sample reviews — replace with real Google reviews when the client provides them.
+    var DATA = [
+      { name: 'คุณณัฐพร', nameEn: 'Nattaporn', meta: 'กรุงเทพฯ · ทริปครอบครัว 6 ท่าน', metaEn: 'Bangkok · Family of 6',
+        th: 'วันที่ไปทะเลปิด พี่เขาโทรมาบอกล่วงหน้าตั้งแต่เย็นวันก่อน แล้วช่วยย้ายเป็นทัวร์บนบกให้ฟรี ไม่ต้องตามเรื่องเอง',
+        en: 'The day the sea was closed, they called the evening before and moved us to a land tour for free — we didn\'t have to chase anything.' },
+      { name: 'Wei & Lin', nameEn: 'Wei & Lin', meta: 'สิงคโปร์ · ทริปฮันนีมูน', metaEn: 'Singapore · Honeymoon',
+        th: 'ตอนแรกกลัวโดนหลอกเพราะเคยอ่านข่าว แต่เว็บบอกชัดว่าโอนเข้าบัญชีบริษัทเท่านั้น พอเช็กชื่อบัญชีตรงกันก็สบายใจเลย',
+        en: 'I was worried about scams after reading the news, but the site clearly said to transfer only to the company account — once the name matched, I felt at ease.' },
+      { name: 'คุณกิตติ', nameEn: 'Kitti', meta: 'เชียงใหม่ · เดินทางคนเดียว', metaEn: 'Chiang Mai · Solo trip',
+        th: 'ไปทัวร์เมืองเก่ากับไกด์ที่โตที่ภูเก็ต ได้กินร้านที่ไม่มีในกูเกิล อันนี้คือของจริง ไม่ใช่ทัวร์ถ่ายรูปเช็กอิน',
+        en: 'Did the Old Town tour with a guide who grew up in Phuket and ate at places you won\'t find on Google. The real thing, not a check-in photo tour.' },
+      { name: 'Mika', nameEn: 'Mika', meta: 'โอซาก้า · กลุ่มเพื่อน 4 คน', metaEn: 'Osaka · Group of 4',
+        th: 'ดำน้ำครั้งแรกในชีวิต ไกด์ใจเย็นมาก ค่อย ๆ สอนทีละสเต็ปจนกล้าลงน้ำ ดูแลความปลอดภัยทุกจุด สนุกเกินคาด',
+        en: 'My first ever dive. The guide was so patient, walking me through every step until I felt brave enough — safe throughout and far more fun than I expected.' },
+      { name: 'คุณอรวรรณ', nameEn: 'Orawan', meta: 'ขอนแก่น · ทริปพ่อแม่', metaEn: 'Khon Kaen · With parents',
+        th: 'จองง่ายมาก ตอบไลน์ไว บอกราคาชัดเจนไม่มีบวกเพิ่มหน้างาน ประทับใจการดูแลผู้สูงอายุในกลุ่มมาก',
+        en: 'Super easy to book, quick replies on LINE, clear pricing with no surprises on the day. They looked after the older folks in our group so well.' },
+      { name: 'James', nameEn: 'James', meta: 'ออสเตรเลีย · คู่รัก', metaEn: 'Australia · Couple',
+        th: 'สปีดโบ๊ทไปพีพีจัดการดีมาก ไม่รู้สึกแออัด ไกด์รู้จุดดำน้ำเงียบ ๆ ที่คนไม่เยอะ',
+        en: 'The speedboat to Phi Phi was well organised and never felt crowded. Our guide knew the quiet snorkelling spots away from the crowds.' },
+      { name: 'คุณพิมพ์ชนก', nameEn: 'Pimchanok', meta: 'นนทบุรี · ทริปเพื่อน', metaEn: 'Nonthaburi · Friends',
+        th: 'ทีมงานคนภูเก็ตจริง แนะนำร้านอาหารถิ่นได้ดีมาก ได้กินของอร่อยที่ไม่เคยรู้มาก่อน',
+        en: 'A genuinely local Phuket team — their food picks were spot on. We ate amazing local dishes we\'d never have found ourselves.' },
+      { name: 'Sophie', nameEn: 'Sophie', meta: 'ฝรั่งเศส · เดินทางคนเดียว', metaEn: 'France · Solo traveller',
+        th: 'รู้สึกปลอดภัยตลอดการเดินทางในฐานะผู้หญิงเที่ยวคนเดียว ทุกอย่างโปร่งใส ไกด์มืออาชีพและเป็นมิตร',
+        en: 'Felt safe the whole time as a solo female traveller. Everything was transparent and the guide was professional and friendly.' }
+    ];
+
+    var esc = function (s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    };
+
+    var isEN = function () { return document.documentElement.lang === 'en'; };
+
+    var cardHTML = function (d, i) {
+      var en = isEN();
+      var name = en ? (d.nameEn || d.name) : d.name;
+      var meta = en ? d.metaEn : d.meta;
+      var text = en ? d.en : d.th;
+      var color = COLORS[i % COLORS.length];
+      var stars = '';
+      for (var s = 0; s < 5; s++) stars += '<svg class="ic" aria-hidden="true"><use href="#i-star"/></svg>';
+      return '<figure class="greview">' +
+        '<div class="greview-top">' +
+          '<span class="g-init" aria-hidden="true" style="background:' + color + '">' + esc(name.trim().charAt(0).toUpperCase()) + '</span>' +
+          '<span><b>' + esc(name) + '</b><span>' + esc(meta) + '</span></span>' +
+          '<svg class="gmark" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-google"/></svg>' +
+        '</div>' +
+        '<span class="greview-stars" aria-label="' + (en ? 'Rated 5 out of 5' : 'ให้คะแนน 5 เต็ม 5') + '">' + stars + '</span>' +
+        '<p>' + esc(text) + '</p>' +
+      '</figure>';
+    };
+
+    var render = function () {
+      var one = DATA.map(cardHTML).join('');
+      // duplicate the set so the -50% keyframe loops seamlessly
+      track.innerHTML = one + one;
+      var figs = track.children;
+      for (var i = DATA.length; i < figs.length; i++) figs[i].setAttribute('aria-hidden', 'true');
+    };
+
+    render();
+    document.addEventListener('langchange', render);
+  })();
 
   /* ---------- footer year ---------- */
   document.querySelectorAll('[data-year]').forEach(function (el) {
