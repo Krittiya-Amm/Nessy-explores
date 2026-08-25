@@ -5,6 +5,22 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var LINE_OA = 'https://line.me/R/ti/p/~@nessyexplores';
 
+  /* On a page refresh, always open at the very top — even if the URL still
+     carries an in-page hash from earlier navigation. Fresh visits that arrive
+     with a hash (shared deep links) are left alone. Uses an instant jump
+     because the page sets scroll-behavior: smooth, and re-asserts after load
+     to beat the browser's own scroll restoration. */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  var navEntry = (window.performance && performance.getEntriesByType &&
+                  performance.getEntriesByType('navigation')[0]) || null;
+  var isReload = navEntry ? navEntry.type === 'reload'
+               : (window.performance && performance.navigation && performance.navigation.type === 1);
+  if (isReload) {
+    var toTop = function () { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); };
+    window.addEventListener('pageshow', toTop);
+    window.addEventListener('load', function () { toTop(); requestAnimationFrame(toTop); });
+  }
+
   /* ---------- inject shared overlays (scam warning + cookie consent) ----------
      Injected here, before the language module snapshots [data-en] nodes, so these
      overlays translate like the rest of the page. Kept in JS so every page gets
@@ -165,6 +181,23 @@
     };
     onScroll(); // honour a mid-page reload where the user is already scrolled
     window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  /* ---------- hero parallax (subtle) ---------- */
+  var heroArt = document.querySelector('.hero-art');
+  if (heroArt && !reduced) {
+    var heroMax = 46;      // px of downward drift across the hero's height
+    var heroTicking = false;
+    var moveHero = function () {
+      var y = window.scrollY;
+      var shift = Math.min(y * 0.18, heroMax);
+      heroArt.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0)';
+      heroTicking = false;
+    };
+    window.addEventListener('scroll', function () {
+      if (!heroTicking) { heroTicking = true; window.requestAnimationFrame(moveHero); }
+    }, { passive: true });
+    moveHero();
   }
 
   /* ---------- scroll reveal ---------- */
@@ -603,6 +636,303 @@
 
     render();
     document.addEventListener('langchange', render);
+  })();
+
+  /* ---------- Find Your Phuket — trip matcher ---------- */
+  (function () {
+    var root = document.querySelector('[data-tripmatch]');
+    if (!root) return;
+
+    var form    = root.querySelector('[data-tm-form]');
+    var steps   = Array.prototype.slice.call(form.querySelectorAll('.tm-step'));
+    var backBtn = form.querySelector('[data-tm-back]');
+    var nextBtn = form.querySelector('[data-tm-next]');
+    var curEl   = root.querySelector('[data-tm-current]');
+    var fillEl  = root.querySelector('[data-tm-fill]');
+    var result  = root.querySelector('[data-tm-result]');
+    var restart = root.querySelector('[data-tm-restart]');
+
+    var isEN = function () { return document.documentElement.lang === 'en'; };
+
+    // selections
+    var picks = { style: [], time: null, zone: null };
+    var stepIndex = 0; // 0-based
+
+    // result presets — each scores against the picks; highest wins
+    var RESULTS = [
+      {
+        href: '#sea',
+        th: { title: 'เกาะสวย น้ำใส สายชิลล์', desc: 'ล่องเรือเที่ยวเกาะระดับโลก น้ำใสหาดทรายขาว ดำน้ำตื้นชมปะการัง แล้วเก็บภาพสวย ๆ แบบไม่ต้องรีบ', tags: ['ทะเล', 'ถ่ายรูปสวย', 'ชิลล์'] },
+        en: { title: 'Island Escape', desc: 'Cruise to world-class islands, swim in crystal-clear water and snorkel over coral — a relaxed day of postcard views.', tags: ['On the Sea', 'Photo', 'Chill'] },
+        style: { chill: 2, photo: 2, nature: 1, family: 1 }, time: { half: 1, day: 2, multi: 1 }, zone: { sea: 3 }
+      },
+      {
+        href: '#dive',
+        th: { title: 'โลกใต้น้ำ & กิจกรรมทางน้ำ', desc: 'ดำน้ำตื้น-ลึกชมแนวปะการังที่สมบูรณ์ เติมความมันกับเจ็ตสกีและพาราเซล เหมาะกับสายผจญภัยที่รักทะเล', tags: ['ดำน้ำ', 'ผจญภัย', 'ทะเล'] },
+        en: { title: 'Underwater Phuket', desc: 'Snorkel and dive healthy reefs, then add a jet-ski or parasail — for sea-lovers who want a little adrenaline.', tags: ['Diving', 'Adventure', 'On the Sea'] },
+        style: { adventure: 3, nature: 1 }, time: { half: 1, day: 2 }, zone: { sea: 2 }
+      },
+      {
+        href: '#local',
+        th: { title: 'เมืองเก่า & วิถีคนถิ่น', desc: 'เดินย่านเมืองเก่า ชิมอาหารถิ่น ตลาดเช้า และหมู่บ้านชาวเล สัมผัสภูเก็ตในมุมที่คนอยู่ที่นี่รู้จัก', tags: ['เมืองเก่า', 'อาหารถิ่น', 'วัฒนธรรม'] },
+        en: { title: 'Old Town & Local Life', desc: 'Wander the old town, taste local food and morning markets, and meet a sea-gypsy village — Phuket the way locals know it.', tags: ['Old Town', 'Local Food', 'Culture'] },
+        style: { local: 3, photo: 1, family: 1, chill: 1 }, time: { half: 2, day: 1 }, zone: { locallife: 3, around: 1 }
+      },
+      {
+        href: '#local',
+        th: { title: 'ธรรมชาติ & ที่ลับเฉพาะ', desc: 'ตามหามุมที่คนไม่ค่อยรู้จัก น้ำตก จุดชมวิว และธรรมชาติเงียบสงบรอบภูเก็ต–พังงา แบบที่ Local Expert พาไป', tags: ['ธรรมชาติ', 'Hidden Gems', 'ผจญภัย'] },
+        en: { title: 'Hidden Nature Trail', desc: 'Seek out lesser-known spots — waterfalls, viewpoints and quiet nature around Phuket and Phang Nga, guided by a local.', tags: ['Nature', 'Hidden Gems', 'Adventure'] },
+        style: { nature: 3, adventure: 2 }, time: { day: 1, multi: 2 }, zone: { hidden: 3, around: 2 }
+      },
+      {
+        href: '#packages',
+        th: { title: 'ครอบครัวเที่ยวสบาย', desc: 'จัดทริปที่เด็ก ๆ และผู้ใหญ่สนุกด้วยกัน กิจกรรมไม่หนัก เดินทางสะดวก มีตัวเลือกโชว์และสวนสนุกให้เลือก', tags: ['ครอบครัว', 'สบาย ๆ', 'สนุก'] },
+        en: { title: 'Easy Family Day', desc: 'A trip the whole family enjoys — easy-going activities, smooth transfers, plus show and theme-park options.', tags: ['Family', 'Easy', 'Fun'] },
+        style: { family: 3, chill: 1, photo: 1 }, time: { half: 2, day: 2 }, zone: { around: 2, sea: 1 }
+      }
+    ];
+
+    var matched = null; // remember for langchange re-render
+
+    var score = function (r) {
+      var s = 0, i;
+      for (i = 0; i < picks.style.length; i++) s += r.style[picks.style[i]] || 0;
+      if (picks.time) s += r.time[picks.time] || 0;
+      if (picks.zone) s += r.zone[picks.zone] || 0;
+      return s;
+    };
+
+    var bestMatch = function () {
+      var best = RESULTS[0], bestScore = -1;
+      RESULTS.forEach(function (r) {
+        var sc = score(r);
+        if (sc > bestScore) { bestScore = sc; best = r; }
+      });
+      return best;
+    };
+
+    // is the current step satisfied? step 1 needs 1–2 styles, others need one pick
+    var stepReady = function (idx) {
+      if (idx === 0) return picks.style.length >= 1;
+      if (idx === 1) return !!picks.time;
+      return !!picks.zone;
+    };
+
+    var updateNav = function () {
+      backBtn.hidden = stepIndex === 0;
+      nextBtn.disabled = !stepReady(stepIndex);
+      var last = stepIndex === steps.length - 1;
+      nextBtn.querySelector('[data-en]').innerHTML =
+        last ? (isEN() ? 'See my match' : 'ดูผลลัพธ์') : (isEN() ? 'Next' : 'ถัดไป');
+      // keep data-en in sync so the global swap engine stays correct
+      nextBtn.querySelector('[data-en]').setAttribute('data-en', last ? 'See my match' : 'Next');
+    };
+
+    var showStep = function (idx) {
+      stepIndex = idx;
+      steps.forEach(function (s, i) {
+        s.hidden = i !== idx;
+        s.classList.toggle('is-active', i === idx);
+      });
+      curEl.textContent = '0' + (idx + 1);
+      fillEl.style.width = ((idx + 1) / steps.length * 100).toFixed(2) + '%';
+      updateNav();
+    };
+
+    var renderResult = function () {
+      if (!matched) return;
+      var en = isEN();
+      var data = en ? matched.en : matched.th;
+      result.querySelector('[data-tm-title]').textContent = data.title;
+      result.querySelector('[data-tm-desc]').textContent = data.desc;
+      var tagsWrap = result.querySelector('[data-tm-tags]');
+      tagsWrap.innerHTML = data.tags.map(function (t) {
+        return '<span class="tm-tag">' + t.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span>';
+      }).join('');
+      result.querySelector('[data-tm-cta]').setAttribute('href', matched.href);
+    };
+
+    var showResult = function () {
+      matched = bestMatch();
+      renderResult();
+      form.hidden = true;
+      result.hidden = false;
+      result.classList.add('is-shown');
+      fillEl.style.width = '100%';
+      curEl.textContent = '03';
+    };
+
+    // chip toggles
+    form.addEventListener('click', function (e) {
+      var chip = e.target.closest('.tm-chip');
+      if (!chip) return;
+      var group = chip.dataset.group;
+      var value = chip.dataset.value;
+
+      if (group === 'style') {
+        var at = picks.style.indexOf(value);
+        if (at > -1) { picks.style.splice(at, 1); chip.setAttribute('aria-pressed', 'false'); }
+        else if (picks.style.length < 2) { picks.style.push(value); chip.setAttribute('aria-pressed', 'true'); }
+        // if already 2 picked and a new one clicked, ignore (hint says 1–2)
+      } else {
+        // single-select
+        picks[group] = value;
+        chip.closest('.tm-chips').querySelectorAll('.tm-chip').forEach(function (c) {
+          c.setAttribute('aria-pressed', c === chip ? 'true' : 'false');
+        });
+      }
+      updateNav();
+    });
+
+    nextBtn.addEventListener('click', function () {
+      if (!stepReady(stepIndex)) return;
+      if (stepIndex === steps.length - 1) showResult();
+      else showStep(stepIndex + 1);
+    });
+
+    backBtn.addEventListener('click', function () {
+      if (stepIndex > 0) showStep(stepIndex - 1);
+    });
+
+    restart.addEventListener('click', function () {
+      picks = { style: [], time: null, zone: null };
+      matched = null;
+      form.querySelectorAll('.tm-chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+      result.hidden = true;
+      result.classList.remove('is-shown');
+      form.hidden = false;
+      showStep(0);
+    });
+
+    document.addEventListener('langchange', function () {
+      updateNav();
+      renderResult();
+    });
+
+    showStep(0);
+  })();
+
+  /* ---------- Phuket, Our Way — local day map ---------- */
+  (function () {
+    var root = document.querySelector('.ourway');
+    if (!root) return;
+
+    var markers = Array.prototype.slice.call(root.querySelectorAll('.ow-marker'));
+    var map     = root.querySelector('.ow-map');
+    var popup   = root.querySelector('[data-ow-popup]');
+    if (!markers.length || !map || !popup) return;
+
+    var elTime  = popup.querySelector('[data-ow-time]');
+    var elTag   = popup.querySelector('[data-ow-tag]');
+    var elTitle = popup.querySelector('[data-ow-storytitle]');
+    var elQuote = popup.querySelector('[data-ow-quote]');
+
+    var isEN = function () { return document.documentElement.lang === 'en'; };
+
+    var STOPS = [
+      { time: '07:30',
+        th: { tag: 'ตลาดเช้า', title: 'ตลาดสดยามเช้า', quote: 'เริ่มวันด้วยกาแฟโบราณกับปาท่องโก๋ ตลาดที่คนภูเก็ตมาจ่ายกับข้าวกันจริง ๆ ก่อนสิบโมงของก็หมดแล้ว' },
+        en: { tag: 'Morning Market', title: 'The morning market', quote: 'Start with kopi and patongko where locals actually shop — by ten it’s all gone.' } },
+      { time: '09:00',
+        th: { tag: 'เมืองเก่า', title: 'ตรอกเมืองเก่า', quote: 'เดินดูตึกชิโน-โปรตุกีสตอนแดดยังไม่แรง มุมถ่ายรูปดีที่สุดคือก่อนร้านเปิด' },
+        en: { tag: 'Old Town', title: 'Old-town lanes', quote: 'Walk the Sino-Portuguese shophouses before the heat — the best photos are before the shops open.' } },
+      { time: '11:00',
+        th: { tag: 'ร้านโกปี๊', title: 'ร้านโกปี๊ไม่มีป้าย', quote: 'ร้านที่ไม่มีป้ายภาษาอังกฤษ สั่งโอเลี้ยงกับขนมจีบ นั่งฟังคนแก่คุยกันเรื่องเรือ' },
+        en: { tag: 'Kopi Shop', title: 'The kopi shop with no sign', quote: 'No English sign. Order o-liang and dim sum, and listen to the old folks talk about boats.' } },
+      { time: '13:30',
+        th: { tag: 'หาดลับ', title: 'หาดเล็กที่คนไม่ค่อยรู้', quote: 'หาดเล็ก ๆ ที่รถทัวร์เข้าไม่ถึง น้ำใส คนน้อย เอาเสื่อไปปูนอนฟังคลื่นได้ทั้งบ่าย' },
+        en: { tag: 'Hidden Beach', title: 'A beach few people know', quote: 'A small cove the tour coaches can’t reach — clear water, few people, a whole afternoon of waves.' } },
+      { time: '16:00',
+        th: { tag: 'จุดชมวิว', title: 'จุดชมวิวมุมคนถิ่น', quote: 'ไม่ใช่จุดชมวิวยอดฮิต แต่เห็นทะเลได้กว้างกว่า ลมเย็น ๆ รอแสงเริ่มเปลี่ยนสี' },
+        en: { tag: 'Viewpoint', title: 'A local’s viewpoint', quote: 'Not the famous lookout — a wider sea view, cool wind, waiting for the light to turn.' } },
+      { time: '18:30',
+        th: { tag: 'หมู่บ้านชาวเล', title: 'ราไวย์ตอนเรือกลับฝั่ง', quote: 'จบวันที่ราไวย์ ดูเรือชาวเลกลับเข้าฝั่ง กินอาหารทะเลสด ๆ ริมหาดตอนพระอาทิตย์ตก' },
+        en: { tag: 'Sea-gypsy Village', title: 'Rawai as the boats come in', quote: 'End at Rawai, watching the sea-gypsy boats return — fresh seafood on the sand as the sun drops.' } }
+    ];
+
+    var current = -1;
+
+    var fill = function (i) {
+      var s = STOPS[i];
+      if (!s) return;
+      var d = isEN() ? s.en : s.th;
+      elTime.textContent  = s.time;
+      elTag.textContent   = d.tag;
+      elTitle.textContent = d.title;
+      elQuote.textContent = d.quote;
+    };
+
+    // place the popup above the pin (or below when there's no room), arrow on the marker
+    var place = function (marker) {
+      var mr = map.getBoundingClientRect();
+      var pr = marker.getBoundingClientRect();
+      var markerX = pr.left + pr.width / 2 - mr.left;
+      var pinTop  = pr.top - mr.top;
+      var pinBase = pr.bottom - mr.top;
+      var gap = 12;
+      var half = popup.offsetWidth / 2;
+      var ph  = popup.offsetHeight;
+
+      var below = pinTop - gap - ph < 0;
+      popup.classList.toggle('above', !below);
+      popup.classList.toggle('below', below);
+      popup.style.top = (below ? pinBase + gap : pinTop - gap - ph) + 'px';
+
+      var cx = Math.max(half + 4, Math.min(mr.width - half - 4, markerX));
+      popup.style.left = cx + 'px';
+      popup.style.setProperty('--arrow-x', (markerX - (cx - half)) + 'px');
+    };
+
+    var open = function (i, marker) {
+      current = i;
+      fill(i);
+      popup.hidden = false;
+      place(marker);            // reads layout → flushes a reflow while still hidden
+      void popup.offsetWidth;   // ensure the pre-open state is committed
+      popup.classList.add('is-open');
+      markers.forEach(function (m, k) {
+        m.classList.toggle('is-active', k === i);
+        m.setAttribute('aria-pressed', k === i ? 'true' : 'false');
+      });
+    };
+
+    var close = function () {
+      current = -1;
+      popup.classList.remove('is-open');
+      markers.forEach(function (m) {
+        m.classList.remove('is-active');
+        m.setAttribute('aria-pressed', 'false');
+      });
+    };
+
+    popup.addEventListener('transitionend', function (e) {
+      if (e.propertyName === 'opacity' && !popup.classList.contains('is-open')) {
+        popup.hidden = true;
+      }
+    });
+
+    markers.forEach(function (m, i) {
+      m.setAttribute('aria-pressed', 'false');
+      m.addEventListener('mouseenter', function () { open(i, m); });
+      m.addEventListener('mouseleave', close);
+      m.addEventListener('focus', function () { open(i, m); });
+      m.addEventListener('blur', close);
+      m.addEventListener('click', function () {           // touch / mouse tap
+        if (current === i) { close(); } else { open(i, m); }
+      });
+      m.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i, m); }
+        else if (e.key === 'Escape') { close(); m.blur(); }
+      });
+    });
+
+    // keep it glued to the pin while the page reflows
+    window.addEventListener('resize', function () {
+      if (current > -1) place(markers[current]);
+    });
+    document.addEventListener('langchange', function () {
+      if (current > -1) { fill(current); place(markers[current]); }
+    });
   })();
 
   /* ---------- footer year ---------- */
