@@ -32,9 +32,11 @@
     <nav aria-label="เมนูหลัก" data-en-label="Main navigation">
       <ul class="nav-links" id="nav-links" data-open="false">
         <li><a href="#main" aria-current="page" data-en="Home">หน้าแรก</a></li>
+        <li><a href="#trip-match" data-en="Find your trip">จับคู่ทริป</a></li>
         <li><a href="#packages" data-en="Tours &amp; Activities">ทัวร์และกิจกรรม</a></li>
-        <li><a href="#local" data-en="Local Experiences">Local Experiences</a></li>
+        <li><a href="#our-way" data-en="Phuket, our way">ภูเก็ตในแบบของเรา</a></li>
         <li><a href="#about" data-en="About Us">เกี่ยวกับเรา</a></li>
+        <li><a href="#reviews" data-en="Reviews">รีวิว</a></li>
         <li><a href="#contact" data-en="Contact">ติดต่อ</a></li>
       </ul>
     </nav>
@@ -166,6 +168,94 @@
           <p data-en="Old town · Morning markets · Local food · Sea-gypsy village">เมืองเก่า · ตลาดเช้า · อาหารถิ่น · หมู่บ้านชาวเล</p>
         </span>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3b. FIND YOUR PHUKET — trip matcher ==================== -->
+<section class="sf-frost tripmatch" id="trip-match" aria-labelledby="tm-title">
+  <div class="wrap">
+    <div class="tm-layout reveal">
+      <div class="tm-intro">
+        <p class="eyebrow" data-en="Find your Phuket">ค้นหาภูเก็ตของคุณ</p>
+        <h2 id="tm-title" data-en="Tell us your vibe — we'll match your trip">บอกสไตล์ที่ใช่ แล้วเราจับคู่ทริปให้</h2>
+        <p class="lead" data-en="Answer three quick questions and we'll suggest a Phuket experience that fits how you like to travel.">ตอบ 3 คำถามสั้น ๆ แล้วเราจะแนะนำประสบการณ์ภูเก็ตที่เหมาะกับสไตล์การเที่ยวของคุณ</p>
+      </div>
+
+      <div class="tm-card" data-tripmatch>
+
+      <!-- progress -->
+      <div class="tm-progress" aria-hidden="true">
+        <span class="tm-count"><span class="tm-cur" data-tm-current>01</span><span class="tm-total"> / 03</span></span>
+        <span class="tm-bar"><span class="tm-bar-fill" data-tm-fill></span></span>
+      </div>
+
+      <!-- form -->
+      <form class="tm-form" data-tm-form>
+
+        <fieldset class="tm-step is-active" data-step="1">
+          <legend class="tm-q"><span data-en="What's your travel vibe?">อยากเที่ยวสไตล์ไหน?</span></legend>
+          <p class="tm-hint" data-en="Pick 1–2">เลือกได้ 1–2 อย่าง</p>
+          <div class="tm-chips" role="group" aria-label="สไตล์การเที่ยว" data-en-label="Travel vibe">
+            <button class="tm-chip" type="button" data-group="style" data-value="chill"     aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg><span data-en="Chill &amp; Relax">ชิลล์ พักผ่อน</span></button>
+            <button class="tm-chip" type="button" data-group="style" data-value="adventure" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-mountain"/></svg><span data-en="Adventure">สายผจญภัย</span></button>
+            <button class="tm-chip" type="button" data-group="style" data-value="photo"     aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg><span data-en="Photo Spots">สายถ่ายรูป</span></button>
+            <button class="tm-chip" type="button" data-group="style" data-value="local"     aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-food"/></svg><span data-en="Local &amp; Food">กินเที่ยวแบบคนถิ่น</span></button>
+            <button class="tm-chip" type="button" data-group="style" data-value="nature"    aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg><span data-en="Nature">ธรรมชาติ</span></button>
+            <button class="tm-chip" type="button" data-group="style" data-value="family"    aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg><span data-en="Family">ไปกับครอบครัว</span></button>
+          </div>
+        </fieldset>
+
+        <fieldset class="tm-step" data-step="2" hidden>
+          <legend class="tm-q"><span data-en="How much time do you have?">มีเวลาเท่าไหร่?</span></legend>
+          <p class="tm-hint" data-en="Pick one">เลือก 1 อย่าง</p>
+          <div class="tm-chips" role="group" aria-label="เวลาที่มี" data-en-label="Time available">
+            <button class="tm-chip" type="button" data-group="time" data-value="half"  aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span data-en="Half Day">ครึ่งวัน</span></button>
+            <button class="tm-chip" type="button" data-group="time" data-value="day"   aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg><span data-en="Full Day">หนึ่งวันเต็ม</span></button>
+            <button class="tm-chip" type="button" data-group="time" data-value="multi" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg><span data-en="2–3 Days">2–3 วัน</span></button>
+          </div>
+        </fieldset>
+
+        <fieldset class="tm-step" data-step="3" hidden>
+          <legend class="tm-q"><span data-en="Where do you want to go?">อยากไปโซนไหน?</span></legend>
+          <p class="tm-hint" data-en="Pick one">เลือก 1 อย่าง</p>
+          <div class="tm-chips" role="group" aria-label="โซนที่อยากไป" data-en-label="Where to go">
+            <button class="tm-chip" type="button" data-group="zone" data-value="sea"       aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-ship"/></svg><span data-en="On the Sea">ออกทะเล</span></button>
+            <button class="tm-chip" type="button" data-group="zone" data-value="around"    aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-car"/></svg><span data-en="Around Phuket">รอบเกาะภูเก็ต</span></button>
+            <button class="tm-chip" type="button" data-group="zone" data-value="locallife" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span data-en="Local Life">วิถีคนเมือง</span></button>
+          </div>
+        </fieldset>
+
+        <div class="tm-nav">
+          <button class="btn btn-outline btn-sm tm-back" type="button" data-tm-back hidden>
+            <svg class="ic" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow-right"/></svg>
+            <span data-en="Back">ย้อนกลับ</span>
+          </button>
+          <button class="btn btn-primary btn-sm tm-next" type="button" data-tm-next disabled>
+            <span data-en="Next">ถัดไป</span>
+            <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- result -->
+      <div class="tm-result" data-tm-result role="region" aria-live="polite" hidden>
+        <p class="tm-result-eyebrow" data-en="Your recommended package">แพ็คเกจที่แนะนำสำหรับคุณ</p>
+        <p class="tm-result-type" data-tm-type></p>
+        <h3 class="tm-result-title" data-tm-title></h3>
+        <div class="tm-result-tags" data-tm-tags></div>
+        <p class="tm-result-desc" data-tm-desc></p>
+        <div class="tm-result-actions">
+          <button class="btn btn-outline btn-sm" type="button" data-tm-restart>
+            <span data-en="Start over">เริ่มใหม่</span>
+          </button>
+          <a class="btn btn-primary btn-sm tm-result-cta" data-tm-cta href="#packages">
+            <span data-en="Choose a Tour Package">เลือกแพ็คเกจทัวร์</span>
+          </a>
+        </div>
+      </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -323,7 +413,7 @@
 
       <article class="tour reveal" data-cat="sea">
         <div class="tour-media">
-          <img src="assets/img/white-beach.webp" alt="ปลาและแนวปะการังใต้ทะเล" data-en-alt="Fish and coral reef underwater" width="900" height="1281" loading="lazy" decoding="async">
+          <img src="assets/img/similan.webp" alt="หมู่เกาะสิมิลัน น้ำทะเลใสสีเทอร์คอยซ์และหินเรือใบ" data-en-alt="Similan Islands with clear turquoise water and Sail Rock" width="599" height="674" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-sky" data-en="Clearest water">น้ำใสที่สุด</span></div>
         </div>
         <div class="tour-body">
@@ -344,7 +434,7 @@
       <!-- ---------- ดำน้ำ & กิจกรรมทางน้ำ ---------- -->
       <article class="tour reveal" data-cat="dive">
         <div class="tour-media">
-          <img src="assets/img/white-beach.webp" alt="กิจกรรมทางน้ำและคลื่นทะเล" data-en-alt="Water sports and sea waves" width="900" height="1281" loading="lazy" decoding="async">
+          <img src="assets/img/jetski-8islands.webp" alt="กลุ่มนักท่องเที่ยวขับเจ็ตสกีหน้าผาหินปูนกลางทะเล" data-en-alt="Group riding jet skis in front of a limestone cliff at sea" width="572" height="644" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-promo" data-en="Thrill-seekers">สายมันส์</span></div>
         </div>
         <div class="tour-body">
@@ -364,7 +454,7 @@
 
       <article class="tour reveal" data-cat="dive">
         <div class="tour-media">
-          <img src="assets/img/lagoon.webp" alt="นักดำน้ำและปะการัง" data-en-alt="Divers and coral" width="867" height="1233" loading="lazy" decoding="async">
+          <img src="assets/img/discover-scuba.webp" alt="นักดำน้ำลึกสามคนใต้น้ำใกล้แนวปะการัง" data-en-alt="Three scuba divers underwater beside a coral reef" width="712" height="802" loading="lazy" decoding="async">
         </div>
         <div class="tour-body">
           <h3 data-en="Your First Scuba Dive (Discover Scuba)">ดำน้ำลึกครั้งแรก (Discover Scuba)</h3>
@@ -382,7 +472,7 @@
 
       <article class="tour reveal" data-cat="dive">
         <div class="tour-media">
-          <img src="assets/img/longtail.webp" alt="กิจกรรมทางน้ำริมชายหาด" data-en-alt="Water sports along the beach" width="900" height="1281" loading="lazy" decoding="async">
+          <img src="assets/img/patong-beach.webp" alt="เซิร์ฟบอร์ดตั้งเรียงบนหาดทรายป่าตองริมทะเล" data-en-alt="Surfboards lined up on the sand at Patong Beach by the sea" width="576" height="648" loading="lazy" decoding="async">
         </div>
         <div class="tour-body">
           <h3 data-en="Patong Beach Activities">กิจกรรมริมหาดป่าตอง</h3>
@@ -401,7 +491,7 @@
       <!-- ---------- ผจญภัยบนบก ---------- -->
       <article class="tour reveal" data-cat="adventure">
         <div class="tour-media">
-          <img src="assets/img/lagoon.webp" alt="กิจกรรมซิปไลน์ในป่าเขา" data-en-alt="Zipline activity in the forested hills" width="867" height="1233" loading="lazy" decoding="async">
+          <img src="assets/img/rafting.webp" alt="กลุ่มนักท่องเที่ยวล่องแก่งด้วยเรือยางในสายน้ำเชี่ยว" data-en-alt="A group white-water rafting through rapids in an inflatable boat" width="581" height="654" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-promo" data-en="Best value">คุ้มที่สุด</span></div>
         </div>
         <div class="tour-body">
@@ -421,7 +511,7 @@
 
       <article class="tour reveal" data-cat="adventure">
         <div class="tour-media">
-          <img src="assets/img/big-buddha.webp" alt="เส้นทางผจญภัยบนภูเขา" data-en-alt="Adventure trail in the mountains" width="900" height="1283" loading="lazy" decoding="async">
+          <img src="assets/img/atv-jungle.webp" alt="นักท่องเที่ยวขับ ATV บนเส้นทางดินกลางป่าเขียวชอุ่ม" data-en-alt="Riders on ATVs along a dirt trail through lush jungle" width="716" height="806" loading="lazy" decoding="async">
         </div>
         <div class="tour-body">
           <h3 data-en="ATV Through Rubber Plantations &amp; Viewpoints">ATV ตะลุยสวนยาง &amp; จุดชมวิว</h3>
@@ -440,7 +530,7 @@
 
       <article class="tour reveal" data-cat="adventure">
         <div class="tour-media">
-          <img src="assets/img/lagoon.webp" alt="ซิปไลน์ระหว่างต้นไม้" data-en-alt="Zipline between the trees" width="867" height="1233" loading="lazy" decoding="async">
+          <img src="assets/img/zipline.webp" alt="นักท่องเที่ยวเล่นซิปไลน์กางแขนเหนืออ่าวทะเลและเกาะหินปูน" data-en-alt="A rider ziplining with arms spread over a bay dotted with limestone islands" width="617" height="694" loading="lazy" decoding="async">
         </div>
         <div class="tour-body">
           <h3 data-en="Zipline Adventure">ซิปไลน์ผจญภัย</h3>
@@ -459,7 +549,7 @@
 
       <article class="tour reveal" data-cat="adventure">
         <div class="tour-media">
-          <img src="assets/img/big-buddha.webp" alt="ธรรมชาติและสัตว์ในป่าภูเก็ต" data-en-alt="Nature and wildlife in the Phuket forest" width="900" height="1283" loading="lazy" decoding="async">
+          <img src="assets/img/elephant-camp.webp" alt="เด็กสองคนเล่นน้ำกับช้างสองเชือกริมทะเล" data-en-alt="Two children playing in the water with two elephants by the sea" width="649" height="730" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-sky" data-en="No-riding option">เลือกแบบไม่ขี่ได้</span></div>
         </div>
         <div class="tour-body">
@@ -480,7 +570,7 @@
       <!-- ---------- โชว์ & สวนสนุก ---------- -->
       <article class="tour reveal" data-cat="show">
         <div class="tour-media">
-          <img src="assets/img/old-town-sunset.webp" alt="การแสดงบนเวทีพร้อมแสงไฟ" data-en-alt="Stage show with lighting" width="900" height="1280" loading="lazy" decoding="async">
+          <img src="assets/img/phuket-fantasea.webp" alt="โชว์วัฒนธรรมไทยบนเวทีพร้อมปราสาททองและช้างแต่งตัว" data-en-alt="Thai cultural stage show with a golden palace set and costumed elephants" width="588" height="588" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-promo" data-en="Popular show">โชว์ยอดนิยม</span></div>
         </div>
         <div class="tour-body">
@@ -499,7 +589,7 @@
 
       <article class="tour reveal" data-cat="show">
         <div class="tour-media">
-          <img src="assets/img/old-town-sunset.webp" alt="เวทีการแสดงและแสงสี" data-en-alt="Stage show with colourful lights" width="900" height="1280" loading="lazy" decoding="async">
+          <img src="assets/img/carnival-magic.webp" alt="ปราสาทแสงสีและลานนกยูงเรืองแสงยามค่ำคืนที่ Carnival Magic" data-en-alt="Illuminated palace and glowing peacock light-floor at night at Carnival Magic" width="594" height="594" loading="lazy" decoding="async">
         </div>
         <div class="tour-body">
           <h3>Carnival Magic</h3>
@@ -517,7 +607,7 @@
 
       <article class="tour reveal" data-cat="show">
         <div class="tour-media">
-          <img src="assets/img/old-town-sunset.webp" alt="การแสดงคาบาเรต์" data-en-alt="Cabaret performance" width="900" height="1280" loading="lazy" decoding="async">
+          <img src="assets/img/simon-cabaret.webp" alt="นักแสดงคาบาเรต์ในชุดสีสันบนเวที Simon Cabaret Phuket" data-en-alt="Cabaret performers in colourful costumes on stage at Simon Cabaret Phuket" width="666" height="666" loading="lazy" decoding="async">
         </div>
         <div class="tour-body">
           <h3>Simon Cabaret</h3>
@@ -535,7 +625,7 @@
 
       <article class="tour reveal" data-cat="show">
         <div class="tour-media">
-          <img src="assets/img/white-beach.webp" alt="โชว์โลมาในสระ" data-en-alt="Dolphin show in a pool" width="900" height="1281" loading="lazy" decoding="async">
+          <img src="assets/img/dolphin-show.webp" alt="โลมาสามตัวกระโดดพร้อมกันในโชว์โลมากลางสระ" data-en-alt="Three dolphins leaping together during a dolphin show in a pool" width="638" height="638" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-sky" data-en="Kids love it">เด็กชอบ</span></div>
         </div>
         <div class="tour-body">
@@ -554,7 +644,7 @@
 
       <article class="tour reveal" data-cat="show">
         <div class="tour-media">
-          <img src="assets/img/old-town.webp" alt="เวทีการแสดงศิลปวัฒนธรรมไทย" data-en-alt="Stage for a Thai cultural performance" width="900" height="1350" loading="lazy" decoding="async">
+          <img src="assets/img/siam-niramit.webp" alt="เวทีการแสดงศิลปวัฒนธรรมไทยอลังการพร้อมปราสาท ช้าง และนักแสดงจำนวนมาก" data-en-alt="Grand Thai cultural stage show with temples, elephants and a large cast of performers" width="874" height="874" loading="lazy" decoding="async">
         </div>
         <div class="tour-body">
           <h3 data-en="Siam Niramit Phuket">Siam Niramit ภูเก็ต</h3>
@@ -585,14 +675,14 @@
           </div>
           <div class="tour-foot">
             <span><span class="price" data-en="Ask for a price">สอบถามราคา</span></span>
-            <a class="btn btn-primary btn-sm" href="#local" data-en="View details">ดูรายละเอียด</a>
+            <a class="btn btn-primary btn-sm" href="#contact" data-loading data-en="Ask us">สอบถาม</a>
           </div>
         </div>
       </article>
 
       <article class="tour reveal" data-cat="local">
         <div class="tour-media">
-          <img src="assets/img/old-town-sunset.webp" alt="ตลาดเช้าและวิถีชีวิตท้องถิ่น" data-en-alt="Morning market and local daily life" width="900" height="1280" loading="lazy" decoding="async">
+          <img src="assets/img/morning-market.webp" alt="แม่ค้าคัดปลาสดบนโต๊ะที่ตลาดเช้าริมทะเลของหมู่บ้านชาวเล" data-en-alt="Vendors sorting fresh fish at a seaside morning market in a sea-gypsy village" width="693" height="780" loading="lazy" decoding="async">
         </div>
         <div class="tour-body">
           <h3 data-en="Morning Market &amp; Sea-Gypsy Village">ตลาดเช้า &amp; หมู่บ้านชาวเล</h3>
@@ -603,7 +693,7 @@
           </div>
           <div class="tour-foot">
             <span><span class="price" data-en="Ask for a price">สอบถามราคา</span></span>
-            <a class="btn btn-primary btn-sm" href="#local" data-en="View details">ดูรายละเอียด</a>
+            <a class="btn btn-primary btn-sm" href="#contact" data-loading data-en="Ask us">สอบถาม</a>
           </div>
         </div>
       </article>
@@ -611,7 +701,7 @@
       <!-- ---------- รถรับส่ง & เรือ ---------- -->
       <article class="tour reveal" data-cat="transfer">
         <div class="tour-media">
-          <img src="assets/img/hero-bay.webp" alt="รถตู้รับส่งและถนนเลียบทะเล" data-en-alt="Transfer van on a coastal road" width="1280" height="1067" loading="lazy" decoding="async">
+          <img src="assets/img/airport-transfer.webp" alt="รถเก๋งรับส่งพร้อมคนขับรออยู่หน้าอาคารสนามบินภูเก็ต" data-en-alt="Transfer sedan and driver waiting outside Phuket airport terminal" width="567" height="638" loading="lazy" decoding="async">
         </div>
         <div class="tour-body">
           <h3 data-en="Phuket Airport Transfer">รถรับส่งสนามบินภูเก็ต</h3>
@@ -629,7 +719,7 @@
 
       <article class="tour reveal" data-cat="transfer">
         <div class="tour-media">
-          <img src="assets/img/longtail.webp" alt="เรือเฟอร์รี่ข้ามเกาะ" data-en-alt="Ferry crossing between islands" width="900" height="1281" loading="lazy" decoding="async">
+          <img src="assets/img/ferry-boat.webp" alt="เรือเฟอร์รี่หลายชั้นแล่นข้ามทะเลสีเทอร์คอยซ์พร้อมนักท่องเที่ยวบนดาดฟ้า" data-en-alt="Multi-deck ferry crossing turquoise water with passengers on the top deck" width="596" height="670" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-sky" data-en="From ฿450">เริ่ม ฿450</span></div>
         </div>
         <div class="tour-body">
@@ -676,94 +766,6 @@
 </section>
 </section>
 
-<!-- ==================== 4b. FIND YOUR PHUKET — trip matcher ==================== -->
-<section class="sf-frost tripmatch" id="trip-match" aria-labelledby="tm-title">
-  <div class="wrap">
-    <div class="tm-layout reveal">
-      <div class="tm-intro">
-        <p class="eyebrow" data-en="Find your Phuket">ค้นหาภูเก็ตของคุณ</p>
-        <h2 id="tm-title" data-en="Tell us your vibe — we'll match your trip">บอกสไตล์ที่ใช่ แล้วเราจับคู่ทริปให้</h2>
-        <p class="lead" data-en="Answer three quick questions and we'll suggest a Phuket experience that fits how you like to travel.">ตอบ 3 คำถามสั้น ๆ แล้วเราจะแนะนำประสบการณ์ภูเก็ตที่เหมาะกับสไตล์การเที่ยวของคุณ</p>
-      </div>
-
-      <div class="tm-card" data-tripmatch>
-
-      <!-- progress -->
-      <div class="tm-progress" aria-hidden="true">
-        <span class="tm-count"><span class="tm-cur" data-tm-current>01</span><span class="tm-total"> / 03</span></span>
-        <span class="tm-bar"><span class="tm-bar-fill" data-tm-fill></span></span>
-      </div>
-
-      <!-- form -->
-      <form class="tm-form" data-tm-form>
-
-        <fieldset class="tm-step is-active" data-step="1">
-          <legend class="tm-q"><span data-en="What's your travel vibe?">อยากเที่ยวสไตล์ไหน?</span></legend>
-          <p class="tm-hint" data-en="Pick 1–2">เลือกได้ 1–2 อย่าง</p>
-          <div class="tm-chips" role="group" aria-label="สไตล์การเที่ยว" data-en-label="Travel vibe">
-            <button class="tm-chip" type="button" data-group="style" data-value="chill"     aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg><span data-en="Chill &amp; Relax">ชิลล์ พักผ่อน</span></button>
-            <button class="tm-chip" type="button" data-group="style" data-value="adventure" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-mountain"/></svg><span data-en="Adventure">สายผจญภัย</span></button>
-            <button class="tm-chip" type="button" data-group="style" data-value="photo"     aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg><span data-en="Photo Spots">สายถ่ายรูป</span></button>
-            <button class="tm-chip" type="button" data-group="style" data-value="local"     aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-food"/></svg><span data-en="Local &amp; Food">กินเที่ยวแบบคนถิ่น</span></button>
-            <button class="tm-chip" type="button" data-group="style" data-value="nature"    aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg><span data-en="Nature">ธรรมชาติ</span></button>
-            <button class="tm-chip" type="button" data-group="style" data-value="family"    aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg><span data-en="Family">ไปกับครอบครัว</span></button>
-          </div>
-        </fieldset>
-
-        <fieldset class="tm-step" data-step="2" hidden>
-          <legend class="tm-q"><span data-en="How much time do you have?">มีเวลาเท่าไหร่?</span></legend>
-          <p class="tm-hint" data-en="Pick one">เลือก 1 อย่าง</p>
-          <div class="tm-chips" role="group" aria-label="เวลาที่มี" data-en-label="Time available">
-            <button class="tm-chip" type="button" data-group="time" data-value="half"  aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span data-en="Half Day">ครึ่งวัน</span></button>
-            <button class="tm-chip" type="button" data-group="time" data-value="day"   aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg><span data-en="Full Day">หนึ่งวันเต็ม</span></button>
-            <button class="tm-chip" type="button" data-group="time" data-value="multi" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg><span data-en="2–3 Days">2–3 วัน</span></button>
-          </div>
-        </fieldset>
-
-        <fieldset class="tm-step" data-step="3" hidden>
-          <legend class="tm-q"><span data-en="Where do you want to go?">อยากไปโซนไหน?</span></legend>
-          <p class="tm-hint" data-en="Pick one">เลือก 1 อย่าง</p>
-          <div class="tm-chips" role="group" aria-label="โซนที่อยากไป" data-en-label="Where to go">
-            <button class="tm-chip" type="button" data-group="zone" data-value="sea"       aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-ship"/></svg><span data-en="On the Sea">ออกทะเล</span></button>
-            <button class="tm-chip" type="button" data-group="zone" data-value="around"    aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-car"/></svg><span data-en="Around Phuket">รอบเกาะภูเก็ต</span></button>
-            <button class="tm-chip" type="button" data-group="zone" data-value="hidden"    aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg><span data-en="Hidden Gems">ที่ลับเฉพาะ</span></button>
-            <button class="tm-chip" type="button" data-group="zone" data-value="locallife" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span data-en="Local Life">วิถีคนเมือง</span></button>
-          </div>
-        </fieldset>
-
-        <div class="tm-nav">
-          <button class="btn btn-outline btn-sm tm-back" type="button" data-tm-back hidden>
-            <svg class="ic" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow-right"/></svg>
-            <span data-en="Back">ย้อนกลับ</span>
-          </button>
-          <button class="btn btn-primary btn-sm tm-next" type="button" data-tm-next disabled>
-            <span data-en="Next">ถัดไป</span>
-            <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
-          </button>
-        </div>
-      </form>
-
-      <!-- result -->
-      <div class="tm-result" data-tm-result role="region" aria-live="polite" hidden>
-        <p class="tm-result-eyebrow" data-en="Your Phuket Match">ทริปที่ใช่สำหรับคุณ</p>
-        <h3 class="tm-result-title" data-tm-title></h3>
-        <div class="tm-result-tags" data-tm-tags></div>
-        <p class="tm-result-desc" data-tm-desc></p>
-        <div class="tm-result-actions">
-          <button class="btn btn-outline btn-sm" type="button" data-tm-restart>
-            <span data-en="Start over">เริ่มใหม่</span>
-          </button>
-          <a class="btn btn-primary btn-sm tm-result-cta" data-tm-cta href="#packages">
-            <span data-en="Explore This Experience">ดูประสบการณ์นี้</span>
-          </a>
-        </div>
-      </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ==================== 5. BEYOND THE SHORE (Local signature) ==================== -->
 <section class="sf-white bts" id="beyond" aria-labelledby="bts-title">
   <div class="wrap">
@@ -771,41 +773,38 @@
 
       <!-- LEFT — travel-journal story -->
       <div class="bts-copy">
-        <p class="bts-meta reveal"><span class="bts-meta-label">Local Stories</span><span class="bts-meta-no">/ 01</span></p>
         <p class="eyebrow reveal" data-delay="60">Beyond the Shore</p>
-        <h2 id="bts-title" class="reveal" data-delay="120" data-en="More than the sea — the stories around Phuket">มากกว่าทะเล คือเรื่องราวที่อยู่รอบ ๆ ภูเก็ต</h2>
-        <p class="lead reveal" data-delay="180" data-en="Phuket is more than beaches. Discover the people, places and stories beyond the usual tourist route.">
-          ภูเก็ตไม่ได้มีแค่ทะเล ค้นพบผู้คน สถานที่ และเรื่องราวที่อยู่นอกเส้นทางท่องเที่ยวแบบเดิม ๆ
+        <h2 id="bts-title" class="reveal" data-delay="120" data-en="The Phuket only locals know">ภูเก็ตในมุมที่คนอยู่ที่นี่เท่านั้นที่รู้</h2>
+        <p class="lead reveal" data-delay="180" data-en="This is why Nessy knows Phuket differently from the usual tour company — we take you to the people, places and stories beyond the usual route.">
+          นี่คือเหตุผลที่ Nessy รู้จักภูเก็ตต่างจากบริษัททัวร์ทั่วไป เราพาคุณไปพบผู้คน สถานที่ และเรื่องราวที่อยู่นอกเส้นทางเดิม ๆ
         </p>
 
         <ol class="bts-flow reveal" data-delay="220" aria-label="เรื่องราวสามช่วงของภูเก็ต" data-en-label="Three chapters of Phuket">
           <li class="bts-step reveal" data-delay="0">
             <span class="bts-step-no">01</span>
             <div class="bts-step-body">
-              <h3 class="bts-step-title"><span class="bts-step-en">The People</span><span class="bts-step-th" data-en="Get to know Phuket through its people">รู้จักภูเก็ตผ่านผู้คน</span></h3>
+              <span class="bts-step-time">The People</span>
+              <h3 class="bts-step-title"><span class="bts-step-th" data-en="Get to know Phuket through its people">รู้จักภูเก็ตผ่านผู้คน</span></h3>
               <p class="bts-step-text" data-en="Meet the local guides, small shops and people who bring the island to life.">พบกับ Local Guides ร้านเล็ก ๆ และผู้คนที่ทำให้ภูเก็ตมีชีวิต</p>
             </div>
           </li>
           <li class="bts-step reveal" data-delay="120">
             <span class="bts-step-no">02</span>
             <div class="bts-step-body">
-              <h3 class="bts-step-title"><span class="bts-step-en">The Places</span><span class="bts-step-th" data-en="Go where some travellers overlook">ไปในที่ที่นักท่องเที่ยวบางคนอาจมองข้าม</span></h3>
+              <span class="bts-step-time">The Places</span>
+              <h3 class="bts-step-title"><span class="bts-step-th" data-en="Go where some travellers overlook">ไปในที่ที่นักท่องเที่ยวบางคนอาจมองข้าม</span></h3>
               <p class="bts-step-text" data-en="Hidden spots, local neighbourhoods and places with a story to tell.">Hidden spots ชุมชนท้องถิ่น และสถานที่ที่มีเรื่องราว</p>
             </div>
           </li>
           <li class="bts-step reveal" data-delay="240">
             <span class="bts-step-no">03</span>
             <div class="bts-step-body">
-              <h3 class="bts-step-title"><span class="bts-step-en">The Stories</span><span class="bts-step-th" data-en="Experience Phuket your own way">สัมผัสภูเก็ตในแบบที่เป็นตัวคุณ</span></h3>
+              <span class="bts-step-time">The Stories</span>
+              <h3 class="bts-step-title"><span class="bts-step-th" data-en="Experience Phuket your own way">สัมผัสภูเก็ตในแบบที่เป็นตัวคุณ</span></h3>
               <p class="bts-step-text" data-en="Experiences that don't come from following a ready-made itinerary.">ประสบการณ์ที่ไม่ได้เกิดจากการเดินตาม Itinerary สำเร็จรูป</p>
             </div>
           </li>
         </ol>
-
-        <a class="arrow-link reveal" data-delay="300" href="#local">
-          <span data-en="Discover beyond the usual">ดูเส้นทาง Local Phuket</span>
-          <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
-        </a>
       </div>
 
       <!-- RIGHT — layered editorial imagery + journal annotations -->
@@ -823,16 +822,9 @@
           <img src="assets/img/old-town.webp" width="640" height="480"
                alt="มุมเล็ก ๆ ในย่านเมืองเก่าภูเก็ต" data-en-alt="A hidden corner of Phuket old town" loading="lazy" decoding="async">
           <figcaption class="bts-cap">
-            <span class="bts-cap-no">02</span>
             <span class="bts-cap-text" data-en="A hidden corner of the island">มุมเล็ก ๆ ที่ซ่อนอยู่</span>
           </figcaption>
         </figure>
-
-        <span class="bts-coord" data-parallax="-30" aria-hidden="true">
-          <svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>
-          <span class="bts-coord-place">PHUKET, THAILAND</span>
-          <span class="bts-coord-latlng">7°52′N&nbsp;&nbsp;98°23′E</span>
-        </span>
 
         <span class="bts-note" data-parallax="18" aria-hidden="true">A different side of Phuket</span>
       </div>
@@ -841,124 +833,7 @@
   </div>
 </section>
 
-<!-- ==================== 5b. LOCAL EXPERIENCES ==================== -->
-<section class="sf-frost-deep" id="local">
-  <div class="wrap">
-    <div class="head reveal">
-      <p class="eyebrow" data-en="5 experiences">5 ประสบการณ์</p>
-      <h2 data-en="Choose the Phuket you want to know">เลือกภูเก็ตแบบที่คุณอยากรู้จัก</h2>
-      <p data-en="Nature, culture, food and the hidden gems of Phuket — every experience is curated and guided by a Local Expert who lives here and knows Phuket inside out.">สัมผัสทั้งธรรมชาติ วัฒนธรรม อาหาร และ Hidden Gems ของภูเก็ต ทุกประสบการณ์คัดสรรและนำเที่ยวโดย Local Expert ที่อาศัยและรู้จักภูเก็ตเป็นอย่างดี</p>
-    </div>
-
-    <!-- Local Experiences — real list from client. TODO: swap in the client's own
-         photos for each experience when provided (currently reusing library images). -->
-    <div class="grid g-3">
-      <article class="tour reveal">
-        <div class="tour-media">
-          <img src="assets/img/old-town.webp" alt="ตึกชิโนโปรตุกีสในย่านเมืองเก่าภูเก็ต" data-en-alt="Sino-Portuguese buildings in Phuket Old Town" width="900" height="1350" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-sky" data-en="Most popular">ยอดนิยมที่สุด</span></div>
-        </div>
-        <div class="tour-body">
-          <h3 data-en="Phuket Old Town">ย่านเมืองเก่าภูเก็ต</h3>
-          <p class="tour-desc" data-en="Wander through Phuket's Old Town and take in the Sino-Portuguese architecture, cosy cafés and much-loved local restaurants.">
-            เดินเที่ยวชมเมืองเก่าภูเก็ต ชมสถาปัตยกรรมชิโน-โปรตุกีส คาเฟ่ และร้านอาหารท้องถิ่น
-          </p>
-          <div class="tour-meta">
-            <span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span data-en="Half day">ครึ่งวัน</span></span>
-            <span><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg><span data-en="Small group 2–8">กลุ่มเล็ก 2–8 ท่าน</span></span>
-          </div>
-          <div class="tour-foot">
-            <span><span class="price" data-en="Ask for a price">สอบถามราคา</span></span>
-            <a class="btn btn-primary btn-sm" href="#contact" data-loading data-en="Ask us">สอบถาม</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="tour reveal">
-        <div class="tour-media">
-          <img src="assets/img/promthep-cape.webp" alt="ต้นตาลและหน้าผาแหลมพรหมเทพริมทะเลอันดามัน ภูเก็ต" data-en-alt="Palm trees and the headland of Promthep Cape by the Andaman Sea, Phuket" width="900" height="595" loading="lazy" decoding="async">
-        </div>
-        <div class="tour-body">
-          <h3 data-en="Nai Harn Beach &amp; Promthep Cape">หาดในหาน &amp; แหลมพรหมเทพ</h3>
-          <p class="tour-desc" data-en="Relax at one of Phuket's most famous beaches and watch the sunset from the iconic Promthep Cape.">
-            เที่ยวชายหาดชื่อดังและชมพระอาทิตย์ตกที่แหลมพรหมเทพ
-          </p>
-          <div class="tour-meta">
-            <span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span data-en="Half day (evening)">ครึ่งวัน (เย็น)</span></span>
-            <span><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg><span data-en="Small group 2–8">กลุ่มเล็ก 2–8 ท่าน</span></span>
-          </div>
-          <div class="tour-foot">
-            <span><span class="price" data-en="Ask for a price">สอบถามราคา</span></span>
-            <a class="btn btn-primary btn-sm" href="#contact" data-loading data-en="Ask us">สอบถาม</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="tour reveal">
-        <div class="tour-media">
-          <img src="assets/img/naiharn-hike.webp" alt="นักท่องเที่ยวยืนบนหน้าผาชมพระอาทิตย์ตกเหนือทะเลอันดามันที่แหลมกระทิง" data-en-alt="A traveller stands on a clifftop watching the sunset over the Andaman Sea at Laem Krathing" width="900" height="598" loading="lazy" decoding="async">
-        </div>
-        <div class="tour-body">
-          <h3 data-en="Nai Harn – Laem Krathing Hiking">เดินป่าในหาน – แหลมกระทิง</h3>
-          <p class="tour-desc" data-en="Hike a scenic nature trail with sweeping Andaman Sea views, passing beautiful lookout points along the way.">
-            เดินป่าชมวิวทะเลอันดามัน ผ่านเส้นทางธรรมชาติและจุดชมวิวที่สวยงาม
-          </p>
-          <div class="tour-meta">
-            <span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span data-en="Half day">ครึ่งวัน</span></span>
-            <span><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg><span data-en="Small group 2–8">กลุ่มเล็ก 2–8 ท่าน</span></span>
-          </div>
-          <div class="tour-foot">
-            <span><span class="price" data-en="Ask for a price">สอบถามราคา</span></span>
-            <a class="btn btn-primary btn-sm" href="#contact" data-loading data-en="Ask us">สอบถาม</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="tour reveal">
-        <div class="tour-media">
-          <img src="assets/img/old-town-sunset.webp" alt="อาหารและขนมท้องถิ่นภูเก็ต" data-en-alt="Local Phuket food and sweets" width="900" height="1280" loading="lazy" decoding="async">
-        </div>
-        <div class="tour-body">
-          <h3 data-en="Phuket Local Food Experience">อาหารถิ่นภูเก็ต</h3>
-          <p class="tour-desc" data-en="Taste local dishes and traditional sweets while soaking up the atmosphere the way Phuket people do.">
-            ลิ้มลองอาหารและขนมท้องถิ่น พร้อมสัมผัสบรรยากาศแบบคนภูเก็ต
-          </p>
-          <div class="tour-meta">
-            <span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span data-en="Half day">ครึ่งวัน</span></span>
-            <span><svg class="ic" aria-hidden="true"><use href="#i-food"/></svg><span data-en="Local tastings">ชิมของถิ่น</span></span>
-          </div>
-          <div class="tour-foot">
-            <span><span class="price" data-en="Ask for a price">สอบถามราคา</span></span>
-            <a class="btn btn-primary btn-sm" href="#contact" data-loading data-en="Ask us">สอบถาม</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="tour reveal">
-        <div class="tour-media">
-          <img src="assets/img/lagoon.webp" alt="สถานที่ลับนอกเส้นทางท่องเที่ยวในภูเก็ต" data-en-alt="A hidden spot off the tourist trail in Phuket" width="867" height="1233" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-promo" data-en="Local Expert pick">Local Expert คัดให้</span></div>
-        </div>
-        <div class="tour-body">
-          <h3 data-en="Hidden Gems of Phuket">Hidden Gems of Phuket</h3>
-          <p class="tour-desc" data-en="Let a Local Expert take you to beautiful spots that sit well off the usual tourist trail.">
-            พาไปค้นพบสถานที่สวย ๆ ที่อยู่นอกเส้นทางท่องเที่ยวทั่วไป โดย Local Expert
-          </p>
-          <div class="tour-meta">
-            <span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span data-en="Half day">ครึ่งวัน</span></span>
-            <span><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span data-en="Off the beaten path">นอกเส้นทางท่องเที่ยว</span></span>
-          </div>
-          <div class="tour-foot">
-            <span><span class="price" data-en="Ask for a price">สอบถามราคา</span></span>
-            <a class="btn btn-primary btn-sm" href="#contact" data-loading data-en="Ask us">สอบถาม</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== 5c. PHUKET, OUR WAY — local day map ==================== -->
+<!-- ==================== 5b. PHUKET, OUR WAY — local day map ==================== -->
 <section class="sf-white ourway" id="our-way" aria-labelledby="ow-title">
   <div class="wrap">
     <div class="ow-layout reveal">
@@ -966,7 +841,6 @@
         <p class="eyebrow" data-en="Phuket, our way">ภูเก็ตในแบบของเรา</p>
         <h2 id="ow-title" data-en="A local's day, dawn to sunset">หนึ่งวันแบบคนภูเก็ต ตั้งแต่เช้าจรดเย็น</h2>
         <p class="lead" data-en="Not a checklist of sights — a rhythm. Hover or tap a stop to see how a local actually spends a day across the island.">ไม่ใช่ลิสต์ที่ต้องไปให้ครบ แต่คือจังหวะของหนึ่งวัน ชี้หรือแตะแต่ละหมุดเพื่อดูว่าคนที่นี่ใช้เวลาในภูเก็ตอย่างไร</p>
-        <p class="ow-hint" data-en="Hover or tap a stop on the map to see the story">ชี้หรือแตะหมุดบนแผนที่เพื่อดูเรื่องเล่า</p>
       </div>
 
       <div class="ow-map">
@@ -1003,11 +877,11 @@
               <text class="ow-time" x="0" y="18">09:00</text>
             </g>
           </g>
-          <g class="ow-marker" data-stop="2" tabindex="0" role="button" aria-label="หมุดที่ 3 · 11:00 · ร้านโกปี๊" data-en-label="Stop 3 · 11:00 · Kopi shop">
+          <g class="ow-marker" data-stop="2" tabindex="0" role="button" aria-label="หมุดที่ 3 · 11:00 · เวิร์กช็อปผ้าบาติก" data-en-label="Stop 3 · 11:00 · Batik workshop">
             <g transform="translate(240,285)">
               <circle class="ow-halo" cx="0" cy="-30" r="14"/>
               <path class="ow-pin" d="M0 0 C -6 -13, -14 -19, -14 -30 A 14 14 0 1 1 14 -30 C 14 -19, 6 -13, 0 0 Z"/>
-              <use class="ow-ic" href="#i-chat" x="-9" y="-36" width="18" height="18"/>
+              <use class="ow-ic" href="#i-palette" x="-9" y="-36" width="18" height="18"/>
               <rect class="ow-time-bg" x="-24" y="9" width="48" height="18" rx="9"/>
               <text class="ow-time" x="0" y="18">11:00</text>
             </g>
@@ -1076,25 +950,26 @@
     <div class="sec-head reveal">
       <div class="sec-title">
         <p class="eyebrow" data-en="Why travel with us">ทำไมต้องเดินทางกับเรา</p>
-        <h2 data-en="Travel easy, it's all real">เที่ยวสบายใจ เพราะทุกอย่างเป็นของจริง</h2>
+        <h2 data-en="We know Phuket.">เรารู้จักภูเก็ต ตัวจริง</h2>
+        <p class="lead" data-en="Not just a tour company — a local team who lives here. Here's what that means for your trip.">ไม่ใช่แค่บริษัททัวร์ แต่คือทีมคนภูเก็ตที่อยู่ที่นี่จริง ๆ และนี่คือสิ่งที่คุณจะได้จากทริปของเรา</p>
       </div>
     </div>
 
     <div class="values">
       <div class="value reveal">
         <span class="n">01</span>
-        <h3 data-en="Real Phuket locals, not a middleman">คนภูเก็ตตัวจริง ไม่ใช่คนกลาง</h3>
-        <p data-en="A real office in Patong. We hand-pick our operators, get on the boats ourselves, and know which days the sea isn't good.">ออฟฟิศจริงที่ป่าตอง เราคัดผู้ให้บริการเอง ลงเรือเอง และรู้ว่าวันไหนทะเลไม่สวย</p>
+        <h3 class="value-title"><span class="value-en">We know the place</span></h3>
+        <p data-en="We know where to go — and exactly when to be there. A real office in Patong, and we know which days the sea isn't good.">รู้ว่าควรไปที่ไหน และควรไปตอนไหน มีออฟฟิศจริงที่ป่าตอง และรู้ว่าวันไหนทะเลไม่สวย</p>
       </div>
       <div class="value reveal">
         <span class="n">02</span>
-        <h3 data-en="Straight prices, confirmed before you pay">ราคาตรง ยืนยันก่อนเก็บเงิน</h3>
-        <p data-en="We work directly with the boat owners and always check real availability first — no stacked middleman fees and no last-minute changes.">ทำงานกับเจ้าของเรือโดยตรง เช็ก stock จริงก่อนเสมอ ไม่มีค่าคนกลางซ้อนและไม่เลื่อนหน้างาน</p>
+        <h3 class="value-title"><span class="value-en">We know the people</span></h3>
+        <p data-en="We work hand-in-hand with local guides, boat operators and family-run businesses across the island — no middleman in between.">ทำงานร่วมกับ Local Guides เจ้าของเรือ และธุรกิจครอบครัวในพื้นที่โดยตรง ไม่มีคนกลางมาคั่น</p>
       </div>
       <div class="value reveal">
         <span class="n">03</span>
-        <h3 data-en="The same team with you all trip">ดูแลตลอดทริปด้วยคนเดิม</h3>
-        <p data-en="You talk to the same team from your first question until you're back at the hotel — and if something comes up on the day, we can actually get to you.">คุยกับทีมเดิมตั้งแต่สอบถามจนกลับถึงโรงแรม มีปัญหาหน้างานเราไปถึงได้จริง</p>
+        <h3 class="value-title"><span class="value-en">We stay with you</span></h3>
+        <p data-en="From your first message to the end of the trip, you talk to the same team — and if something comes up on the day, we can actually get to you.">ตั้งแต่ทักมาจนจบทริป คุณคุยกับทีมเดิมตลอด มีปัญหาหน้างาน เราไปถึงได้จริง</p>
       </div>
     </div>
   </div>
@@ -1151,19 +1026,49 @@
   </div>
 </section>
 
+<!-- ==================== 7b. WATCH — brand film ==================== -->
+<section class="sf-prussian" id="film" aria-labelledby="film-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-title">
+        <p class="eyebrow" data-en="Watch the film">ชมคลิปแนะนำ</p>
+        <h2 id="film-title" data-en="Let the film tell Phuket's story">ให้ภาพเล่าเรื่องภูเก็ตแทนคำพูด</h2>
+        <p class="lead" data-en="A short film of the routes, the people and the little moments we love most about the Andaman.">คลิปสั้น ๆ ที่รวมเส้นทาง ผู้คน และช่วงเวลาเล็ก ๆ ที่เรารักที่สุดของอันดามัน</p>
+      </div>
+    </div>
+
+    <!-- Click-to-play facade: shows the poster + play button and only loads the
+         YouTube player (and its third-party scripts/cookies) once the visitor
+         chooses to play. Enhanced in app.js; without JS the link still opens
+         the clip on YouTube. -->
+    <div class="video reveal">
+      <a class="video-frame" data-video="XwauWcXgRWg"
+         href="https://www.youtube.com/watch?v=XwauWcXgRWg" target="_blank" rel="noopener"
+         aria-label="เล่นคลิปแนะนำ Nessy Explores" data-en-label="Play the Nessy Explores film">
+        <img class="video-poster" src="https://i.ytimg.com/vi/XwauWcXgRWg/maxresdefault.jpg"
+             onerror="this.src='https://i.ytimg.com/vi/XwauWcXgRWg/hqdefault.jpg'"
+             alt="ภาพปกคลิปแนะนำการเที่ยวภูเก็ตกับ Nessy Explores"
+             data-en-alt="Cover image of the Nessy Explores Phuket film"
+             width="1280" height="720" loading="lazy" decoding="async">
+        <span class="video-play" aria-hidden="true"><svg class="ic"><use href="#i-play"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ==================== 8. REVIEWS ==================== -->
-<section class="sf-frost">
+<section class="sf-frost" id="reviews" aria-labelledby="reviews-title">
   <div class="wrap">
     <div class="greviews-head reveal">
-      <div class="greviews-lead">
-        <div class="sec-title">
-          <p class="eyebrow" data-en="What travellers say">เสียงจากผู้เดินทาง</p>
-          <h2 data-en="Real reviews from real trips">รีวิวจริงจากทริปจริง</h2>
-        </div>
+      <div class="sec-title">
+        <p class="eyebrow" data-en="What travellers say">เสียงจากผู้เดินทาง</p>
+        <h2 id="reviews-title" data-en="Real reviews from real trips">รีวิวจริงจากทริปจริง</h2>
+      </div>
+      <div class="greviews-actions">
         <div class="gscore">
           <svg class="glogo" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-google"/></svg>
-          <div>
-            <div style="display:flex; align-items:center; gap:var(--s-2)">
+          <div class="gscore-body">
+            <div class="gscore-top">
               <span class="gnum">4.9</span>
               <span class="gstars" aria-label="ให้คะแนน 4.9 เต็ม 5" data-en-label="Rated 4.9 out of 5">
                 <svg class="ic" aria-hidden="true"><use href="#i-star"/></svg>
@@ -1176,12 +1081,12 @@
             <span class="gmeta" data-en="from 320+ Google reviews">จาก 320+ รีวิวบน Google</span>
           </div>
         </div>
+        <!-- TODO: swap in the client's real Google Business "write a review" link (Place ID) when provided -->
+        <a class="btn btn-outline greviews-cta" href="https://www.google.com/maps/search/?api=1&amp;query=Nessy+Explores+Phuket" target="_blank" rel="noopener" data-en="Write a review on Google">
+          <svg class="ic" aria-hidden="true"><use href="#i-star"/></svg>
+          <span data-en="Write a review">เขียนรีวิว</span>
+        </a>
       </div>
-      <!-- TODO: swap in the client's real Google Business "write a review" link (Place ID) when provided -->
-      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&amp;query=Nessy+Explores+Phuket" target="_blank" rel="noopener" data-en="Write a review on Google">
-        <svg class="ic" aria-hidden="true"><use href="#i-star"/></svg>
-        <span data-en="Write a review">เขียนรีวิว</span>
-      </a>
     </div>
 
     <!-- Google-style auto-sliding review marquee. Cards are rendered from sample

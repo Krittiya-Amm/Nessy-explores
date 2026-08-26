@@ -28,30 +28,30 @@
   (function () {
     if (!document.body) return;
     var html =
-      '<div class="modal modal-warn" id="scam-modal" aria-hidden="true">' +
-        '<div class="modal-backdrop" data-close></div>' +
-        '<div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="scam-title">' +
-          '<button class="modal-x" type="button" data-close aria-label="ปิด" data-en-label="Close"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>' +
-          '<div class="modal-body">' +
-            '<div class="warn-head">' +
-              '<span class="warn-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span>' +
-              '<h3 id="scam-title" data-en="Before you pay, please read">ก่อนโอนเงิน อ่านสักนิด</h3>' +
-            '</div>' +
-            '<ul class="warn-list">' +
-              '<li><svg class="ic" aria-hidden="true"><use href="#i-badge-check"/></svg><span data-en="We\'re a registered company — GAL-SHAI TOUR CO., LTD.">จดทะเบียนนิติบุคคล — บริษัท กาล-ไช ทัวร์ จำกัด (GAL-SHAI TOUR CO., LTD)</span></li>' +
-              '<li><svg class="ic" aria-hidden="true"><use href="#i-bank"/></svg><span data-en="We only take payment <strong>into the company\'s corporate account</strong> — the account name matches the company name exactly.">รับชำระผ่าน<strong>บัญชีนิติบุคคลของบริษัทเท่านั้น</strong> ชื่อบัญชีต้องตรงกับชื่อบริษัทเป๊ะ</span></li>' +
-              '<li><svg class="ic" aria-hidden="true"><use href="#i-ban"/></svg><span data-en="We <strong>never</strong> accept transfers to a personal account, and we <strong>never</strong> ask for an OTP or password.">เรา<strong>ไม่รับ</strong>โอนเข้าบัญชีบุคคล และ<strong>ไม่เคย</strong>ขอ OTP หรือรหัสผ่าน</span></li>' +
-            '</ul>' +
-            '<div class="warn-bank">' +
-              '<span class="tag" aria-hidden="true">KBank</span>' +
-              '<div><b data-en="GAL-SHAI TOUR CO., LTD">บจก. กาล-ไช ทัวร์</b> · <span data-en="Kasikornbank · Acct. no. 332-2-83353-8">ธนาคารกสิกรไทย · เลขที่ 332-2-83353-8</span></div>' +
-            '</div>' +
-            '<div class="modal-actions">' +
-              '<a class="btn btn-primary btn-sm" href="' + LINE_OA + '" target="_blank" rel="noopener" data-en="Verify on LINE">ตรวจสอบทาง LINE</a>' +
-              '<button class="btn btn-outline btn-sm" type="button" data-close data-en="Got it">รับทราบ</button>' +
-            '</div>' +
-            '<p class="modal-note" data-en="If anyone asks you to transfer to a personal account, it is a scam.">หากมีผู้อ้างชื่อเราแล้วให้โอนเข้าบัญชีบุคคล นั่นคือมิจฉาชีพ</p>' +
+      '<div class="scam-alert" id="scam-modal" role="alert" aria-live="assertive" aria-hidden="true">' +
+        '<button class="scam-x" type="button" data-scam-close aria-label="ปิด" data-en-label="Close"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>' +
+        '<div class="scam-head">' +
+          '<span class="scam-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span>' +
+          '<div class="scam-heads">' +
+            '<span class="scam-flag" data-en="Scam alert">⚠ ระวังมิจฉาชีพ</span>' +
+            '<h3 id="scam-title" data-en="Before you pay, please read">ก่อนโอนเงิน อ่านสักนิด</h3>' +
           '</div>' +
+        '</div>' +
+        '<div class="scam-body">' +
+          '<ul class="warn-list">' +
+            '<li><svg class="ic" aria-hidden="true"><use href="#i-badge-check"/></svg><span data-en="We\'re a registered company — GAL-SHAI TOUR CO., LTD.">จดทะเบียนนิติบุคคล — บริษัท กาล-ไช ทัวร์ จำกัด (GAL-SHAI TOUR CO., LTD)</span></li>' +
+            '<li><svg class="ic" aria-hidden="true"><use href="#i-bank"/></svg><span data-en="We only take payment <strong>into the company\'s corporate account</strong> — the account name matches the company name exactly.">รับชำระผ่าน<strong>บัญชีนิติบุคคลของบริษัทเท่านั้น</strong> ชื่อบัญชีต้องตรงกับชื่อบริษัทเป๊ะ</span></li>' +
+            '<li><svg class="ic ic-ban" aria-hidden="true"><use href="#i-ban"/></svg><span data-en="We <strong>never</strong> accept transfers to a personal account, and we <strong>never</strong> ask for an OTP or password.">เรา<strong>ไม่รับ</strong>โอนเข้าบัญชีบุคคล และ<strong>ไม่เคย</strong>ขอ OTP หรือรหัสผ่าน</span></li>' +
+          '</ul>' +
+          '<div class="warn-bank">' +
+            '<span class="tag" aria-hidden="true">KBank</span>' +
+            '<div><b data-en="GAL-SHAI TOUR CO., LTD">บจก. กาล-ไช ทัวร์</b> · <span data-en="Kasikornbank · Acct. no. 332-2-83353-8">ธนาคารกสิกรไทย · เลขที่ 332-2-83353-8</span></div>' +
+          '</div>' +
+          '<div class="scam-actions">' +
+            '<a class="btn btn-primary btn-sm" href="' + LINE_OA + '" target="_blank" rel="noopener" data-en="Verify on LINE">ตรวจสอบทาง LINE</a>' +
+            '<button class="btn btn-outline btn-sm" type="button" data-scam-close data-en="Got it">รับทราบ</button>' +
+          '</div>' +
+          '<p class="scam-note" data-en="If anyone asks you to transfer to a personal account, it is a scam.">หากมีผู้อ้างชื่อเราแล้วให้โอนเข้าบัญชีบุคคล นั่นคือมิจฉาชีพ</p>' +
         '</div>' +
       '</div>' +
       '<div class="cookie" id="cookie-banner" role="dialog" aria-live="polite" aria-label="การใช้คุกกี้" data-en-label="Cookie notice">' +
@@ -259,6 +259,25 @@
     });
   }
 
+  /* ---------- Beyond the Shore: light each step number as it reaches mid-screen ---------- */
+  var btsSteps = document.querySelectorAll('#beyond .bts-step');
+  if (btsSteps.length) {
+    if (reduced || !('IntersectionObserver' in window)) {
+      btsSteps.forEach(function (el) { el.classList.add('is-lit'); });
+    } else {
+      // fires when a step crosses the vertical centre band of the viewport, so
+      // numbers deepen one at a time as the reader scrolls (stays lit after)
+      var litIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-lit');
+          litIo.unobserve(entry.target);
+        });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      btsSteps.forEach(function (el) { litIo.observe(el); });
+    }
+  }
+
   /* ---------- package filter + progressive reveal ---------- */
   var filters = document.querySelector('[data-filters]');
 
@@ -458,6 +477,34 @@
     }
   }
 
+  /* ---------- click-to-play video (brand film) ----------
+     Keeps YouTube (and its third-party scripts/cookies) out of the initial
+     load: the poster + play button are shown until the visitor clicks, then we
+     swap in a privacy-friendly nocookie iframe that autoplays. Progressive
+     enhancement — without JS the element is a plain link to the clip. */
+  var videoFrame = document.querySelector('.video-frame[data-video]');
+  if (videoFrame) {
+    videoFrame.addEventListener('click', function (e) {
+      // let modifier / middle clicks open YouTube in a new tab as normal
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
+      if (videoFrame.classList.contains('is-playing')) return;
+      e.preventDefault();
+
+      var id = videoFrame.getAttribute('data-video');
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id +
+        '?autoplay=1&rel=0&modestbranding=1';
+      iframe.title = videoFrame.getAttribute('aria-label') || 'Video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('loading', 'lazy');
+
+      videoFrame.classList.add('is-playing');
+      videoFrame.appendChild(iframe);
+      requestAnimationFrame(function () { try { iframe.focus(); } catch (err) {} });
+    });
+  }
+
   /* ---------- modals (shared shell: tour detail + scam warning) ---------- */
   var Modal = (function () {
     var openEl = null;
@@ -543,14 +590,28 @@
     }, true);
   })();
 
-  /* ---------- scam-warning modal (once per session, after reaching packages) ---------- */
+  /* ---------- scam-warning alert (bottom-left toast, once per session, after
+     reaching packages) ----------
+     Reworked from a center modal into a corner alert: it slides in from the
+     bottom-left when the visitor scrolls to the packages section, without a
+     backdrop or scroll-lock, so browsing keeps flowing while the warning stays
+     visible. Auto-dismisses after a while, or on close / "รับทราบ".
+     Shows again on every page load — the `fired` flag below still keeps it to
+     a single appearance per load, so it won't re-trigger while scrolling. */
   (function () {
-    var modal = document.getElementById('scam-modal');
-    if (!modal) return;
-    var KEY = 'nessy-scam-seen';
-    var seen;
-    try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) { seen = false; }
-    if (seen) return;
+    var alertEl = document.getElementById('scam-modal');
+    if (!alertEl) return;
+
+    var hideTimer = null;
+    var dismiss = function () {
+      alertEl.classList.remove('is-open');
+      alertEl.setAttribute('aria-hidden', 'true');
+      if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    };
+    // close on the X and the "รับทราบ" button
+    alertEl.addEventListener('click', function (e) {
+      if (e.target.closest('[data-scam-close]')) { e.preventDefault(); dismiss(); }
+    });
 
     // Only surface the warning once the visitor has actually scrolled down to
     // the packages section (where paying becomes relevant). On pages without
@@ -570,9 +631,11 @@
       }
       if (!reached) return;
       fired = true;
-      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
       window.removeEventListener('scroll', trigger);
-      Modal.open(modal);
+      alertEl.classList.add('is-open');
+      alertEl.setAttribute('aria-hidden', 'false');
+      // linger long enough to read, then slide away on its own
+      hideTimer = setTimeout(dismiss, 14000);
     };
     window.addEventListener('scroll', trigger, { passive: true });
   })();
@@ -693,31 +756,31 @@
     // result presets — each scores against the picks; highest wins
     var RESULTS = [
       {
-        href: '#sea',
+        cat: 'sea',
         th: { title: 'เกาะสวย น้ำใส สายชิลล์', desc: 'ล่องเรือเที่ยวเกาะระดับโลก น้ำใสหาดทรายขาว ดำน้ำตื้นชมปะการัง แล้วเก็บภาพสวย ๆ แบบไม่ต้องรีบ', tags: ['ทะเล', 'ถ่ายรูปสวย', 'ชิลล์'] },
         en: { title: 'Island Escape', desc: 'Cruise to world-class islands, swim in crystal-clear water and snorkel over coral — a relaxed day of postcard views.', tags: ['On the Sea', 'Photo', 'Chill'] },
         style: { chill: 2, photo: 2, nature: 1, family: 1 }, time: { half: 1, day: 2, multi: 1 }, zone: { sea: 3 }
       },
       {
-        href: '#dive',
+        cat: 'dive',
         th: { title: 'โลกใต้น้ำ & กิจกรรมทางน้ำ', desc: 'ดำน้ำตื้น-ลึกชมแนวปะการังที่สมบูรณ์ เติมความมันกับเจ็ตสกีและพาราเซล เหมาะกับสายผจญภัยที่รักทะเล', tags: ['ดำน้ำ', 'ผจญภัย', 'ทะเล'] },
         en: { title: 'Underwater Phuket', desc: 'Snorkel and dive healthy reefs, then add a jet-ski or parasail — for sea-lovers who want a little adrenaline.', tags: ['Diving', 'Adventure', 'On the Sea'] },
         style: { adventure: 3, nature: 1 }, time: { half: 1, day: 2 }, zone: { sea: 2 }
       },
       {
-        href: '#local',
+        cat: 'local',
         th: { title: 'เมืองเก่า & วิถีคนถิ่น', desc: 'เดินย่านเมืองเก่า ชิมอาหารถิ่น ตลาดเช้า และหมู่บ้านชาวเล สัมผัสภูเก็ตในมุมที่คนอยู่ที่นี่รู้จัก', tags: ['เมืองเก่า', 'อาหารถิ่น', 'วัฒนธรรม'] },
         en: { title: 'Old Town & Local Life', desc: 'Wander the old town, taste local food and morning markets, and meet a sea-gypsy village — Phuket the way locals know it.', tags: ['Old Town', 'Local Food', 'Culture'] },
         style: { local: 3, photo: 1, family: 1, chill: 1 }, time: { half: 2, day: 1 }, zone: { locallife: 3, around: 1 }
       },
       {
-        href: '#local',
+        cat: 'adventure',
         th: { title: 'ธรรมชาติ & ที่ลับเฉพาะ', desc: 'ตามหามุมที่คนไม่ค่อยรู้จัก น้ำตก จุดชมวิว และธรรมชาติเงียบสงบรอบภูเก็ต–พังงา แบบที่ Local Expert พาไป', tags: ['ธรรมชาติ', 'Hidden Gems', 'ผจญภัย'] },
         en: { title: 'Hidden Nature Trail', desc: 'Seek out lesser-known spots — waterfalls, viewpoints and quiet nature around Phuket and Phang Nga, guided by a local.', tags: ['Nature', 'Hidden Gems', 'Adventure'] },
         style: { nature: 3, adventure: 2 }, time: { day: 1, multi: 2 }, zone: { hidden: 3, around: 2 }
       },
       {
-        href: '#packages',
+        cat: 'show',
         th: { title: 'ครอบครัวเที่ยวสบาย', desc: 'จัดทริปที่เด็ก ๆ และผู้ใหญ่สนุกด้วยกัน กิจกรรมไม่หนัก เดินทางสะดวก มีตัวเลือกโชว์และสวนสนุกให้เลือก', tags: ['ครอบครัว', 'สบาย ๆ', 'สนุก'] },
         en: { title: 'Easy Family Day', desc: 'A trip the whole family enjoys — easy-going activities, smooth transfers, plus show and theme-park options.', tags: ['Family', 'Easy', 'Fun'] },
         style: { family: 3, chill: 1, photo: 1 }, time: { half: 2, day: 2 }, zone: { around: 2, sea: 1 }
@@ -771,18 +834,44 @@
       updateNav();
     };
 
+    // the recommended package type mirrors a real catalog category, so the
+    // label always matches the filter tab the CTA will open
+    var catName = function (cat, en) {
+      var tab = document.querySelector('.filter-tab[data-cat="' + cat + '"]');
+      if (!tab) return '';
+      return en ? tab.dataset.nameEn : tab.dataset.nameTh;
+    };
+
     var renderResult = function () {
       if (!matched) return;
       var en = isEN();
       var data = en ? matched.en : matched.th;
+      var typeEl = result.querySelector('[data-tm-type]');
+      if (typeEl) typeEl.textContent = catName(matched.cat, en);
       result.querySelector('[data-tm-title]').textContent = data.title;
       result.querySelector('[data-tm-desc]').textContent = data.desc;
       var tagsWrap = result.querySelector('[data-tm-tags]');
       tagsWrap.innerHTML = data.tags.map(function (t) {
         return '<span class="tm-tag">' + t.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span>';
       }).join('');
-      result.querySelector('[data-tm-cta]').setAttribute('href', matched.href);
     };
+
+    // CTA: open the matching package category in the catalog, then scroll there.
+    // Clicking the filter tab reuses the catalog's own selection logic, so this
+    // works even for categories (like Local Phuket) whose hash collides with a
+    // section id and can't be reached by a plain deep-link.
+    var cta = result.querySelector('[data-tm-cta]');
+    if (cta) {
+      cta.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (matched && matched.cat && matched.cat !== 'all') {
+          var tab = document.querySelector('.filter-tab[data-cat="' + matched.cat + '"]');
+          if (tab) tab.click();
+        }
+        var pk = document.getElementById('packages');
+        if (pk) pk.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      });
+    }
 
     var showResult = function () {
       matched = bestMatch();
@@ -869,8 +958,8 @@
         th: { tag: 'เมืองเก่า', title: 'ตรอกเมืองเก่า', quote: 'เดินดูตึกชิโน-โปรตุกีสตอนแดดยังไม่แรง มุมถ่ายรูปดีที่สุดคือก่อนร้านเปิด' },
         en: { tag: 'Old Town', title: 'Old-town lanes', quote: 'Walk the Sino-Portuguese shophouses before the heat — the best photos are before the shops open.' } },
       { time: '11:00',
-        th: { tag: 'ร้านโกปี๊', title: 'ร้านโกปี๊ไม่มีป้าย', quote: 'ร้านที่ไม่มีป้ายภาษาอังกฤษ สั่งโอเลี้ยงกับขนมจีบ นั่งฟังคนแก่คุยกันเรื่องเรือ' },
-        en: { tag: 'Kopi Shop', title: 'The kopi shop with no sign', quote: 'No English sign. Order o-liang and dim sum, and listen to the old folks talk about boats.' } },
+        th: { tag: 'งานคราฟท์', title: 'เวิร์กช็อปผ้าบาติก', quote: 'แวะบ้านช่างบาติก ลองเพนต์ผ้าลายทะเลอันดามันด้วยมือตัวเอง ได้ของกลับบ้านที่ไม่มีใครเหมือน' },
+        en: { tag: 'Local Craft', title: 'A batik workshop', quote: 'Drop by a batik maker’s home and hand-paint your own Andaman-sea pattern — a one-of-a-kind piece to take home.' } },
       { time: '13:30',
         th: { tag: 'หาดลับ', title: 'หาดเล็กที่คนไม่ค่อยรู้', quote: 'หาดเล็ก ๆ ที่รถทัวร์เข้าไม่ถึง น้ำใส คนน้อย เอาเสื่อไปปูนอนฟังคลื่นได้ทั้งบ่าย' },
         en: { tag: 'Hidden Beach', title: 'A beach few people know', quote: 'A small cove the tour coaches can’t reach — clear water, few people, a whole afternoon of waves.' } },

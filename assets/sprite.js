@@ -95,6 +95,7 @@
 <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M16.5 3c.24 1.4.9 2.66 1.9 3.6a5.7 5.7 0 0 0 3.1 1.45v3.3a8.9 8.9 0 0 1-4.4-1.2v6.06a6.06 6.06 0 1 1-6.06-6.06c.32 0 .64.03.95.08v3.4a2.75 2.75 0 1 0 1.9 2.62V3z"/></symbol>
 <symbol id="i-youtube" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M23.5 6.2a3 3 0 0 0-2.1-2.12C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.58A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.12c1.9.58 9.4.58 9.4.58s7.5 0 9.4-.58a3 3 0 0 0 2.1-2.12A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6z"/></symbol>
 <symbol id="i-external" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.52.85l12.5-7.5a1 1 0 0 0 0-1.7L8.52 3.65A1 1 0 0 0 7 4.5z"/></symbol>
 
 <!-- ===== scene artwork (4:3 cards) =====
      Each scene: sky -> distant karsts -> sea -> subject -> foreground -->

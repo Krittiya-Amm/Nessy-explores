@@ -213,7 +213,10 @@ small { font-size: var(--t-sm); }
 }
 
 .skip-link {
-  position: absolute; left: 50%; top: 0; transform: translate(-50%, -120%);
+  /* fixed (not absolute) so an elastic over-scroll bounce at the very top
+     can't reveal the space above the page and flash this button into view;
+     it stays anchored off-screen until focused. */
+  position: fixed; left: 50%; top: 0; transform: translate(-50%, -120%);
   z-index: var(--z-modal); background: var(--prussian); color: var(--white);
   padding: var(--s-3) var(--s-6); border-radius: 0 0 var(--r-md) var(--r-md);
   font-weight: 600; font-size: var(--t-sm);
@@ -426,12 +429,17 @@ section.tight { padding-block: var(--s-12); }
   transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease),
               border-color var(--dur) var(--ease);
 }
-.tour:hover { box-shadow: var(--e-3); transform: translateY(-4px); border-color: var(--blue); }
+.tour:hover,
+.tour:focus-within { box-shadow: var(--e-3); transform: translateY(-4px); border-color: var(--blue); }
 
 .tour-media {
-  position: relative; aspect-ratio: 4 / 3; overflow: hidden;
+  position: relative; aspect-ratio: 4 / 4.5; overflow: hidden;
   background: var(--frost-deep);
 }
+/* Show & theme-park cards use wide stage panoramas (Siam Niramit, FantaSea,
+   Carnival Magic, Simon Cabaret, Dolphin Show). A square frame keeps the full
+   scene readable instead of cropping the sides away like the 4:4.5 portrait. */
+.tour[data-cat="show"] .tour-media { aspect-ratio: 1 / 1; }
 .tour-media svg, .tour-media img { width: 100%; height: 100%; object-fit: cover; }
 .tour-media .ribbons {
   position: absolute; inset: var(--s-3) var(--s-3) auto var(--s-3);
@@ -439,9 +447,14 @@ section.tight { padding-block: var(--s-12); }
   pointer-events: none;
 }
 
-.tour-body { padding: var(--s-5); display: flex; flex-direction: column; gap: var(--s-3); flex: 1; }
-.tour-body h3 { margin: 0; font-size: var(--t-md); line-height: 1.4; }
-.tour-desc { margin: 0; font-size: var(--t-sm); color: var(--muted); flex: 1; }
+.tour-body { padding: var(--s-4) var(--s-5) var(--s-5); display: flex; flex-direction: column; gap: var(--s-2); flex: 1; }
+.tour-body h3 {
+  margin: 0; font-size: var(--t-md); line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+/* Editorial card: the description is kept in the DOM for the detail modal, but
+   the card itself leads with image → destination → CTA, not a wall of text. */
+.tour-desc { display: none; }
 
 .tour-meta {
   display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4);
@@ -461,6 +474,19 @@ section.tight { padding-block: var(--s-12); }
 }
 .price s { font-size: var(--t-sm); color: var(--muted); font-weight: 400; margin-right: var(--s-1); }
 .price .unit { font-size: var(--t-xs); font-weight: 400; color: var(--muted); }
+
+/* Editorial footer: the label is a quiet caption so the CTA reads as the single
+   primary action; the button gains a trailing arrow that nudges with the card's
+   hover/focus, matching the site-wide arrow micro-interaction. */
+.tour-foot .price { font-size: var(--t-sm); font-weight: 600; color: var(--muted-ink); }
+.tour-foot .btn-primary::after {
+  content: ''; width: 15px; height: 15px; flex: none; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform var(--dur) var(--ease);
+}
+.tour:hover .tour-foot .btn-primary::after,
+.tour:focus-within .tour-foot .btn-primary::after { transform: translateX(4px); }
 
 /* --------------------------------------------------------------------------
    8. Navbar — solid warm-white for inner pages; a transparent overlay
@@ -482,14 +508,14 @@ section.tight { padding-block: var(--s-12); }
 .brand { display: flex; align-items: center; gap: var(--s-3); margin-right: auto; min-height: 44px; }
 .brand:hover { text-decoration: none; }
 /* the exported mark is a square PNG; the circle crops its white corners */
-.brand-mark { width: 38px; height: 38px; flex: none; border-radius: 50%; }
+.brand-mark { width: 32px; height: 32px; flex: none; border-radius: 50%; }
 .brand-txt { display: flex; flex-direction: column; line-height: 1.12; }
 .brand-name {
-  font-family: var(--font-display); font-weight: 700; font-size: 1.3125rem;
+  font-family: var(--font-display); font-weight: 700; font-size: 1.125rem;
   color: var(--ink); letter-spacing: -.02em;
 }
 .brand-tag {
-  font-family: var(--font-display); font-size: 10px; letter-spacing: .18em;
+  font-family: var(--font-display); font-size: 9px; letter-spacing: .16em;
   text-transform: uppercase; color: var(--muted-ink); font-weight: 500;
 }
 
@@ -511,7 +537,7 @@ section.tight { padding-block: var(--s-12); }
 }
 .nav-links a:hover::after,
 .nav-links a[aria-current="page"]::after { transform: scaleX(1); }
-.nav-links a:hover { background: var(--sand-2); color: var(--ocean-darker); text-decoration: none; }
+.nav-links a:hover { background: transparent; color: var(--ocean-darker); text-decoration: none; }
 .nav-links a[aria-current="page"] { color: var(--ocean-darker); font-weight: 600; }
 
 .nav-cta { display: flex; align-items: center; gap: var(--s-3); }
@@ -556,7 +582,7 @@ section.tight { padding-block: var(--s-12); }
 .navbar-overlay .brand-name { color: var(--white); }
 .navbar-overlay .brand-tag { color: rgba(255, 255, 255, .78); }
 .navbar-overlay .nav-links a { color: rgba(255, 255, 255, .92); }
-.navbar-overlay .nav-links a:hover { background: rgba(255, 255, 255, .16); color: #fff; }
+.navbar-overlay .nav-links a:hover { background: transparent; color: #fff; }
 .navbar-overlay .nav-links a[aria-current="page"] { color: #fff; }
 .navbar-overlay .lang { background: rgba(255, 255, 255, .18); }
 .navbar-overlay .lang .lang-btn:not([aria-current="true"]) { color: rgba(255, 255, 255, .82); }
@@ -573,7 +599,7 @@ section.tight { padding-block: var(--s-12); }
 .navbar-overlay.scrolled .brand-name { color: var(--ink); }
 .navbar-overlay.scrolled .brand-tag { color: var(--muted-ink); }
 .navbar-overlay.scrolled .nav-links a { color: var(--ink); }
-.navbar-overlay.scrolled .nav-links a:hover { background: var(--sand-2); color: var(--ocean-darker); }
+.navbar-overlay.scrolled .nav-links a:hover { background: transparent; color: var(--ocean-darker); }
 .navbar-overlay.scrolled .nav-links a[aria-current="page"] { color: var(--ocean-darker); }
 .navbar-overlay.scrolled .lang { background: var(--sand-2); }
 .navbar-overlay.scrolled .lang .lang-btn:not([aria-current="true"]) { color: var(--muted-ink); }
@@ -1188,14 +1214,17 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 .tour-media img, .cat-art img {
   transition: transform var(--dur-slow) var(--ease); will-change: transform;
 }
-.tour:hover .tour-media img { transform: scale(1.06); }
+.tour:hover .tour-media img,
+.tour:focus-within .tour-media img { transform: scale(1.06); }
 .cat:hover .cat-art img { transform: scale(1.07); }
 
 /* A faint navy wash on the top edge gives the photo depth and keeps the
    promo ribbons legible against a bright sky. Sits below the ribbons. */
 .tour-media::before {
   content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(180deg, rgba(12, 42, 66, .22) 0%, rgba(12, 42, 66, 0) 26%);
+  background:
+    linear-gradient(180deg, rgba(12, 42, 66, .22) 0%, rgba(12, 42, 66, 0) 24%),
+    linear-gradient(0deg, rgba(9, 34, 46, .46) 0%, rgba(9, 34, 46, 0) 32%);
 }
 .tour-media .ribbons { z-index: 2; }
 .tour-media .ribbons .badge { box-shadow: 0 2px 8px rgba(12, 42, 66, .28); }
@@ -1411,13 +1440,15 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 
 /* Story flow — vertical route connecting three chapters */
 .bts-flow { list-style: none; margin: var(--s-6) 0 var(--s-8); padding: 0; position: relative; }
-.bts-flow::before {
-  content: ''; position: absolute; left: 16px; top: 10px; bottom: 10px; width: 2px;
+/* dashed connector links one circle to the next only — drawn per step except
+   the last, so no line dangles below circle 03 */
+.bts-step:not(:last-child)::before {
+  content: ''; position: absolute; left: 16px; top: 17px; bottom: -25px; width: 2px;
   background: repeating-linear-gradient(var(--ocean) 0 5px, transparent 5px 11px);
   opacity: .55; transform: scaleY(0); transform-origin: top;
   transition: transform 1100ms var(--ease-out) .12s;
 }
-.bts-flow.reveal-in::before { transform: scaleY(1); }
+.bts-step.reveal-in::before { transform: scaleY(1); }
 
 .bts-step { position: relative; display: grid; grid-template-columns: 34px 1fr; gap: var(--s-4); padding-bottom: var(--s-6); }
 .bts-step:last-child { padding-bottom: 0; }
@@ -1429,8 +1460,17 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
   font-variant-numeric: tabular-nums; box-shadow: 0 0 0 4px var(--white);
   transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
-.bts-step:hover .bts-step-no { background: var(--ocean); color: var(--white); }
+/* stays light until the reader scrolls that step to the middle of the screen,
+   then eases from light to deep — so the column lights up one number at a time
+   as you scroll down (driven by .is-lit from the scroll observer in app.js) */
+.bts-step.is-lit .bts-step-no { background: var(--ocean); color: var(--white); transition: background-color .8s var(--ease), color .8s var(--ease); }
+.bts-step:hover .bts-step-no { background: var(--ocean-darker); color: var(--white); transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
 .bts-step-body { grid-column: 2; }
+.bts-step-time {
+  display: inline-block; font-family: var(--font-display); font-weight: 600;
+  font-size: var(--t-xs); letter-spacing: .06em; color: var(--ocean);
+  text-transform: uppercase;
+}
 .bts-step-title { display: flex; align-items: baseline; gap: var(--s-3); flex-wrap: wrap; margin: 3px 0 var(--s-1); font-size: var(--t-md); line-height: 1.2; }
 .bts-step-en { font-family: var(--font-display); font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
 .bts-step-th { font-size: var(--t-sm); font-weight: 600; color: var(--muted-ink); }
@@ -1490,7 +1530,7 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
   .bts-coord { top: var(--s-2); right: var(--s-2); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bts-flow::before { transition: none; transform: scaleY(1); }
+  .bts-step:not(:last-child)::before { transition: none; transform: scaleY(1); }
   .bts-img:hover img { transform: none; }
   .bts-img-main, .bts-img-sub, .bts-coord { transform: none; }
   .bts-note { transform: rotate(-6deg); }
@@ -1532,7 +1572,8 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 }
 .value .n { font-family: var(--font-display); font-size: var(--t-xl); font-weight: 700; color: var(--coral); line-height: 1; letter-spacing: -.02em; }
 .value h3 { font-size: var(--t-lg); margin: var(--s-4) 0 var(--s-2); color: #fff; }
-.value p { font-size: var(--t-sm); color: rgba(234, 242, 243, .8); margin: 0; }
+.value-en { font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em; }
+.value p { font-size: var(--t-sm); color: rgba(234, 242, 243, .8); margin: 0; line-height: 1.6; }
 
 /* ---- Real Phuket Moments — asymmetric gallery ---- */
 .moments { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(140px, 17vw, 210px); gap: var(--s-4); }
@@ -1550,6 +1591,65 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 /* larger tiles carry a bigger label so the text reads at a glance */
 .moment.big .tag, .moment.wide .tag { font-size: var(--t-md); gap: 9px; bottom: var(--s-5); }
 .moment.big .tag .ic, .moment.wide .tag .ic { width: 21px; height: 21px; }
+
+/* Editorial hover: a corner "go" arrow fades in, and the label lifts in on
+   pointer devices. Touch devices keep the label visible (no hover state). */
+.moment::before {
+  content: ''; position: absolute; top: var(--s-3); right: var(--s-3); z-index: 3;
+  width: 34px; height: 34px; border-radius: var(--r-pill); pointer-events: none;
+  background: rgba(9, 34, 46, .5)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E")
+    center / 16px no-repeat;
+  opacity: 0; transform: translateY(-5px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+.moment:hover::before, .moment:focus-visible::before { opacity: 1; transform: translateY(0); background-color: var(--coral); }
+@media (hover: hover) {
+  .moment .tag { transform: translateY(7px); opacity: 0; transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease); }
+  .moment:hover .tag, .moment:focus-visible .tag { transform: translateY(0); opacity: 1; }
+}
+/* Small screens are touch-first: always show the label regardless of any
+   lingering hover-capability reporting from emulators. */
+@media (max-width: 640px) {
+  .moment .tag { opacity: 1 !important; transform: none !important; }
+}
+
+/* ---- Brand film — click-to-play video ---- */
+.video { max-width: 960px; margin: 0 auto; }
+.video-frame {
+  position: relative; display: block; overflow: hidden;
+  aspect-ratio: 16 / 9;                 /* reserves space → no layout shift */
+  border-radius: var(--r-lg); background: #0a1a22;
+  box-shadow: var(--e-3);
+}
+.video-poster { width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform var(--dur-slow) var(--ease); }
+.video-frame::after {                   /* soft scrim so the play button reads */
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(60% 60% at 50% 50%, rgba(9, 34, 46, .1), rgba(9, 34, 46, .5));
+  transition: background var(--dur) var(--ease);
+}
+.video-frame:hover .video-poster { transform: scale(1.04); }
+.video-play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  z-index: 2; display: grid; place-items: center;
+  width: 76px; height: 76px; border-radius: var(--r-pill);
+  background: var(--coral); color: var(--on-coral); box-shadow: var(--e-3);
+  transition: transform var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+.video-play .ic { width: 30px; height: 30px; fill: currentColor; stroke: none; margin-left: 3px; }
+.video-frame:hover .video-play,
+.video-frame:focus-visible .video-play { transform: translate(-50%, -50%) scale(1.08); background: var(--coral-dark); }
+.video-frame:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
+/* Once played, the YouTube iframe replaces the poster/button in the same box */
+.video-frame.is-playing { cursor: default; }
+.video-frame.is-playing .video-poster, .video-frame.is-playing .video-play,
+.video-frame.is-playing::after { display: none; }
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+@media (max-width: 640px) {
+  .video-play { width: 60px; height: 60px; }
+  .video-play .ic { width: 24px; height: 24px; }
+}
 
 /* ---- Reviews — photo cards ---- */
 .reviews { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-6); }
@@ -1637,14 +1737,18 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
     transition-duration: .01ms !important;
   }
   .reveal { opacity: 1; transform: none; }
-  .card-link:hover, .tour:hover, .cat:hover, .dock a:hover { transform: none; }
-  .tour:hover .tour-media img, .cat:hover .cat-art img, .cat:hover .cat-body { transform: none; }
+  .card-link:hover, .tour:hover, .tour:focus-within, .cat:hover, .dock a:hover { transform: none; }
+  .tour:hover .tour-media img, .tour:focus-within .tour-media img, .cat:hover .cat-art img, .cat:hover .cat-body { transform: none; }
+  .tour:hover .tour-foot .btn-primary::after, .tour:focus-within .tour-foot .btn-primary::after { transform: none; }
   .hero-art img, .page-hero-art img { animation: none; }
   /* Home 2.0 — freeze photo zooms, arrow nudges and the rotating go-badge */
   .exp:hover .exp-media img, .exp-cat:hover img, .moment:hover img,
   .editorial-media:hover > img { transform: none; }
   .exp-cat:hover .go { transform: none; }
   .arrow-link:hover .ic, .exp:hover .arrow-link .ic { transform: none; }
+  /* keep gallery labels present (don't rely on a hover reveal) */
+  .moment .tag { opacity: 1; transform: none; }
+  .moment::before { transform: none; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1817,26 +1921,78 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
 .modal-note { margin: 0; font-size: .8125rem; color: var(--muted, #52616b); text-align: center; }
 
-/* Scam-warning variant */
-.modal-warn .modal-panel { max-width: 520px; }
-/* buttons sized to their label and centered, instead of stretching full width */
-.modal-warn .modal-actions { display: flex; flex-wrap: wrap; justify-content: center; }
-.modal-warn .modal-body { padding-top: var(--s-8); }
-.warn-head { display: flex; align-items: center; gap: var(--s-3); }
-.warn-head .warn-ic {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 48px; height: 48px; flex: none; border-radius: var(--r-pill);
-  background: #FDECEA; color: var(--coral, #FF6155);
+/* ==========================================================================
+   Scam-warning alert — bottom-left corner toast
+   Slides in from the bottom-left when the visitor reaches the packages
+   section. A bold coral header + coral frame make it read as an urgent
+   safety warning rather than a soft info card (colours stay within CI).
+   ========================================================================== */
+.scam-alert {
+  position: fixed; left: var(--s-4); bottom: var(--s-4);
+  z-index: calc(var(--z-modal) + 6);
+  width: min(374px, calc(100vw - var(--s-6)));
+  background: var(--white);
+  border: 1px solid var(--coral, #FF6155);
+  border-radius: var(--r-lg);
+  box-shadow: 0 10px 24px rgba(255, 97, 85, .28), 0 22px 56px rgba(15, 65, 73, .20);
+  overflow: hidden;
+  transform: translateY(140%); opacity: 0; visibility: hidden;
+  transition: transform .36s var(--ease-out, ease), opacity .3s ease, visibility .36s;
 }
-.warn-head .warn-ic .ic { width: 26px; height: 26px; }
-.warn-head h3 { font-family: var(--font-display); font-size: 1.375rem; margin: 0; color: var(--charcoal, #192E38); }
+.scam-alert.is-open { transform: none; opacity: 1; visibility: visible; }
+.scam-x {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border: none; border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, .22); color: var(--white); cursor: pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+.scam-x:hover { background: rgba(255, 255, 255, .38); transform: scale(1.06); }
+.scam-x .ic { width: 17px; height: 17px; }
+.scam-head {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: linear-gradient(105deg, var(--coral, #FF6155), var(--coral-dark, #F5544A));
+  color: var(--white);
+}
+.scam-head .scam-ic {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; flex: none; border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, .2); color: var(--white);
+  animation: scam-pulse 1.6s ease-in-out infinite;
+}
+.scam-head .scam-ic .ic { width: 22px; height: 22px; }
+.scam-heads { display: flex; flex-direction: column; gap: 2px; }
+.scam-flag {
+  font-size: .6875rem; font-weight: 800; letter-spacing: .04em;
+  text-transform: uppercase; opacity: .95;
+}
+.scam-head h3 { font-family: var(--font-display); font-size: 1.0625rem; line-height: 1.2; margin: 0; color: var(--white); }
+.scam-body { padding: var(--s-4); display: flex; flex-direction: column; gap: var(--s-3); font-size: .9rem; }
+.scam-actions { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.scam-actions .btn { flex: 1 1 auto; }
+.scam-note { margin: 0; font-size: .75rem; color: var(--muted, #52616b); text-align: center; }
+@keyframes scam-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, .5); }
+  70%      { box-shadow: 0 0 0 9px rgba(255, 255, 255, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scam-alert { transition: opacity .2s ease, visibility .2s; }
+  .scam-head .scam-ic { animation: none; }
+}
+@media (max-width: 640px) {
+  .scam-alert { left: var(--s-3); right: var(--s-3); bottom: var(--s-3); width: auto; }
+}
+
+/* shared warning content (list + bank box), tuned toward the alert palette */
 .warn-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--s-3); }
-.warn-list li { display: flex; gap: var(--s-3); align-items: flex-start; line-height: 1.6; color: var(--charcoal, #192E38); }
-.warn-list li .ic { width: 20px; height: 20px; flex: none; margin-top: 2px; color: var(--ocean); }
+.warn-list li { display: flex; gap: var(--s-3); align-items: flex-start; line-height: 1.55; color: var(--charcoal, #192E38); }
+.warn-list li .ic { width: 19px; height: 19px; flex: none; margin-top: 2px; color: var(--ocean); }
+.warn-list li .ic-ban { color: var(--coral-dark, #F5544A); }
 .warn-bank {
   display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3);
-  padding: var(--s-4); border: 1px dashed var(--line); border-radius: var(--r-lg);
-  background: var(--sea-mist, #E5F5F3); font-size: .9375rem;
+  padding: var(--s-3) var(--s-4); border: 1px dashed rgba(255, 97, 85, .5); border-radius: var(--r-lg);
+  background: var(--coral-soft, rgba(255, 97, 85, .16)); font-size: .875rem;
 }
 .warn-bank .tag { display: inline-grid; place-items: center; width: 44px; height: 40px; border-radius: var(--r-sm); background: var(--white); color: var(--ocean); font-weight: 700; font-size: .75rem; flex: none; box-shadow: var(--e-1); }
 .warn-bank b { color: var(--charcoal, #192E38); }
@@ -1863,14 +2019,23 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 /* ==========================================================================
    23) REVIEWS MARQUEE — Google-style auto-slide
    ========================================================================== */
-.greviews-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-6); flex-wrap: wrap; margin-bottom: var(--s-6); }
-.greviews-lead { display: flex; flex-direction: column; gap: var(--s-4); }
-.gscore { display: inline-flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4); background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--e-1); align-self: flex-start; }
-.gscore .glogo { width: 32px; height: 32px; flex: none; }
-.gscore .gnum { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; line-height: 1; color: var(--charcoal, #192E38); }
+.greviews-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-6); flex-wrap: wrap; margin-bottom: var(--s-8); }
+.greviews-head .sec-title { margin: 0; }
+/* score badge + CTA read as one tidy cluster, equal height, aligned to the title */
+.greviews-actions { display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap; }
+.gscore { display: inline-flex; align-items: center; gap: var(--s-3); }
+.gscore .glogo { width: 28px; height: 28px; flex: none; }
+.gscore-body { display: flex; flex-direction: column; gap: 2px; }
+.gscore-top { display: flex; align-items: center; gap: var(--s-2); }
+.gscore .gnum { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; line-height: 1; color: var(--charcoal, #192E38); font-variant-numeric: tabular-nums; }
 .gscore .gstars { display: inline-flex; gap: 1px; color: var(--mango, #F5BE4F); }
-.gscore .gstars .ic { width: 16px; height: 16px; fill: currentColor; stroke: none; }
-.gscore .gmeta { font-size: .8125rem; color: var(--muted, #52616b); }
+.gscore .gstars .ic { width: 15px; height: 15px; fill: currentColor; stroke: none; }
+.gscore .gmeta { font-size: .8125rem; color: var(--muted, #52616b); line-height: 1.2; }
+.greviews-cta { padding: var(--s-2) var(--s-4); font-size: var(--t-sm); }
+.greviews-cta .ic { width: 15px; height: 15px; }
+@media (max-width: 640px) {
+  .greviews-actions { width: 100%; justify-content: space-between; }
+}
 .marquee { position: relative; overflow: hidden; --gap: var(--s-6); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
 .marquee-track { display: flex; gap: var(--gap); width: max-content; animation: marquee 80s linear infinite; }
 .marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
@@ -1942,12 +2107,15 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 .tm-intro .lead { margin-bottom: 0; }
 
 .tm-card {
+  position: relative;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: var(--r-xl);
   box-shadow: var(--e-2);
   padding: var(--s-8) var(--s-8) var(--s-6);
+  overflow: hidden;
 }
+.tm-progress, .tm-form, .tm-result { position: relative; z-index: 1; }
 
 .tm-progress {
   display: flex; align-items: center; gap: var(--s-4);
@@ -1956,9 +2124,15 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 .tm-count { font-family: var(--font-display); font-weight: 700; font-size: var(--t-sm); color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; letter-spacing: .04em; }
 .tm-count .tm-cur { color: var(--ocean); }
 .tm-count .tm-total { color: var(--muted); }
-.tm-bar { flex: 1 1 auto; height: 8px; border-radius: var(--r-pill); background: var(--sand-2); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(15,65,73,.04); }
-.tm-bar-fill { display: block; height: 100%; width: 33.33%; border-radius: inherit; background: linear-gradient(90deg, var(--ocean), var(--turquoise-dark)); transition: width var(--dur) var(--ease-out); }
-
+.tm-bar { position: relative; flex: 1 1 auto; height: 10px; border-radius: var(--r-pill); background: var(--sand-2); box-shadow: inset 0 0 0 1px rgba(15,65,73,.04); overflow: visible; }
+.tm-bar-fill { position: relative; display: block; height: 100%; width: 33.33%; border-radius: inherit; background: linear-gradient(90deg, var(--ocean), var(--turquoise)); box-shadow: 0 1px 6px -1px rgba(1,126,135,.5); transition: width var(--dur-slow) cubic-bezier(.34,1.56,.64,1); }
+/* a friendly knob that glides along at the head of the fill */
+.tm-bar-fill::after {
+  content: ""; position: absolute; top: 50%; right: 0; transform: translate(45%, -50%);
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--white); border: 3px solid var(--ocean);
+  box-shadow: 0 2px 6px -1px rgba(1,126,135,.5);
+}
 .tm-form { margin: 0; }
 .tm-step { border: 0; margin: 0; padding: 0; min-inline-size: 0; }
 .tm-step[hidden] { display: none; }
@@ -1973,30 +2147,44 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
   border: 1.5px solid var(--line); border-radius: var(--r-lg);
   background: var(--white); color: var(--ink);
   font: inherit; font-weight: 500; font-size: var(--t-sm); text-align: left;
-  cursor: pointer; transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur-fast) var(--ease);
+  cursor: pointer;
+  /* clay "lip" — a soft bottom edge that makes the chip feel like a physical button */
+  box-shadow: 0 2px 0 rgba(15,65,73,.07);
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur-fast) cubic-bezier(.34,1.56,.64,1);
 }
 .tm-chip .ic {
   box-sizing: content-box; width: 20px; height: 20px; flex: none; padding: 8px;
   border-radius: var(--r-md); background: var(--sea-mist); color: var(--ocean);
-  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease), transform var(--dur) cubic-bezier(.34,1.56,.64,1);
 }
-.tm-chip:hover { background: var(--sea-mist); }
-.tm-chip:hover .ic { background: var(--white); }
-.tm-chip:active { transform: scale(.975); }
+.tm-chip:hover {
+  background: var(--sea-mist); border-color: var(--turquoise);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px -10px rgba(1,126,135,.4), 0 2px 0 rgba(15,65,73,.07);
+}
+.tm-chip:hover .ic { background: var(--white); transform: rotate(-6deg) scale(1.08); }
+.tm-chip:active { transform: translateY(0) scale(.95); box-shadow: 0 1px 0 rgba(15,65,73,.07); }
 .tm-chip:focus-visible { outline: 3px solid var(--turquoise); outline-offset: 2px; }
 .tm-chip[aria-pressed="true"] {
   background: var(--sea-mist); color: var(--ocean-darker); font-weight: 700;
+  border-color: var(--ocean);
 }
-.tm-chip[aria-pressed="true"] .ic { background: var(--ocean); color: var(--white); }
-/* selected check badge */
+.tm-chip[aria-pressed="true"] .ic { background: var(--ocean); color: var(--white); transform: scale(1.1); }
+/* a little celebratory squish the moment a chip is picked */
+@media (prefers-reduced-motion: no-preference) {
+  .tm-chip[aria-pressed="true"] { animation: tmChipPop var(--dur) cubic-bezier(.34,1.56,.64,1); }
+}
+@keyframes tmChipPop { 0% { transform: scale(1); } 45% { transform: scale(1.05); } 100% { transform: scale(1); } }
+/* selected check badge — pops in with a springy overshoot */
 .tm-chip::after {
   content: ""; position: absolute; top: 10px; right: 10px;
   width: 20px; height: 20px; border-radius: 50%;
-  background: var(--ocean) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
-  opacity: 0; transform: scale(.6); transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease-out);
+  background: var(--coral) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+  box-shadow: 0 2px 6px -1px rgba(255,97,85,.5);
+  opacity: 0; transform: scale(.3) rotate(-25deg); transition: opacity var(--dur) var(--ease), transform var(--dur) cubic-bezier(.34,1.56,.64,1);
   pointer-events: none;
 }
-.tm-chip[aria-pressed="true"]::after { opacity: 1; transform: none; }
+.tm-chip[aria-pressed="true"]::after { opacity: 1; transform: scale(1) rotate(0); }
 
 .tm-nav { display: flex; justify-content: space-between; gap: var(--s-3); margin-top: var(--s-8); }
 .tm-nav .tm-back[hidden] { display: none; }
@@ -2009,6 +2197,14 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
   margin: 0 0 var(--s-3); font-family: var(--font-display); font-weight: 700;
   font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--coral);
 }
+/* the recommended package type — the headline of the result */
+.tm-result-type {
+  display: inline-flex; align-items: center; margin: 0 0 var(--s-3);
+  padding: 6px var(--s-4); border-radius: var(--r-pill);
+  background: var(--sea-mist); color: var(--ocean-darker);
+  font-family: var(--font-display); font-weight: 700; font-size: var(--t-md); line-height: 1.2;
+}
+.tm-result-type:empty { display: none; }
 .tm-result-title { margin: 0; font-size: var(--t-xl); line-height: 1.15; color: var(--ink); }
 .tm-result-tags { display: flex; flex-wrap: wrap; gap: var(--s-2); margin: var(--s-4) 0 0; }
 .tm-tag { display: inline-flex; align-items: center; padding: 4px var(--s-3); border-radius: var(--r-pill); background: var(--sea-mist); color: var(--ocean-darker); font-size: var(--t-xs); font-weight: 600; }
@@ -2019,9 +2215,19 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 
 /* enter animation for step / result swaps */
 @media (prefers-reduced-motion: no-preference) {
-  .tm-step.is-active, .tm-result.is-shown { animation: tmIn var(--dur) var(--ease-out) both; }
+  .tm-step.is-active { animation: tmIn var(--dur) var(--ease-out) both; }
+  /* the result gets a friendlier springy pop to feel like a reveal */
+  .tm-result.is-shown { animation: tmPopIn var(--dur-slow) cubic-bezier(.34,1.56,.64,1) both; }
+  .tm-result.is-shown .tm-result-type { animation: tmChipPop var(--dur-slow) cubic-bezier(.34,1.56,.64,1) 120ms both; }
 }
 @keyframes tmIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes tmPopIn { from { opacity: 0; transform: scale(.92) translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* reduced motion: keep the playful states but drop the movement */
+@media (prefers-reduced-motion: reduce) {
+  .tm-chip:hover, .tm-chip:active { transform: none; }
+  .tm-chip:hover .ic, .tm-chip[aria-pressed="true"] .ic { transform: none; }
+}
 
 @media (max-width: 860px) {
   .tm-layout { grid-template-columns: 1fr; gap: var(--s-8); }
