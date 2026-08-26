@@ -750,13 +750,12 @@
         <div class="tm-result-tags" data-tm-tags></div>
         <p class="tm-result-desc" data-tm-desc></p>
         <div class="tm-result-actions">
-          <a class="btn btn-primary tm-result-cta" data-tm-cta href="#packages">
-            <span data-en="Explore This Experience">ดูประสบการณ์นี้</span>
-            <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
-          </a>
           <button class="btn btn-outline btn-sm" type="button" data-tm-restart>
             <span data-en="Start over">เริ่มใหม่</span>
           </button>
+          <a class="btn btn-primary btn-sm tm-result-cta" data-tm-cta href="#packages">
+            <span data-en="Explore This Experience">ดูประสบการณ์นี้</span>
+          </a>
         </div>
       </div>
 
@@ -766,41 +765,78 @@
 </section>
 
 <!-- ==================== 5. BEYOND THE SHORE (Local signature) ==================== -->
-<section class="sf-white">
+<section class="sf-white bts" id="beyond" aria-labelledby="bts-title">
   <div class="wrap">
-    <div class="editorial">
-      <div class="editorial-copy reveal">
-        <p class="eyebrow">Beyond the Shore</p>
-        <h2 data-en="The Phuket only locals know">ภูเก็ตในมุมที่คนอยู่ที่นี่เท่านั้นที่รู้</h2>
-        <p class="lead" data-en="Anyone can take you to the pretty islands, but the one thing only we can do is <strong>Phuket through a local's eyes</strong>: the morning market that closes by ten, the kopi shop with no English sign, and the Rawai sea-gypsy village where the boats come in at dawn.">
-          ทัวร์เกาะสวย ๆ ใครก็พาไปได้ แต่สิ่งที่เราทำได้คนเดียวคือ
-          <strong>ภูเก็ตในมุมของคนท้องถิ่น</strong> ตลาดเช้าที่ปิดสิบโมง
-          ร้านโกปี๊ที่ไม่มีป้ายภาษาอังกฤษ และหมู่บ้านชาวเลราไวย์ที่เรือกลับเข้าฝั่งตอนเช้า
+    <div class="editorial bts-editorial">
+
+      <!-- LEFT — travel-journal story -->
+      <div class="bts-copy">
+        <p class="bts-meta reveal"><span class="bts-meta-label">Local Stories</span><span class="bts-meta-no">/ 01</span></p>
+        <p class="eyebrow reveal" data-delay="60">Beyond the Shore</p>
+        <h2 id="bts-title" class="reveal" data-delay="120" data-en="More than the sea — the stories around Phuket">มากกว่าทะเล คือเรื่องราวที่อยู่รอบ ๆ ภูเก็ต</h2>
+        <p class="lead reveal" data-delay="180" data-en="Phuket is more than beaches. Discover the people, places and stories beyond the usual tourist route.">
+          ภูเก็ตไม่ได้มีแค่ทะเล ค้นพบผู้คน สถานที่ และเรื่องราวที่อยู่นอกเส้นทางท่องเที่ยวแบบเดิม ๆ
         </p>
-        <ul class="ed-list">
-          <li>
-            <svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>
-            <span data-en="<b>Guides born and raised in Phuket</b>, not freelancers who fly in for the season"><b>ไกด์ที่เกิดและโตในภูเก็ต</b> ไม่ใช่ไกด์ฟรีแลนซ์ที่บินมาตามฤดู</span>
+
+        <ol class="bts-flow reveal" data-delay="220" aria-label="เรื่องราวสามช่วงของภูเก็ต" data-en-label="Three chapters of Phuket">
+          <li class="bts-step reveal" data-delay="0">
+            <span class="bts-step-no">01</span>
+            <div class="bts-step-body">
+              <h3 class="bts-step-title"><span class="bts-step-en">The People</span><span class="bts-step-th" data-en="Get to know Phuket through its people">รู้จักภูเก็ตผ่านผู้คน</span></h3>
+              <p class="bts-step-text" data-en="Meet the local guides, small shops and people who bring the island to life.">พบกับ Local Guides ร้านเล็ก ๆ และผู้คนที่ทำให้ภูเก็ตมีชีวิต</p>
+            </div>
           </li>
-          <li>
-            <svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>
-            <span data-en="<b>Small groups of 2–8</b> — room to walk, talk and ask questions, not a coach-load tour"><b>กลุ่มเล็ก 2–8 ท่าน</b> เดินได้ คุยได้ ถามได้ ไม่ใช่ทัวร์หมู่คณะ</span>
+          <li class="bts-step reveal" data-delay="120">
+            <span class="bts-step-no">02</span>
+            <div class="bts-step-body">
+              <h3 class="bts-step-title"><span class="bts-step-en">The Places</span><span class="bts-step-th" data-en="Go where some travellers overlook">ไปในที่ที่นักท่องเที่ยวบางคนอาจมองข้าม</span></h3>
+              <p class="bts-step-text" data-en="Hidden spots, local neighbourhoods and places with a story to tell.">Hidden spots ชุมชนท้องถิ่น และสถานที่ที่มีเรื่องราว</p>
+            </div>
           </li>
-          <li>
-            <svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>
-            <span data-en="<b>Money stays in the community</b> — the shops and boats we use are local people"><b>เงินหมุนอยู่ในชุมชน</b> ร้านและเรือที่เราพาไปคือคนในพื้นที่</span>
+          <li class="bts-step reveal" data-delay="240">
+            <span class="bts-step-no">03</span>
+            <div class="bts-step-body">
+              <h3 class="bts-step-title"><span class="bts-step-en">The Stories</span><span class="bts-step-th" data-en="Experience Phuket your own way">สัมผัสภูเก็ตในแบบที่เป็นตัวคุณ</span></h3>
+              <p class="bts-step-text" data-en="Experiences that don't come from following a ready-made itinerary.">ประสบการณ์ที่ไม่ได้เกิดจากการเดินตาม Itinerary สำเร็จรูป</p>
+            </div>
           </li>
-        </ul>
-        <a class="arrow-link" href="#local">
-          <span data-en="See our Local Phuket routes">ดูเส้นทาง Local Phuket</span>
+        </ol>
+
+        <a class="arrow-link reveal" data-delay="300" href="#local">
+          <span data-en="Discover beyond the usual">ดูเส้นทาง Local Phuket</span>
           <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg>
         </a>
       </div>
 
-      <div class="editorial-media reveal">
-        <img src="assets/img/longtail.webp" width="900" height="1281"
-             alt="เรือหางยาวจอดริมชายฝั่งภูเก็ตยามแสงเช้า" data-en-alt="Long-tail boat moored on the Phuket shore in the morning light" loading="lazy" decoding="async">
+      <!-- RIGHT — layered editorial imagery + journal annotations -->
+      <div class="bts-media reveal" data-delay="120">
+        <figure class="bts-img bts-img-main" data-parallax="-16">
+          <img src="assets/img/local-phuket.webp" width="900" height="1125"
+               alt="ผู้คนและชีวิตท้องถิ่นในภูเก็ต" data-en-alt="Local people and everyday life in Phuket" loading="lazy" decoding="async">
+          <figcaption class="bts-cap">
+            <span class="bts-cap-no">01</span>
+            <span class="bts-cap-text" data-en="Local Phuket">Local Phuket</span>
+          </figcaption>
+        </figure>
+
+        <figure class="bts-img bts-img-sub" data-parallax="24">
+          <img src="assets/img/old-town.webp" width="640" height="480"
+               alt="มุมเล็ก ๆ ในย่านเมืองเก่าภูเก็ต" data-en-alt="A hidden corner of Phuket old town" loading="lazy" decoding="async">
+          <figcaption class="bts-cap">
+            <span class="bts-cap-no">02</span>
+            <span class="bts-cap-text" data-en="A hidden corner of the island">มุมเล็ก ๆ ที่ซ่อนอยู่</span>
+          </figcaption>
+        </figure>
+
+        <span class="bts-coord" data-parallax="-30" aria-hidden="true">
+          <svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>
+          <span class="bts-coord-place">PHUKET, THAILAND</span>
+          <span class="bts-coord-latlng">7°52′N&nbsp;&nbsp;98°23′E</span>
+        </span>
+
+        <span class="bts-note" data-parallax="18" aria-hidden="true">A different side of Phuket</span>
       </div>
+
     </div>
   </div>
 </section>

@@ -309,7 +309,11 @@ section.tight { padding-block: var(--s-12); }
 }
 .btn:hover { text-decoration: none; }
 .btn:active { transform: scale(.975); }
-.btn .ic { width: 20px; height: 20px; }
+.btn .ic { width: 20px; height: 20px; transition: transform var(--dur) var(--ease); }
+/* Micro-interaction: subtle lift on hover; a trailing arrow icon slides right */
+.btn:hover { transform: translateY(-1px); }
+.btn:hover:active { transform: scale(.975); }
+.btn:hover .ic:last-child { transform: translateX(3px); }
 
 /* Primary — Ocean Blue. The only filled CTA colour on light surfaces.
    The accent orange is deliberately NOT used here: it would read as a
@@ -492,11 +496,21 @@ section.tight { padding-block: var(--s-12); }
 .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
 .nav-links li { margin: 0; }
 .nav-links a {
+  position: relative;
   display: inline-flex; align-items: center; min-height: 42px;
   padding: 0 var(--s-3); border-radius: var(--r-sm);
   font-size: var(--t-sm); font-weight: 500; color: var(--ink); white-space: nowrap;
   transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
 }
+/* Micro-interaction: a thin indicator wipes in from the left on hover/current */
+.nav-links a::after {
+  content: ''; position: absolute; left: var(--s-3); right: var(--s-3); bottom: 5px; height: 2px;
+  border-radius: 2px; background: currentColor; opacity: .85;
+  transform: scaleX(0); transform-origin: left; pointer-events: none;
+  transition: transform var(--dur) var(--ease);
+}
+.nav-links a:hover::after,
+.nav-links a[aria-current="page"]::after { transform: scaleX(1); }
 .nav-links a:hover { background: var(--sand-2); color: var(--ocean-darker); text-decoration: none; }
 .nav-links a[aria-current="page"] { color: var(--ocean-darker); font-weight: 600; }
 
@@ -1377,6 +1391,111 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 .editorial-media { position: relative; border-radius: var(--r-2xl); overflow: hidden; aspect-ratio: 6 / 5; box-shadow: var(--e-3); background: var(--sand-2); }
 .editorial-media.tall { aspect-ratio: 3 / 4; }
 .editorial-media > img { width: 100%; height: 100%; object-fit: cover; }
+
+/* --------------------------------------------------------------------------
+   24b. Beyond the Shore — signature travel-journal section
+   Editorial storytelling: journal meta, a People → Places → Stories route,
+   layered imagery and small hand-noted annotations. Uses only CI tokens.
+   -------------------------------------------------------------------------- */
+.bts-editorial { align-items: center; }
+.bts-copy { max-width: 34rem; }
+
+/* Journal meta line — "Local Stories / 01" */
+.bts-meta {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-display); font-size: var(--t-xs);
+  letter-spacing: .18em; text-transform: uppercase; margin: 0 0 var(--s-3);
+}
+.bts-meta-label { color: var(--ocean-darker); font-weight: 700; }
+.bts-meta-no    { color: var(--muted-ink); font-variant-numeric: tabular-nums; }
+
+/* Story flow — vertical route connecting three chapters */
+.bts-flow { list-style: none; margin: var(--s-6) 0 var(--s-8); padding: 0; position: relative; }
+.bts-flow::before {
+  content: ''; position: absolute; left: 16px; top: 10px; bottom: 10px; width: 2px;
+  background: repeating-linear-gradient(var(--ocean) 0 5px, transparent 5px 11px);
+  opacity: .55; transform: scaleY(0); transform-origin: top;
+  transition: transform 1100ms var(--ease-out) .12s;
+}
+.bts-flow.reveal-in::before { transform: scaleY(1); }
+
+.bts-step { position: relative; display: grid; grid-template-columns: 34px 1fr; gap: var(--s-4); padding-bottom: var(--s-6); }
+.bts-step:last-child { padding-bottom: 0; }
+.bts-step-no {
+  grid-column: 1; z-index: 1; align-self: start;
+  width: 34px; height: 34px; display: grid; place-items: center;
+  border-radius: var(--r-pill); background: var(--sea-mist); color: var(--ocean-darker);
+  font-family: var(--font-display); font-weight: 700; font-size: var(--t-xs);
+  font-variant-numeric: tabular-nums; box-shadow: 0 0 0 4px var(--white);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.bts-step:hover .bts-step-no { background: var(--ocean); color: var(--white); }
+.bts-step-body { grid-column: 2; }
+.bts-step-title { display: flex; align-items: baseline; gap: var(--s-3); flex-wrap: wrap; margin: 3px 0 var(--s-1); font-size: var(--t-md); line-height: 1.2; }
+.bts-step-en { font-family: var(--font-display); font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+.bts-step-th { font-size: var(--t-sm); font-weight: 600; color: var(--muted-ink); }
+.bts-step-text { margin: 0; font-size: var(--t-sm); color: var(--muted-ink); line-height: 1.6; max-width: 42ch; }
+
+/* Layered editorial imagery */
+.bts-media { position: relative; align-self: center; padding: var(--s-6) var(--s-5) var(--s-10) 0; }
+.bts-img { position: relative; border-radius: var(--r-2xl); overflow: hidden; box-shadow: var(--e-3); background: var(--sand-2); }
+.bts-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform var(--dur-slow) var(--ease); }
+.bts-img:hover img { transform: scale(1.04); }
+.bts-img-main { aspect-ratio: 4 / 5; transform: translate3d(0, var(--par-y, 0px), 0); }
+.bts-img-sub {
+  position: absolute; left: -6%; bottom: 4%; width: 46%; aspect-ratio: 4 / 3;
+  border: 5px solid var(--white); border-radius: var(--r-xl); box-shadow: var(--e-4);
+  transform: translate3d(0, var(--par-y, 0px), 0);
+}
+[data-parallax] { will-change: transform; }
+
+/* Photo caption chips */
+.bts-cap {
+  position: absolute; left: var(--s-3); bottom: var(--s-3); z-index: 2;
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: 6px var(--s-3); border-radius: var(--r-pill);
+  background: rgba(24, 36, 41, .72); color: #fff; font-size: var(--t-xs); letter-spacing: .02em;
+}
+.bts-cap-no { font-family: var(--font-display); font-weight: 700; color: var(--mango); font-variant-numeric: tabular-nums; }
+.bts-img-sub .bts-cap { left: var(--s-2); bottom: var(--s-2); padding: 4px var(--s-2); font-size: .6875rem; }
+
+/* Journal annotations */
+.bts-coord {
+  position: absolute; top: var(--s-4); right: var(--s-4); z-index: 2;
+  display: grid; grid-template-columns: auto auto; align-items: center; gap: 2px var(--s-2);
+  padding: var(--s-2) var(--s-3); background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--r-md); box-shadow: var(--e-2);
+  transform: translate3d(0, var(--par-y, 0px), 0);
+}
+.bts-coord .ic { grid-row: 1 / 3; width: 16px; height: 16px; color: var(--coral); }
+.bts-coord-place  { font-size: var(--t-xs); font-weight: 700; letter-spacing: .12em; color: var(--ink); }
+.bts-coord-latlng { grid-column: 2; font-size: .625rem; letter-spacing: .1em; color: var(--muted-ink); font-variant-numeric: tabular-nums; }
+
+.bts-note {
+  position: absolute; right: 3%; bottom: -0.35rem; z-index: 2;
+  font-family: var(--font-display); font-style: italic; font-weight: 500;
+  font-size: var(--t-md); color: var(--ocean-darker);
+  transform: translate3d(0, var(--par-y, 0px), 0) rotate(-6deg);
+}
+
+@media (max-width: 860px) {
+  .bts-copy { max-width: none; }
+  .bts-media { padding: var(--s-6) 0 var(--s-8); margin-top: var(--s-2); }
+  .bts-img-main { aspect-ratio: 16 / 11; }
+  .bts-img-sub { width: 40%; left: 0; }
+}
+@media (max-width: 560px) {
+  .bts-note { display: none; }
+  .bts-img-sub { width: 44%; left: -3%; }
+  .bts-coord { top: var(--s-2); right: var(--s-2); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bts-flow::before { transition: none; transform: scaleY(1); }
+  .bts-img:hover img { transform: none; }
+  .bts-img-main, .bts-img-sub, .bts-coord { transform: none; }
+  .bts-note { transform: rotate(-6deg); }
+}
+
 /* overlapping caption chip */
 .float-chip {
   position: absolute; z-index: 4; background: var(--warm-white); color: var(--ink);
@@ -1895,6 +2014,8 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 .tm-tag { display: inline-flex; align-items: center; padding: 4px var(--s-3); border-radius: var(--r-pill); background: var(--sea-mist); color: var(--ocean-darker); font-size: var(--t-xs); font-weight: 600; }
 .tm-result-desc { margin: var(--s-4) 0 0; color: var(--muted); font-size: var(--t-md); line-height: 1.65; max-width: 58ch; }
 .tm-result-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); margin-top: var(--s-6); }
+/* Normalise line-height so the anchor CTA and the button match in height */
+.tm-result-actions .btn { line-height: 1.2; }
 
 /* enter animation for step / result swaps */
 @media (prefers-reduced-motion: no-preference) {
@@ -1951,6 +2072,12 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 .ow-marker:focus-visible .ow-pin { fill: var(--ocean); }
 .ow-marker:hover .ow-halo,
 .ow-marker:focus-visible .ow-halo { opacity: .16; r: 22px; }
+/* Micro-interaction: a soft pulse breathes on the halo while pointed at */
+@media (prefers-reduced-motion: no-preference) {
+  .ow-marker:hover .ow-halo,
+  .ow-marker:focus-visible .ow-halo { animation: owPulse 1.7s var(--ease-out) infinite; }
+}
+@keyframes owPulse { 0%, 100% { opacity: .14; } 50% { opacity: .3; } }
 .ow-marker.is-active .ow-pin { fill: var(--ocean); }
 .ow-marker.is-active .ow-halo { opacity: .18; r: 24px; }
 .ow-marker.is-active .ow-time { fill: var(--ocean-darker); font-weight: 700; }

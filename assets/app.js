@@ -200,6 +200,38 @@
     moveHero();
   }
 
+  /* ---------- generic parallax ([data-parallax]) ----------
+     Layered depth for editorial imagery and journal annotations. Each element
+     drifts by data-parallax px (sign = direction) as it crosses the viewport.
+     Transform is applied through the --par-y custom property so any base
+     transform in CSS (e.g. the note's rotate) is preserved. Off for reduced
+     motion; damped on small screens. */
+  var parallaxEls = document.querySelectorAll('[data-parallax]');
+  if (parallaxEls.length && !reduced) {
+    var mqSmallP = window.matchMedia('(max-width: 640px)');
+    var pTicking = false;
+    var vhP = window.innerHeight;
+    var moveParallax = function () {
+      var damp = mqSmallP.matches ? 0.4 : 1;
+      var center = vhP / 2;
+      parallaxEls.forEach(function (el) {
+        var rect = el.getBoundingClientRect();
+        if (rect.bottom < -80 || rect.top > vhP + 80) { pTicking = false; return; }
+        var elCenter = rect.top + rect.height / 2;
+        var progress = (center - elCenter) / vhP;          // ~-0.5 … ~0.5
+        var speed = parseFloat(el.getAttribute('data-parallax')) || 0;
+        var y = progress * speed * damp;
+        el.style.setProperty('--par-y', y.toFixed(1) + 'px');
+      });
+      pTicking = false;
+    };
+    window.addEventListener('scroll', function () {
+      if (!pTicking) { pTicking = true; window.requestAnimationFrame(moveParallax); }
+    }, { passive: true });
+    window.addEventListener('resize', function () { vhP = window.innerHeight; moveParallax(); }, { passive: true });
+    moveParallax();
+  }
+
   /* ---------- scroll reveal ---------- */
   var targets = document.querySelectorAll('.reveal');
 
