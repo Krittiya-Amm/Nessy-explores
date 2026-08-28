@@ -81,6 +81,9 @@
       <button class="chip" type="button" data-filter="all" aria-pressed="true">
         <svg class="ic" aria-hidden="true"><use href="#i-grid"/></svg>ทั้งหมด
       </button>
+      <button class="chip" type="button" data-filter="popular" aria-pressed="false">
+        <svg class="ic" aria-hidden="true"><use href="#i-star"/></svg>ยอดนิยม
+      </button>
       <button class="chip" type="button" data-filter="sea" aria-pressed="false">
         <svg class="ic" aria-hidden="true"><use href="#i-ship"/></svg>เกาะ &amp; ทะเล
       </button>
@@ -112,7 +115,7 @@
     <span class="svc-ic" aria-hidden="true"><svg class="ic"><use href="#i-plane"/></svg></span>
     <div class="svc-text">
       <b>อยากได้ตั๋วเครื่องบินด้วย? เราจองให้ได้</b>
-      <p>เรารับจองตั๋วเครื่องบินทั้งในและต่างประเทศ แจ้งวันเดินทางทาง LINE เดี๋ยวเราจัดให้ — บริการนี้ให้บริการผ่านแชทเท่านั้น</p>
+      <p>เรารับจองตั๋วเครื่องบินทั้งในและต่างประเทศ<br>แจ้งวันเดินทางกับเราผ่านทาง LINE เดี๋ยวเราจัดให้ บริการนี้ให้บริการผ่านแชทเท่านั้น</p>
     </div>
     <a class="btn btn-primary btn-sm" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener">สอบถามเรื่องตั๋ว</a>
   </div>
@@ -130,7 +133,7 @@
       <article class="tour reveal" data-cat="sea">
         <div class="tour-media">
           <img src="assets/img/talay-waek-krabi.webp" alt="เขาหินปูนและทะเลสีครามที่ไร่เลย์ กระบี่" width="1108" height="1477" style="object-position: center 80%;" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-sky">ใหม่</span></div>
+          <div class="ribbons"><span class="badge badge-dark">ใหม่</span></div>
         </div>
         <div class="tour-body">
           <h3>ทะเลแหวก · เกาะปอดะ · ไร่เลย์ กระบี่</h3>
@@ -149,7 +152,7 @@
       <article class="tour reveal" data-cat="sea">
         <div class="tour-media">
           <img src="assets/img/surin-moken.webp" alt="หาดทรายขาวและน้ำทะเลใสที่อุทยานแห่งชาติหมู่เกาะสุรินทร์" width="1056" height="1551" style="object-position: center 72%;" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-sky">ใหม่</span></div>
+          <div class="ribbons"><span class="badge badge-dark">ใหม่</span></div>
         </div>
         <div class="tour-body">
           <h3>อุทยานฯ หมู่เกาะสุรินทร์ · หมู่บ้านมอร์แกน</h3>
@@ -168,7 +171,7 @@
       <article class="tour reveal" data-cat="sea">
         <div class="tour-media">
           <img src="assets/img/thanbok-koh-hong.webp" alt="เรือหางยาวและน้ำทะเลใสสีเขียวมรกตที่เกาะห้อง กระบี่" width="1108" height="1477" style="object-position: center 75%;" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-sky">ใหม่</span></div>
+          <div class="ribbons"><span class="badge badge-dark">ใหม่</span></div>
         </div>
         <div class="tour-body">
           <h3>อุทยานฯ ธารโบกขรณี · เกาะห้อง</h3>
@@ -184,10 +187,9 @@
         </div>
       </article>
 
-      <article class="tour reveal" data-cat="sea">
+      <article class="tour reveal" data-cat="sea popular">
         <div class="tour-media">
           <img src="assets/img/longtail.webp" alt="เรือหางยาวและเขาหินปูนอ่าวพังงา" width="900" height="1281" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-promo">ขายดีที่สุด</span></div>
         </div>
         <div class="tour-body">
           <h3>4 เกาะ เจมส์บอนด์ + อ่าวพังงา</h3>
@@ -263,7 +265,7 @@
       </article>
 
       <!-- ---------- ดำน้ำ & กิจกรรมทางน้ำ ---------- -->
-      <article class="tour reveal" data-cat="dive">
+      <article class="tour reveal" data-cat="dive popular">
         <div class="tour-media">
           <img src="assets/img/jetski-8islands.webp" alt="กลุ่มนักท่องเที่ยวขับเจ็ตสกีหน้าผาหินปูนกลางทะเล" width="572" height="644" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-promo">สายมันส์</span></div>
@@ -320,7 +322,7 @@
       </article>
 
       <!-- ---------- ผจญภัยบนบก ---------- -->
-      <article class="tour reveal" data-cat="adventure">
+      <article class="tour reveal" data-cat="adventure popular">
         <div class="tour-media">
           <img src="assets/img/rafting.webp" alt="กลุ่มนักท่องเที่ยวล่องแก่งด้วยเรือยางในสายน้ำเชี่ยว" width="581" height="654" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-promo">คุ้มที่สุด</span></div>
@@ -399,7 +401,7 @@
       </article>
 
       <!-- ---------- โชว์ & สวนสนุก ---------- -->
-      <article class="tour reveal" data-cat="show">
+      <article class="tour reveal" data-cat="show popular">
         <div class="tour-media">
           <img src="assets/img/phuket-fantasea.webp" alt="โชว์วัฒนธรรมไทยบนเวทีพร้อมปราสาททองและช้างแต่งตัว" width="588" height="588" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-promo">โชว์ยอดนิยม</span></div>
@@ -495,7 +497,7 @@
       <article class="tour reveal" data-cat="local">
         <div class="tour-media">
           <img src="assets/img/old-town.webp" alt="ตึกชิโนโปรตุกีสในเมืองเก่าภูเก็ต" width="900" height="1350" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-sky">ใหม่ · เฉพาะที่นี่</span></div>
+          <div class="ribbons"><span class="badge badge-dark">ใหม่ · เฉพาะที่นี่</span></div>
         </div>
         <div class="tour-body">
           <h3>เมืองเก่าภูเก็ต &amp; อาหารถิ่น</h3>
@@ -643,7 +645,7 @@
           <svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg>
           LINE @nessyexplores
         </a>
-        <a class="btn btn-light btn-lg" href="https://wa.me/66825466162" target="_blank" rel="noopener">
+        <a class="btn btn-light btn-lg" href="https://wa.me/message/6FWCMSE6VRA6P1" target="_blank" rel="noopener">
           <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
           WhatsApp
         </a>
@@ -702,15 +704,19 @@
         <ul class="foot-contact">
           <li>
             <svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>
-            <span>26/1 ถนนราษฎร์อุทิศ 200 ปี<br>ป่าตอง กะทู้ ภูเก็ต 83150</span>
+            <span><a href="https://www.google.com/maps/search/?api=1&amp;query=26%2F1+Ratuthit+200+Pi+Road+Patong+Kathu+Phuket+83150" target="_blank" rel="noopener" aria-label="เปิดแผนที่ Google Maps">26/1 ถนนราษฎร์อุทิศ 200 ปี<br>ป่าตอง กะทู้ ภูเก็ต 83150</a></span>
           </li>
           <li>
-            <svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg>
-            <span>LINE OA: <a href="https://lin.ee/R05IzYR" target="_blank" rel="noopener">Nessy Explores</a></span>
+            <svg class="ic ic-brand ic-line-white" aria-hidden="true"><use href="#i-line"/></svg>
+            <span>LINE Official: <a href="https://lin.ee/R05IzYR" target="_blank" rel="noopener">Nessy Explores</a></span>
+          </li>
+          <li>
+            <svg class="ic ic-brand" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+            <span>WhatsApp: <a href="https://wa.me/message/6FWCMSE6VRA6P1" target="_blank" rel="noopener">Nessy Explores</a></span>
           </li>
           <li>
             <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
-            <span><a href="tel:+66825466162">082-546-6162</a> (Nessy · WhatsApp ได้)</span>
+            <span><a href="tel:+66825466162">082-546-6162</a></span>
           </li>
           <li>
             <svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>
@@ -733,15 +739,21 @@
 
     <div class="foot-base">
       <p>© <span data-year>2569</span> บริษัท กาล-ไช ทัวร์ จำกัด (GAL-SHAI TOUR CO., LTD) — สงวนลิขสิทธิ์</p>
-      <p>เว็บไซต์ตัวอย่างเพื่อการนำเสนอ · จัดทำโดย Sellsuki</p>
+      <nav class="foot-legal" aria-label="ข้อกำหนดและนโยบาย">
+        <a href="privacy.html">นโยบายความเป็นส่วนตัว</a>
+        <a href="terms.html">ข้อกำหนดและเงื่อนไข</a>
+      </nav>
     </div>
   </div>
 </footer>
 
 <!-- ============================ CONTACT DOCK ============================ -->
 <div class="dock">
-  <a class="accent" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" aria-label="สอบถามทาง LINE" data-en-label="Ask us on LINE">
+  <a class="dock-line" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" aria-label="สอบถามทาง LINE" data-en-label="Ask us on LINE">
     <svg class="ic ic-brand" aria-hidden="true"><use href="#i-line"/></svg>
+  </a>
+  <a class="dock-wa" href="https://wa.me/message/6FWCMSE6VRA6P1" target="_blank" rel="noopener" aria-label="สอบถามทาง WhatsApp" data-en-label="Ask us on WhatsApp">
+    <svg class="ic ic-brand" aria-hidden="true"><use href="#i-whatsapp"/></svg>
   </a>
   <a href="tel:+66825466162" aria-label="โทรหาเรา" data-en-label="Call us">
     <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>

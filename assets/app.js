@@ -38,20 +38,11 @@
           '</div>' +
         '</div>' +
         '<div class="scam-body">' +
-          '<ul class="warn-list">' +
-            '<li><svg class="ic" aria-hidden="true"><use href="#i-badge-check"/></svg><span data-en="We\'re a registered company — GAL-SHAI TOUR CO., LTD.">จดทะเบียนนิติบุคคล — บริษัท กาล-ไช ทัวร์ จำกัด (GAL-SHAI TOUR CO., LTD)</span></li>' +
-            '<li><svg class="ic" aria-hidden="true"><use href="#i-bank"/></svg><span data-en="We only take payment <strong>into the company\'s corporate account</strong> — the account name matches the company name exactly.">รับชำระผ่าน<strong>บัญชีนิติบุคคลของบริษัทเท่านั้น</strong> ชื่อบัญชีต้องตรงกับชื่อบริษัทเป๊ะ</span></li>' +
-            '<li><svg class="ic ic-ban" aria-hidden="true"><use href="#i-ban"/></svg><span data-en="We <strong>never</strong> accept transfers to a personal account, and we <strong>never</strong> ask for an OTP or password.">เรา<strong>ไม่รับ</strong>โอนเข้าบัญชีบุคคล และ<strong>ไม่เคย</strong>ขอ OTP หรือรหัสผ่าน</span></li>' +
-          '</ul>' +
-          '<div class="warn-bank">' +
-            '<span class="tag" aria-hidden="true">KBank</span>' +
-            '<div><b data-en="GAL-SHAI TOUR CO., LTD">บจก. กาล-ไช ทัวร์</b> · <span data-en="Kasikornbank · Acct. no. 332-2-83353-8">ธนาคารกสิกรไทย · เลขที่ 332-2-83353-8</span></div>' +
-          '</div>' +
+          '<p class="scam-lead" data-en="We only take payment <strong>into the company\'s corporate account</strong> — we never accept transfers to a personal account, and never ask for an OTP or password.">รับชำระเงินผ่าน<strong>บัญชีนิติบุคคลของบริษัทเท่านั้น</strong> เราไม่รับโอนเข้าบัญชีบุคคล และไม่เคยขอ OTP หรือรหัสผ่าน</p>' +
           '<div class="scam-actions">' +
-            '<a class="btn btn-primary btn-sm" href="' + LINE_OA + '" target="_blank" rel="noopener" data-en="Verify on LINE">ตรวจสอบทาง LINE</a>' +
+            '<button class="btn btn-primary btn-sm" type="button" data-scam-detail data-en="See full details">ดูรายละเอียดเพิ่มเติม</button>' +
             '<button class="btn btn-outline btn-sm" type="button" data-scam-close data-en="Got it">รับทราบ</button>' +
           '</div>' +
-          '<p class="scam-note" data-en="If anyone asks you to transfer to a personal account, it is a scam.">หากมีผู้อ้างชื่อเราแล้วให้โอนเข้าบัญชีบุคคล นั่นคือมิจฉาชีพ</p>' +
         '</div>' +
       '</div>' +
       '<div class="cookie" id="cookie-banner" role="dialog" aria-live="polite" aria-label="การใช้คุกกี้" data-en-label="Cookie notice">' +
@@ -325,7 +316,7 @@
       var inCat = 0, shown = 0, firstHidden = null;
 
       items.forEach(function (item) {
-        var match = currentCat === 'all' || item.dataset.cat === currentCat;
+        var match = currentCat === 'all' || (' ' + item.dataset.cat + ' ').indexOf(' ' + currentCat + ' ') !== -1;
         if (!match) { item.hidden = true; return; }
         inCat++;
         if (inCat <= limit) { item.hidden = false; shown++; }
@@ -608,23 +599,41 @@
       alertEl.setAttribute('aria-hidden', 'true');
       if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
     };
-    // close on the X and the "รับทราบ" button
+    // close on the X and the "รับทราบ" button; "ดูรายละเอียดเพิ่มเติม" closes
+    // the toast and scrolls down to the full safety details in the footer.
     alertEl.addEventListener('click', function (e) {
+      if (e.target.closest('[data-scam-detail]')) {
+        e.preventDefault();
+        dismiss();
+        var sect = document.getElementById('safety');
+        if (sect) {
+          var prefersReduced = window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          sect.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+        }
+        return;
+      }
       if (e.target.closest('[data-scam-close]')) { e.preventDefault(); dismiss(); }
     });
 
-    // Only surface the warning once the visitor has actually scrolled down to
-    // the packages section (where paying becomes relevant). On pages without
-    // that section, fall back to a plain scroll-depth threshold.
-    var target = document.getElementById('packages') || document.getElementById('catalog');
+    // Surface the warning once the visitor has scrolled into the tours &
+    // activities section far enough to actually see the first row of cards —
+    // not merely when the section heading appears. We track the first tour
+    // card and wait until it is well inside the viewport. Fall back to the
+    // section top, then to a plain scroll-depth threshold, on pages without
+    // cards.
+    var target = document.querySelector('#catalog article.tour, .grid article.tour, article.tour')
+              || document.getElementById('packages')
+              || document.getElementById('catalog');
 
     var fired = false;
     var trigger = function () {
       if (fired) return;
       var reached;
       if (target) {
-        // fire when the top of the packages section has scrolled into view
-        reached = target.getBoundingClientRect().top <= window.innerHeight * 0.6;
+        // fire once the first card has risen to ~70% up the viewport, i.e. the
+        // first row is comfortably in view
+        reached = target.getBoundingClientRect().top <= window.innerHeight * 0.7;
       } else {
         var y = window.pageYOffset || document.documentElement.scrollTop || 0;
         reached = y >= Math.max(600, window.innerHeight * 0.6);
@@ -746,6 +755,13 @@
     var fillEl  = root.querySelector('[data-tm-fill]');
     var result  = root.querySelector('[data-tm-result]');
     var restart = root.querySelector('[data-tm-restart]');
+    var startPanel = root.querySelector('[data-tm-start]');
+    var startBtn   = root.querySelector('[data-tm-startbtn]');
+    var progress   = root.querySelector('.tm-progress');
+    var track      = root.querySelector('[data-tm-track]');
+    var dots       = track ? Array.prototype.slice.call(track.querySelectorAll('[data-tm-dot]')) : [];
+    var matchingEl = root.querySelector('[data-tm-matching]');
+    var advanceTimer = null, matchTimer = null;
 
     var isEN = function () { return document.documentElement.lang === 'en'; };
 
@@ -823,6 +839,14 @@
       nextBtn.querySelector('[data-en]').setAttribute('data-en', last ? 'See my match' : 'Next');
     };
 
+    // light up the level tracker: cleared rounds get a check, current one glows
+    var setDots = function (activeIdx) {
+      dots.forEach(function (d, i) {
+        d.classList.toggle('is-done', i < activeIdx);
+        d.classList.toggle('is-active', i === activeIdx);
+      });
+    };
+
     var showStep = function (idx) {
       stepIndex = idx;
       steps.forEach(function (s, i) {
@@ -831,6 +855,7 @@
       });
       curEl.textContent = '0' + (idx + 1);
       fillEl.style.width = ((idx + 1) / steps.length * 100).toFixed(2) + '%';
+      setDots(idx);
       updateNav();
     };
 
@@ -873,14 +898,27 @@
       });
     }
 
-    var showResult = function () {
+    // reveal the matched package — springs the result card in
+    var revealResult = function () {
       matched = bestMatch();
       renderResult();
-      form.hidden = true;
+      if (matchingEl) matchingEl.hidden = true;
       result.hidden = false;
       result.classList.add('is-shown');
       fillEl.style.width = '100%';
       curEl.textContent = '03';
+      setDots(steps.length); // all three rounds cleared
+    };
+
+    // gate the reveal behind a short "matching…" beat so the result feels earned
+    var showResult = function () {
+      form.hidden = true;
+      if (reduced || !matchingEl) { revealResult(); return; }
+      result.hidden = true;
+      result.classList.remove('is-shown');
+      matchingEl.hidden = false;
+      clearTimeout(matchTimer);
+      matchTimer = setTimeout(revealResult, 950);
     };
 
     // chip toggles
@@ -903,24 +941,70 @@
         });
       }
       updateNav();
+
+      // game feel: single-choice rounds auto-advance so a tap flows straight to
+      // the next question (or the result). The multi-pick "vibe" step waits for
+      // the Next button so people can pick a second option.
+      if (group !== 'style' && stepReady(stepIndex)) {
+        clearTimeout(advanceTimer);
+        advanceTimer = setTimeout(function () {
+          if (stepIndex === steps.length - 1) showResult();
+          else showStep(stepIndex + 1);
+        }, reduced ? 0 : 480);
+      }
     });
 
+    // reveal the quiz from the start gate — the questions stay hidden until "Start"
+    var beginQuiz = function (focusFirst) {
+      clearTimeout(advanceTimer); clearTimeout(matchTimer);
+      if (startPanel) startPanel.hidden = true;
+      if (progress) progress.hidden = false;
+      if (matchingEl) matchingEl.hidden = true;
+      result.hidden = true;
+      result.classList.remove('is-shown');
+      form.hidden = false;
+      showStep(0);
+      if (focusFirst) {
+        var firstChip = form.querySelector('.tm-chip');
+        if (firstChip) firstChip.focus({ preventScroll: true });
+      }
+    };
+
+    if (startBtn) startBtn.addEventListener('click', function () { beginQuiz(true); });
+
+    // skip the quiz — jump straight to the Popular tab in the catalog
+    var popBtn = root.querySelector('[data-tm-popular]');
+    if (popBtn) {
+      popBtn.addEventListener('click', function () {
+        var tab = document.querySelector('.filter-tab[data-cat="popular"]');
+        if (tab) tab.click();
+        var pk = document.getElementById('packages');
+        if (pk) pk.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      });
+    }
+
     nextBtn.addEventListener('click', function () {
+      clearTimeout(advanceTimer);
       if (!stepReady(stepIndex)) return;
       if (stepIndex === steps.length - 1) showResult();
       else showStep(stepIndex + 1);
     });
 
     backBtn.addEventListener('click', function () {
+      clearTimeout(advanceTimer);
       if (stepIndex > 0) showStep(stepIndex - 1);
     });
 
     restart.addEventListener('click', function () {
+      clearTimeout(advanceTimer); clearTimeout(matchTimer);
       picks = { style: [], time: null, zone: null };
       matched = null;
       form.querySelectorAll('.tm-chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
       result.hidden = true;
       result.classList.remove('is-shown');
+      if (matchingEl) matchingEl.hidden = true;
+      if (startPanel) startPanel.hidden = true;
+      if (progress) progress.hidden = false;
       form.hidden = false;
       showStep(0);
     });
@@ -938,122 +1022,224 @@
     var root = document.querySelector('.ourway');
     if (!root) return;
 
-    var markers = Array.prototype.slice.call(root.querySelectorAll('.ow-marker'));
-    var map     = root.querySelector('.ow-map');
-    var popup   = root.querySelector('[data-ow-popup]');
-    if (!markers.length || !map || !popup) return;
+    var modeBtns = Array.prototype.slice.call(root.querySelectorAll('[data-ow-mode]'));
+    var mapEl    = root.querySelector('.ow-map');
+    var markers  = mapEl ? Array.prototype.slice.call(mapEl.querySelectorAll('.ow-marker')) : [];
+    var listEl   = root.querySelector('[data-ow-list]');
+    var popup    = root.querySelector('[data-ow-popup]');
+    if (!mapEl || !listEl || !popup) return;
 
-    var elTime  = popup.querySelector('[data-ow-time]');
-    var elTag   = popup.querySelector('[data-ow-tag]');
-    var elTitle = popup.querySelector('[data-ow-storytitle]');
-    var elQuote = popup.querySelector('[data-ow-quote]');
+    var elImg   = popup.querySelector('img');
 
     var isEN = function () { return document.documentElement.lang === 'en'; };
 
-    var STOPS = [
-      { time: '07:30',
-        th: { tag: 'ตลาดเช้า', title: 'ตลาดสดยามเช้า', quote: 'เริ่มวันด้วยกาแฟโบราณกับปาท่องโก๋ ตลาดที่คนภูเก็ตมาจ่ายกับข้าวกันจริง ๆ ก่อนสิบโมงของก็หมดแล้ว' },
-        en: { tag: 'Morning Market', title: 'The morning market', quote: 'Start with kopi and patongko where locals actually shop — by ten it’s all gone.' } },
-      { time: '09:00',
-        th: { tag: 'เมืองเก่า', title: 'ตรอกเมืองเก่า', quote: 'เดินดูตึกชิโน-โปรตุกีสตอนแดดยังไม่แรง มุมถ่ายรูปดีที่สุดคือก่อนร้านเปิด' },
-        en: { tag: 'Old Town', title: 'Old-town lanes', quote: 'Walk the Sino-Portuguese shophouses before the heat — the best photos are before the shops open.' } },
-      { time: '11:00',
-        th: { tag: 'งานคราฟท์', title: 'เวิร์กช็อปผ้าบาติก', quote: 'แวะบ้านช่างบาติก ลองเพนต์ผ้าลายทะเลอันดามันด้วยมือตัวเอง ได้ของกลับบ้านที่ไม่มีใครเหมือน' },
-        en: { tag: 'Local Craft', title: 'A batik workshop', quote: 'Drop by a batik maker’s home and hand-paint your own Andaman-sea pattern — a one-of-a-kind piece to take home.' } },
-      { time: '13:30',
-        th: { tag: 'หาดลับ', title: 'หาดเล็กที่คนไม่ค่อยรู้', quote: 'หาดเล็ก ๆ ที่รถทัวร์เข้าไม่ถึง น้ำใส คนน้อย เอาเสื่อไปปูนอนฟังคลื่นได้ทั้งบ่าย' },
-        en: { tag: 'Hidden Beach', title: 'A beach few people know', quote: 'A small cove the tour coaches can’t reach — clear water, few people, a whole afternoon of waves.' } },
-      { time: '16:00',
-        th: { tag: 'จุดชมวิว', title: 'จุดชมวิวมุมคนถิ่น', quote: 'ไม่ใช่จุดชมวิวยอดฮิต แต่เห็นทะเลได้กว้างกว่า ลมเย็น ๆ รอแสงเริ่มเปลี่ยนสี' },
-        en: { tag: 'Viewpoint', title: 'A local’s viewpoint', quote: 'Not the famous lookout — a wider sea view, cool wind, waiting for the light to turn.' } },
-      { time: '18:30',
-        th: { tag: 'หมู่บ้านชาวเล', title: 'ราไวย์ตอนเรือกลับฝั่ง', quote: 'จบวันที่ราไวย์ ดูเรือชาวเลกลับเข้าฝั่ง กินอาหารทะเลสด ๆ ริมหาดตอนพระอาทิตย์ตก' },
-        en: { tag: 'Sea-gypsy Village', title: 'Rawai as the boats come in', quote: 'End at Rawai, watching the sea-gypsy boats return — fresh seafood on the sand as the sun drops.' } }
+    // half day (ครึ่งวัน) and full day (1 วัน) are two independent itineraries;
+    // the map pins are re-labelled per mode from whichever set is active.
+    var HALF = [
+      { time: '08:00', icon: '#i-food', img: 'assets/img/mee-ton-poe.webp',
+        th: { tag: 'มื้อเช้า', title: 'ร้านหมี่ต้นโพธิ์', quote: 'ร้านดังระดับตำนาน เปิดมากว่า 70 ปี เมนูขึ้นชื่อคือหมี่ผัดฮกเกี้ยนใส่ไข่' },
+        en: { tag: 'Breakfast', title: 'Mee Ton Poe', quote: 'A legendary noodle shop open for over 70 years — famous for Hokkien fried noodles with egg.' } },
+      { time: '10:00', icon: '#i-bank', img: 'assets/img/old-town.webp', pos: 'center 22%',
+        th: { tag: 'เมืองเก่า', title: 'เดินเล่นเมืองเก่า', quote: 'เดินถนนถลาง ซอยรมณีย์ ถนนดีบุก ถนนพังงา แวะร้านหนังสือ แกลเลอรี และชมอาคารชิโน-โปรตุกีส' },
+        en: { tag: 'Old Town', title: 'Old-town stroll', quote: 'Wander Thalang, Soi Romanee, Dibuk and Phang Nga roads — bookshops, galleries and Sino-Portuguese shophouses.' } },
+      { time: '12:00', icon: '#i-food', img: 'assets/img/one-chun.webp', fit: 'contain', bg: '#3b5a44',
+        th: { tag: 'มิชลิน', title: 'ร้านวันจันทร์ (One Chun)', quote: 'หนึ่งในร้านอาหารพื้นเมืองภูเก็ตที่โด่งดังที่สุดย่านเมืองเก่า การันตีด้วยรางวัล Michelin Bib Gourmand 8 ปีติดต่อกัน (2026)' },
+        en: { tag: 'Michelin', title: 'One Chun Cafe & Restaurant', quote: 'One of Phuket’s most famous local restaurants in the Old Town — a Michelin Bib Gourmand for 8 years running (2026).' } }
     ];
 
-    var current = -1;
+    var FULL = [
+      { time: '07:00', icon: '#i-food', img: 'assets/img/boonrat-dimsum.webp',
+        th: { tag: 'มื้อเช้า', title: 'บุญรัตน์ติ่มซำ สาขา 1', quote: 'เริ่มเช้าแบบคนภูเก็ตด้วยติ่มซำร้านดังเปิดมานาน ซาลาเปา ขนมจีบ ฮะเก๋า ร้อน ๆ กับชาจีนสักถ้วย' },
+        en: { tag: 'Breakfast', title: 'Boonrat Dim Sum (Branch 1)', quote: 'Start the morning like a local with dim sum from a long-time favourite — steamed buns, dumplings and Chinese tea.' } },
+      { time: '08:30', icon: '#i-ship', img: 'assets/img/islands-sea.webp',
+        th: { tag: 'ทะเล', title: 'เกาะเฮ', quote: 'นั่งสปีดโบ๊ทข้ามไปเกาะเฮ น้ำใสฟ้าเทอร์ควอยซ์ เล่นน้ำ ดำน้ำตื้นดูปะการังใกล้ฝั่ง' },
+        en: { tag: 'Island', title: 'Coral Island (Koh Hey)', quote: 'Speedboat across to Coral Island — turquoise water, swimming and easy snorkelling over the reef.' } },
+      { time: '13:00', icon: '#i-food', img: 'assets/img/mor-mudong.webp',
+        th: { tag: 'มื้อเที่ยง', title: 'ร้านอาหารหมอมูดง', quote: 'อาหารใต้พื้นบ้านแท้ ๆ ในป่าชายเลน นั่งซุ้มไม้ไผ่ส่วนตัว รสจัดจ้านถึงเครื่องแกงใต้ ร้านที่คนพื้นที่นิยมมาก' },
+        en: { tag: 'Lunch', title: 'Mor Mudong', quote: 'Authentic southern-Thai food in the mangroves — private bamboo huts and bold, fiery local curries the locals love.' } },
+      { time: '15:00', icon: '#i-waves', img: 'assets/img/white-beach.webp',
+        th: { tag: 'คาเฟ่ริมหาด', title: 'หาดกะตะน้อย', quote: 'พักผ่อนถ่ายรูปชิค ๆ ที่คาเฟ่ริมหาดกะตะน้อย หาดเงียบ น้ำใส วิวสวยกำลังดี' },
+        en: { tag: 'Beach cafe', title: 'Kata Noi Beach', quote: 'Unwind at a beachfront cafe on Kata Noi — a quiet cove, clear water and a perfect view.' } },
+      { time: '17:15', icon: '#i-mountain', img: 'assets/img/naiharn-hike.webp',
+        th: { tag: 'จุดชมวิว', title: 'จุดชมวิวกังหันลม', quote: 'แวะจุดชมวิวกังหันลม มองเห็นหาดยะนุ้ยและทะเลกว้าง รับลมเย็น ๆ ก่อนพระอาทิตย์ตก' },
+        en: { tag: 'Viewpoint', title: 'Windmill Viewpoint', quote: 'Stop at the Windmill Viewpoint for the sweep of Yanui Beach and the open sea in the cooling wind.' } },
+      { time: '18:00', icon: '#i-sun', img: 'assets/img/promthep-sunset.webp',
+        th: { tag: 'พระอาทิตย์ตก', title: 'แหลมพรหมเทพ', quote: 'ปิดท้ายวันด้วยแสงสุดท้ายที่แหลมพรหมเทพ จุดชมพระอาทิตย์ตกยอดฮิตของภูเก็ต' },
+        en: { tag: 'Sunset', title: 'Promthep Cape', quote: 'End the day with the last light at Promthep Cape — Phuket’s most-loved sunset spot.' } }
+    ];
 
-    var fill = function (i) {
-      var s = STOPS[i];
-      if (!s) return;
-      var d = isEN() ? s.en : s.th;
-      elTime.textContent  = s.time;
-      elTag.textContent   = d.tag;
-      elTitle.textContent = d.title;
-      elQuote.textContent = d.quote;
+    var mode = 'full';
+    var STOPS = FULL;
+
+    // warm the cache so the place image shows instantly in the popup
+    HALF.concat(FULL).forEach(function (s) { var im = new Image(); im.src = s.img; });
+
+    var inMode = function (i) { return i < STOPS.length; };
+    var openIdx = -1;          // stop currently shown in the popup (-1 = closed)
+
+    // ---- full itinerary list (left) — static reference info, not linked to the map ----
+    var renderList = function () {
+      var en = isEN();
+      listEl.textContent = '';
+      STOPS.forEach(function (s, i) {
+        if (!inMode(i)) return;
+        var d = en ? s.en : s.th;
+        var li = document.createElement('li');
+        li.className = 'ow-item';
+        li.setAttribute('data-stop', String(i));
+
+        var row = document.createElement('div');
+        row.className = 'ow-row';
+        row.innerHTML =
+          '<span class="ow-row-ic" aria-hidden="true"><svg class="ic"><use href="' + s.icon + '"/></svg></span>' +
+          '<span class="ow-row-body">' +
+            '<span class="ow-row-head">' +
+              '<span class="ow-row-time">' + s.time + '</span>' +
+              '<span class="ow-row-title"></span>' +
+            '</span>' +
+            '<span class="ow-row-quote"></span>' +
+          '</span>';
+        row.querySelector('.ow-row-title').textContent = d.title;
+        row.querySelector('.ow-row-quote').textContent = d.quote;
+
+        li.appendChild(row);
+        listEl.appendChild(li);
+      });
     };
 
-    // place the popup above the pin (or below when there's no room), arrow on the marker
+    // ---- sync the map pins (icon / time / label) with the active itinerary ----
+    var updateMarkers = function () {
+      var en = isEN();
+      markers.forEach(function (m) {
+        var i = parseInt(m.getAttribute('data-stop'), 10);
+        var s = STOPS[i];
+        if (!s) return;                     // pin hidden by CSS in half-day mode
+        var d = en ? s.en : s.th;
+        var use = m.querySelector('.ow-ic');
+        if (use) { use.setAttribute('href', s.icon); use.setAttribute('xlink:href', s.icon); }
+        var t = m.querySelector('.ow-time');
+        if (t) t.textContent = s.time;
+        m.setAttribute('aria-label', (en ? 'Stop ' : 'หมุดที่ ') + (i + 1) + ' · ' + s.time + ' · ' + d.title);
+      });
+    };
+
+    // ---- image popup on the map (image only) ----
+    var fill = function (i) {
+      var s = STOPS[i];
+      var d = isEN() ? s.en : s.th;
+      if (elImg.getAttribute('src') !== s.img) { elImg.src = s.img; }
+      elImg.style.objectPosition = s.pos || 'center';
+      elImg.style.objectFit = s.fit || 'cover';
+      elImg.parentElement.style.background = s.bg || '';
+      elImg.alt = d.title;
+    };
+
+    // position the popup on the map, near the pin (above unless it clips the top)
     var place = function (marker) {
-      var mr = map.getBoundingClientRect();
+      var mr = mapEl.getBoundingClientRect();
       var pr = marker.getBoundingClientRect();
       var markerX = pr.left + pr.width / 2 - mr.left;
       var pinTop  = pr.top - mr.top;
       var pinBase = pr.bottom - mr.top;
-      var gap = 12;
-      var half = popup.offsetWidth / 2;
-      var ph  = popup.offsetHeight;
-
+      var gap = 12, half = popup.offsetWidth / 2, ph = popup.offsetHeight;
       var below = pinTop - gap - ph < 0;
       popup.classList.toggle('above', !below);
       popup.classList.toggle('below', below);
       popup.style.top = (below ? pinBase + gap : pinTop - gap - ph) + 'px';
-
       var cx = Math.max(half + 4, Math.min(mr.width - half - 4, markerX));
       popup.style.left = cx + 'px';
       popup.style.setProperty('--arrow-x', (markerX - (cx - half)) + 'px');
     };
 
-    var open = function (i, marker) {
-      current = i;
+    var markerFor = function (i) {
+      for (var k = 0; k < markers.length; k++) {
+        if (markers[k].getAttribute('data-stop') === String(i)) return markers[k];
+      }
+      return null;
+    };
+
+    var setActive = function (i) {
+      markers.forEach(function (m) {
+        m.classList.toggle('is-active', m.getAttribute('data-stop') === String(i));
+      });
+    };
+
+    var open = function (i) {
+      if (!inMode(i)) return;
+      var marker = markerFor(i);
+      if (!marker) return;
+      openIdx = i;
       fill(i);
+      setActive(i);
       popup.hidden = false;
-      place(marker);            // reads layout → flushes a reflow while still hidden
-      void popup.offsetWidth;   // ensure the pre-open state is committed
-      popup.classList.add('is-open');
-      markers.forEach(function (m, k) {
-        m.classList.toggle('is-active', k === i);
-        m.setAttribute('aria-pressed', k === i ? 'true' : 'false');
+      // measure after it is rendered, then place + reveal
+      requestAnimationFrame(function () {
+        place(marker);
+        popup.classList.add('is-open');
       });
     };
 
     var close = function () {
-      current = -1;
+      openIdx = -1;
       popup.classList.remove('is-open');
-      markers.forEach(function (m) {
-        m.classList.remove('is-active');
-        m.setAttribute('aria-pressed', 'false');
-      });
+      setActive(-1);
     };
-
     popup.addEventListener('transitionend', function (e) {
       if (e.propertyName === 'opacity' && !popup.classList.contains('is-open')) {
         popup.hidden = true;
       }
     });
 
-    markers.forEach(function (m, i) {
-      m.setAttribute('aria-pressed', 'false');
-      m.addEventListener('mouseenter', function () { open(i, m); });
-      m.addEventListener('mouseleave', close);
-      m.addEventListener('focus', function () { open(i, m); });
-      m.addEventListener('blur', close);
-      m.addEventListener('click', function () {           // touch / mouse tap
-        if (current === i) { close(); } else { open(i, m); }
+    // ---- trip-length filter (full day / half day) ----
+    var setMode = function (m) {
+      mode = m;
+      STOPS = m === 'half' ? HALF : FULL;
+      modeBtns.forEach(function (b) {
+        var on = b.getAttribute('data-ow-mode') === m;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
+      mapEl.classList.toggle('ow-half', m === 'half');
+      updateMarkers();
+      renderList();
+      // if the open place is now hidden, close the popup
+      if (openIdx !== -1 && !inMode(openIdx)) close();
+    };
+
+    modeBtns.forEach(function (b) {
+      b.addEventListener('click', function () { setMode(b.getAttribute('data-ow-mode')); });
+    });
+
+    // each map pin drives the popup (hover, focus, or tap)
+    markers.forEach(function (m) {
+      var i = parseInt(m.getAttribute('data-stop'), 10);
+      m.addEventListener('mouseenter', function () { open(i); });
+      m.addEventListener('mouseleave', close);
+      m.addEventListener('focus', function () { open(i); });
+      m.addEventListener('blur', close);
+      m.addEventListener('click', function () { open(i); });
       m.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i, m); }
-        else if (e.key === 'Escape') { close(); m.blur(); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
+        if (e.key === 'Escape') { close(); m.blur(); }
       });
     });
 
-    // keep it glued to the pin while the page reflows
+    // keep the popup glued to its pin while the layout shifts
     window.addEventListener('resize', function () {
-      if (current > -1) place(markers[current]);
+      if (openIdx === -1) return;
+      var marker = markerFor(openIdx);
+      if (marker) place(marker);
     });
+
+    // re-render list + popup text on language switch
     document.addEventListener('langchange', function () {
-      if (current > -1) { fill(current); place(markers[current]); }
+      updateMarkers();
+      renderList();
+      if (openIdx !== -1) fill(openIdx);
     });
+
+    updateMarkers();
+    renderList();
   })();
 
   /* ---------- footer year ---------- */

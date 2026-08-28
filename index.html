@@ -31,11 +31,12 @@
 
     <nav aria-label="เมนูหลัก" data-en-label="Main navigation">
       <ul class="nav-links" id="nav-links" data-open="false">
-        <li><a href="#main" aria-current="page" data-en="Home">หน้าแรก</a></li>
+        <li><a href="#find" data-en="Styles">สไตล์ทริป</a></li>
         <li><a href="#trip-match" data-en="Find your trip">จับคู่ทริป</a></li>
-        <li><a href="#packages" data-en="Tours &amp; Activities">ทัวร์และกิจกรรม</a></li>
-        <li><a href="#our-way" data-en="Phuket, our way">ภูเก็ตในแบบของเรา</a></li>
-        <li><a href="#about" data-en="About Us">เกี่ยวกับเรา</a></li>
+        <li><a href="#packages" data-en="Tours">ทัวร์และกิจกรรม</a></li>
+        <li><a href="#beyond" data-en="Our way">ภูเก็ตในแบบของเรา</a></li>
+        <li><a href="#about" data-en="Why Us">ทำไมต้องเรา</a></li>
+        <li><a href="#moments" data-en="Gallery">แกลเลอรี</a></li>
         <li><a href="#reviews" data-en="Reviews">รีวิว</a></li>
         <li><a href="#contact" data-en="Contact">ติดต่อ</a></li>
       </ul>
@@ -46,7 +47,7 @@
         <button type="button" class="lang-btn is-active" data-set-lang="th" aria-current="true" lang="th">TH</button>
         <button type="button" class="lang-btn" data-set-lang="en" aria-current="false" lang="en">EN</button>
       </span>
-      <a class="btn btn-coral btn-sm" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" data-en="Plan a Trip">วางแผนทริป</a>
+      <a class="btn btn-coral btn-sm" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" data-en="Book a Trip">จองทริป</a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนู">
         <svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg>
       </button>
@@ -180,18 +181,86 @@
         <p class="eyebrow" data-en="Find your Phuket">ค้นหาภูเก็ตของคุณ</p>
         <h2 id="tm-title" data-en="Tell us your vibe — we'll match your trip">บอกสไตล์ที่ใช่ แล้วเราจับคู่ทริปให้</h2>
         <p class="lead" data-en="Answer three quick questions and we'll suggest a Phuket experience that fits how you like to travel.">ตอบ 3 คำถามสั้น ๆ แล้วเราจะแนะนำประสบการณ์ภูเก็ตที่เหมาะกับสไตล์การเที่ยวของคุณ</p>
+        <!-- travel-trail motif — a plane looping its way to the spot that matches you -->
+        <div class="tm-motif" aria-hidden="true">
+          <svg class="tm-map" viewBox="0 0 240 250" role="img">
+            <!-- airy sky doodles: sun, drifting clouds, twinkles -->
+            <circle class="tm-map-sun-halo" cx="42" cy="46" r="26"/>
+            <circle class="tm-map-sun" cx="42" cy="46" r="15"/>
+            <g class="tm-map-cloud" transform="translate(150,42)">
+              <circle cx="-15" cy="6" r="9"/><circle cx="-2" cy="0" r="12"/><circle cx="12" cy="5" r="10"/>
+              <rect x="-24" y="5" width="46" height="12" rx="6"/>
+            </g>
+            <g class="tm-map-cloud tm-map-cloud-2" transform="translate(198,150)">
+              <circle cx="-11" cy="5" r="7"/><circle cx="0" cy="0" r="10"/><circle cx="11" cy="5" r="8"/>
+              <rect x="-18" y="4" width="37" height="10" rx="5"/>
+            </g>
+            <path class="tm-map-spark" d="M212 70 l2.4 5.6 5.6 2.4 -5.6 2.4 -2.4 5.6 -2.4 -5.6 -5.6 -2.4 5.6 -2.4 Z"/>
+            <circle class="tm-map-spark tm-map-spark-2" cx="30" cy="150" r="2.6"/>
+            <circle class="tm-map-spark tm-map-spark-3" cx="122" cy="236" r="2.6"/>
+
+            <!-- big open, curved dashed trail (no background — airy space) -->
+            <path class="tm-map-route" d="M54 202 C 84 182, 104 178, 118 166 C 130 156, 124 140, 104 144 C 84 148, 88 176, 116 178 C 150 180, 168 120, 200 66" fill="none"/>
+
+            <!-- plane riding the start of the trail (its own badge colour) -->
+            <g transform="translate(46,208)">
+              <g class="tm-map-plane">
+                <circle class="tm-map-plane-badge" r="17"/>
+                <use class="tm-map-plane-ic" href="#i-plane" x="-10" y="-10" width="20" height="20" transform="rotate(6)"/>
+              </g>
+            </g>
+            <!-- destination pin — up by the star, top-right (clear of the star) -->
+            <g transform="translate(206,54)">
+              <ellipse class="tm-map-pinglow" cx="0" cy="4" rx="15" ry="4.5"/>
+              <g class="tm-map-pin">
+                <path class="tm-map-pindrop" d="M0 0 C -8 -17, -18 -25, -18 -38 A 18 18 0 1 1 18 -38 C 18 -25, 8 -17, 0 0 Z"/>
+                <use class="tm-map-pinic" href="#i-heart" x="-9" y="-47" width="18" height="18"/>
+              </g>
+            </g>
+          </svg>
+        </div>
       </div>
 
       <div class="tm-card" data-tripmatch>
 
-      <!-- progress -->
-      <div class="tm-progress" aria-hidden="true">
-        <span class="tm-count"><span class="tm-cur" data-tm-current>01</span><span class="tm-total"> / 03</span></span>
-        <span class="tm-bar"><span class="tm-bar-fill" data-tm-fill></span></span>
+      <!-- start gate — a quick "press start" screen so the matcher feels like a game -->
+      <div class="tm-start" data-tm-start>
+        <span class="tm-start-badge"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><span data-en="Trip-match game">เกมจับคู่ทริป</span></span>
+        <div class="tm-start-icon" aria-hidden="true"><svg class="ic"><use href="#i-compass"/></svg></div>
+        <h3 class="tm-start-title" data-en="Ready to find your kind of trip?">พร้อมหาทริปในสไตล์คุณหรือยัง?</h3>
+        <p class="tm-start-desc" data-en="Play a quick 3-question game and we'll match the Phuket experience that fits you best — no wrong answers.">เล่นเกมสั้น ๆ แค่ 3 คำถาม แล้วเราจะจับคู่ประสบการณ์ภูเก็ตที่ใช่ที่สุดสำหรับคุณ ไม่มีคำตอบผิด</p>
+        <ul class="tm-start-steps" aria-hidden="true">
+          <li><b>1</b><span data-en="Vibe">สไตล์</span></li>
+          <li><b>2</b><span data-en="Time">เวลา</span></li>
+          <li><b>3</b><span data-en="Zone">โซน</span></li>
+        </ul>
+        <div class="tm-start-actions">
+          <button class="btn btn-coral tm-start-btn" type="button" data-tm-startbtn>
+            <svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>
+            <span data-en="Start the quiz">เริ่มทดสอบ</span>
+          </button>
+          <button class="btn btn-outline tm-start-alt" type="button" data-tm-popular>
+            <span data-en="Popular trips">ทริปยอดนิยม</span>
+          </button>
+        </div>
+        <p class="tm-start-note" data-en="Under a minute · no sign-up needed">ใช้เวลาไม่ถึง 1 นาที · ไม่ต้องกรอกข้อมูล</p>
+      </div>
+
+      <!-- progress — a labelled level tracker + bar so it reads like a 3-round game -->
+      <div class="tm-progress" aria-hidden="true" hidden>
+        <div class="tm-track" data-tm-track>
+          <span class="tm-dot is-active" data-tm-dot><b>1</b><span class="tm-dot-label" data-en="Vibe">สไตล์</span></span>
+          <span class="tm-dot" data-tm-dot><b>2</b><span class="tm-dot-label" data-en="Time">เวลา</span></span>
+          <span class="tm-dot" data-tm-dot><b>3</b><span class="tm-dot-label" data-en="Zone">โซน</span></span>
+        </div>
+        <div class="tm-progress-row">
+          <span class="tm-count"><span class="tm-cur" data-tm-current>01</span><span class="tm-total"> / 03</span></span>
+          <span class="tm-bar"><span class="tm-bar-fill" data-tm-fill></span></span>
+        </div>
       </div>
 
       <!-- form -->
-      <form class="tm-form" data-tm-form>
+      <form class="tm-form" data-tm-form hidden>
 
         <fieldset class="tm-step is-active" data-step="1">
           <legend class="tm-q"><span data-en="What's your travel vibe?">อยากเที่ยวสไตล์ไหน?</span></legend>
@@ -238,6 +307,13 @@
         </div>
       </form>
 
+      <!-- matching — a short "computing your result" beat that builds anticipation -->
+      <div class="tm-matching" data-tm-matching role="status" aria-live="polite" hidden>
+        <span class="tm-matching-orb" aria-hidden="true"><svg class="ic"><use href="#i-compass"/></svg></span>
+        <p class="tm-matching-text" data-en="Matching your perfect trip…">กำลังจับคู่ทริปที่ใช่ให้คุณ…</p>
+        <span class="tm-matching-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      </div>
+
       <!-- result -->
       <div class="tm-result" data-tm-result role="region" aria-live="polite" hidden>
         <p class="tm-result-eyebrow" data-en="Your recommended package">แพ็คเกจที่แนะนำสำหรับคุณ</p>
@@ -276,6 +352,7 @@
   <div class="wrap">
     <div class="filter-tabs" role="group" data-filters aria-label="กรองแพ็กเกจตามหมวด" data-en-label="Filter by category">
       <button class="filter-tab is-active" type="button" aria-pressed="true"  data-cat="all"       data-name-th="ทั้งหมด"                data-name-en="All"><svg class="ic tab-ic" aria-hidden="true"><use href="#i-grid"/></svg><span class="tab-label">ทั้งหมด</span></button>
+      <button class="filter-tab"           type="button" aria-pressed="false" data-cat="popular"   data-name-th="ยอดนิยม"               data-name-en="Popular"><svg class="ic tab-ic" aria-hidden="true"><use href="#i-star"/></svg><span class="tab-label">ยอดนิยม</span></button>
       <button class="filter-tab"           type="button" aria-pressed="false" data-cat="sea"       data-name-th="เกาะ &amp; ทะเล"          data-name-en="Islands &amp; Sea"><svg class="ic tab-ic" aria-hidden="true"><use href="#i-waves"/></svg><span class="tab-label">เกาะ &amp; ทะเล</span></button>
       <button class="filter-tab"           type="button" aria-pressed="false" data-cat="dive"      data-name-th="ดำน้ำ &amp; กิจกรรมทางน้ำ" data-name-en="Diving &amp; Watersports"><svg class="ic tab-ic" aria-hidden="true"><use href="#i-fish"/></svg><span class="tab-label">ดำน้ำ &amp; กิจกรรมทางน้ำ</span></button>
       <button class="filter-tab"           type="button" aria-pressed="false" data-cat="adventure" data-name-th="ผจญภัยบนบก"            data-name-en="Land Adventures"><svg class="ic tab-ic" aria-hidden="true"><use href="#i-mountain"/></svg><span class="tab-label">ผจญภัยบนบก</span></button>
@@ -299,7 +376,7 @@
       <article class="tour reveal" data-cat="sea">
         <div class="tour-media">
           <img src="assets/img/talay-waek-krabi.webp" alt="เขาหินปูนและทะเลสีครามที่ไร่เลย์ กระบี่" data-en-alt="Limestone karsts and blue sea at Railay, Krabi" width="1108" height="1477" style="object-position: center 80%;" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-sky" data-en="New">ใหม่</span></div>
+          <div class="ribbons"><span class="badge badge-dark" data-en="New">ใหม่</span></div>
         </div>
         <div class="tour-body">
           <h3 data-en="Talay Waek · Poda Island · Railay, Krabi">ทะเลแหวก · เกาะปอดะ · ไร่เลย์ กระบี่</h3>
@@ -318,7 +395,7 @@
       <article class="tour reveal" data-cat="sea">
         <div class="tour-media">
           <img src="assets/img/surin-moken.webp" alt="หาดทรายขาวและน้ำทะเลใสที่อุทยานแห่งชาติหมู่เกาะสุรินทร์" data-en-alt="White-sand beach and clear water at Mu Ko Surin National Park" width="1056" height="1551" style="object-position: center 72%;" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-sky" data-en="New">ใหม่</span></div>
+          <div class="ribbons"><span class="badge badge-dark" data-en="New">ใหม่</span></div>
         </div>
         <div class="tour-body">
           <h3 data-en="Surin Islands National Park · Moken Village">อุทยานฯ หมู่เกาะสุรินทร์ · หมู่บ้านมอร์แกน</h3>
@@ -337,7 +414,7 @@
       <article class="tour reveal" data-cat="sea">
         <div class="tour-media">
           <img src="assets/img/thanbok-koh-hong.webp" alt="เรือหางยาวและน้ำทะเลใสสีเขียวมรกตที่เกาะห้อง กระบี่" data-en-alt="Long-tail boats and emerald-clear water at Koh Hong, Krabi" width="1108" height="1477" style="object-position: center 75%;" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-sky" data-en="New">ใหม่</span></div>
+          <div class="ribbons"><span class="badge badge-dark" data-en="New">ใหม่</span></div>
         </div>
         <div class="tour-body">
           <h3 data-en="Than Bok Khorani National Park · Koh Hong">อุทยานฯ ธารโบกขรณี · เกาะห้อง</h3>
@@ -353,10 +430,9 @@
         </div>
       </article>
 
-      <article class="tour reveal" data-cat="sea">
+      <article class="tour reveal" data-cat="sea popular">
         <div class="tour-media">
           <img src="assets/img/longtail.webp" alt="เรือหางยาวและเขาหินปูนอ่าวพังงา" data-en-alt="Long-tail boat and limestone karsts in Phang Nga Bay" width="900" height="1281" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-promo" data-en="Bestseller">ขายดีที่สุด</span></div>
         </div>
         <div class="tour-body">
           <h3 data-en="James Bond 4 Islands + Phang Nga Bay">4 เกาะ เจมส์บอนด์ + อ่าวพังงา</h3>
@@ -432,7 +508,7 @@
       </article>
 
       <!-- ---------- ดำน้ำ & กิจกรรมทางน้ำ ---------- -->
-      <article class="tour reveal" data-cat="dive">
+      <article class="tour reveal" data-cat="dive popular">
         <div class="tour-media">
           <img src="assets/img/jetski-8islands.webp" alt="กลุ่มนักท่องเที่ยวขับเจ็ตสกีหน้าผาหินปูนกลางทะเล" data-en-alt="Group riding jet skis in front of a limestone cliff at sea" width="572" height="644" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-promo" data-en="Thrill-seekers">สายมันส์</span></div>
@@ -489,7 +565,7 @@
       </article>
 
       <!-- ---------- ผจญภัยบนบก ---------- -->
-      <article class="tour reveal" data-cat="adventure">
+      <article class="tour reveal" data-cat="adventure popular">
         <div class="tour-media">
           <img src="assets/img/rafting.webp" alt="กลุ่มนักท่องเที่ยวล่องแก่งด้วยเรือยางในสายน้ำเชี่ยว" data-en-alt="A group white-water rafting through rapids in an inflatable boat" width="581" height="654" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-promo" data-en="Best value">คุ้มที่สุด</span></div>
@@ -568,7 +644,7 @@
       </article>
 
       <!-- ---------- โชว์ & สวนสนุก ---------- -->
-      <article class="tour reveal" data-cat="show">
+      <article class="tour reveal" data-cat="show popular">
         <div class="tour-media">
           <img src="assets/img/phuket-fantasea.webp" alt="โชว์วัฒนธรรมไทยบนเวทีพร้อมปราสาททองและช้างแต่งตัว" data-en-alt="Thai cultural stage show with a golden palace set and costumed elephants" width="588" height="588" loading="lazy" decoding="async">
           <div class="ribbons"><span class="badge badge-promo" data-en="Popular show">โชว์ยอดนิยม</span></div>
@@ -664,7 +740,7 @@
       <article class="tour reveal" data-cat="local">
         <div class="tour-media">
           <img src="assets/img/old-town.webp" alt="ตึกชิโนโปรตุกีสในเมืองเก่าภูเก็ต" data-en-alt="Sino-Portuguese buildings in Phuket Old Town" width="900" height="1350" loading="lazy" decoding="async">
-          <div class="ribbons"><span class="badge badge-sky" data-en="New · Only here">ใหม่ · เฉพาะที่นี่</span></div>
+          <div class="ribbons"><span class="badge badge-dark" data-en="New · Only here">ใหม่ · เฉพาะที่นี่</span></div>
         </div>
         <div class="tour-body">
           <h3 data-en="Phuket Old Town &amp; Local Food">เมืองเก่าภูเก็ต &amp; อาหารถิ่น</h3>
@@ -757,7 +833,7 @@
       <span class="svc-ic" aria-hidden="true"><svg class="ic"><use href="#i-plane"/></svg></span>
       <div class="svc-text">
         <b data-en="Need flights too? We can book those">อยากได้ตั๋วเครื่องบินด้วย? เราจองให้ได้</b>
-        <p data-en="We also book domestic and international air tickets. Just tell us your dates on LINE and we'll handle it — this service is arranged by chat only.">เรารับจองตั๋วเครื่องบินทั้งในและต่างประเทศ แจ้งวันเดินทางทาง LINE เดี๋ยวเราจัดให้ — บริการนี้ให้บริการผ่านแชทเท่านั้น</p>
+        <p data-en="We also book domestic and international air tickets.<br>Just tell us your dates on LINE and we'll handle it — this service is arranged by chat only.">เรารับจองตั๋วเครื่องบินทั้งในและต่างประเทศ<br>แจ้งวันเดินทางกับเราผ่านทาง LINE เดี๋ยวเราจัดให้ บริการนี้ให้บริการผ่านแชทเท่านั้น</p>
       </div>
       <a class="btn btn-primary btn-sm" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" data-en="Ask about flights">สอบถามเรื่องตั๋ว</a>
     </div>
@@ -836,85 +912,98 @@
 <!-- ==================== 5b. PHUKET, OUR WAY — local day map ==================== -->
 <section class="sf-white ourway" id="our-way" aria-labelledby="ow-title">
   <div class="wrap">
-    <div class="ow-layout reveal">
-      <div class="ow-intro">
-        <p class="eyebrow" data-en="Phuket, our way">ภูเก็ตในแบบของเรา</p>
-        <h2 id="ow-title" data-en="A local's day, dawn to sunset">หนึ่งวันแบบคนภูเก็ต ตั้งแต่เช้าจรดเย็น</h2>
-        <p class="lead" data-en="Not a checklist of sights — a rhythm. Hover or tap a stop to see how a local actually spends a day across the island.">ไม่ใช่ลิสต์ที่ต้องไปให้ครบ แต่คือจังหวะของหนึ่งวัน ชี้หรือแตะแต่ละหมุดเพื่อดูว่าคนที่นี่ใช้เวลาในภูเก็ตอย่างไร</p>
+    <div class="ow-head reveal">
+      <p class="eyebrow" data-en="Phuket, our way">ภูเก็ตในแบบของเรา</p>
+      <h2 id="ow-title" data-en="A Phuket-style day —<br>eat, explore, chill like a local">หนึ่งวันสไตล์คนภูเก็ต<br>กิน เที่ยว ชิล แบบฉบับคนพื้นที่</h2>
+      <p class="lead" data-en="Drop the checklist and feel the real rhythm of a Phuket local’s day —<br>from a beloved breakfast spot and a stroll through the Old Town to the evening view at Promthep Cape.">ทิ้งเช็คลิสต์ที่ต้องเก็บให้ครบ แล้วมาสัมผัสจังหวะชีวิตจริงของคนภูเก็ต<br>ตั้งแต่มื้อเช้าเจ้าดัง เดินทอดน่องย่านเมืองเก่า ไปจนถึงชมวิวยามเย็นที่แหลมพรหมเทพ</p>
+
+      <!-- trip-length filter — controls both the list and the map below -->
+      <div class="ow-modes" role="group" aria-label="เลือกความยาวของทริป" data-en-label="Choose trip length">
+        <button class="ow-mode is-active" type="button" data-ow-mode="full" aria-pressed="true">
+          <span data-en="Full day">1 วัน</span>
+        </button>
+        <button class="ow-mode" type="button" data-ow-mode="half" aria-pressed="false">
+          <span data-en="Half day">ครึ่งวัน</span>
+        </button>
       </div>
+    </div>
+
+    <div class="ow-layout reveal">
+      <!-- full itinerary — every stop of the day; hover/tap to preview it on the map -->
+      <ol class="ow-list" data-ow-list aria-label="รายการเที่ยวทั้งวัน" data-en-label="The day's full itinerary"></ol>
 
       <div class="ow-map">
         <svg class="ow-svg" viewBox="39 0 452 560" role="img" aria-label="แผนที่เส้นทางหนึ่งวันในภูเก็ตแบบคนท้องถิ่น" data-en-label="A map of a local one-day route across Phuket">
           <!-- soft sea panel behind the island -->
           <rect class="ow-water" x="49" y="6" width="432" height="552" rx="46"/>
 
-          <!-- Phuket-style island silhouette: narrow north, gentle west bays, wider east, tapered south -->
+          <!-- Phuket-style island silhouette -->
           <path class="ow-island" d="M255 96 C 305 96, 350 112, 382 150 C 414 190, 432 224, 432 270 C 432 314, 424 348, 410 382 C 402 418, 404 448, 390 478 C 374 506, 350 524, 316 528 C 290 530, 266 524, 248 510 C 226 496, 206 480, 192 456 C 172 428, 156 402, 156 370 C 156 338, 168 312, 166 280 C 164 248, 152 222, 156 190 C 160 158, 164 128, 184 112 C 204 100, 230 96, 255 96 Z"/>
-          <path class="ow-coast" d="M255 96 C 305 96, 350 112, 382 150 C 414 190, 432 224, 432 270 C 432 314, 424 348, 410 382 C 402 418, 404 448, 390 478 C 374 506, 350 524, 316 528 C 290 530, 266 524, 248 510 C 226 496, 206 480, 192 456 C 172 428, 156 402, 156 370 C 156 338, 168 312, 166 280 C 164 248, 152 222, 156 190 C 160 158, 164 128, 184 112 C 204 100, 230 96, 255 96 Z"/>
 
           <!-- sea name, west side (Andaman) -->
           <text class="ow-sea-label" x="92" y="300" transform="rotate(-90 92 300)" data-en="Andaman Sea">ทะเลอันดามัน</text>
 
-          <!-- dotted local route weaving through the day -->
-          <path class="ow-route" d="M180 130 C 260 120, 310 140, 330 175 C 352 214, 270 250, 240 285 C 214 315, 350 300, 390 330 C 424 356, 300 388, 250 420 C 214 443, 320 452, 360 480" fill="none" stroke-linecap="round"/>
+          <!-- dotted local route — split into morning + afternoon legs -->
+          <path class="ow-route ow-route-am" d="M180 130 C 260 120, 310 140, 330 175 C 352 214, 270 250, 240 285" fill="none" stroke-linecap="round"/>
+          <path class="ow-route ow-route-pm" d="M240 285 C 214 315, 350 300, 390 330 C 424 356, 300 388, 250 420 C 214 443, 320 452, 360 480" fill="none" stroke-linecap="round"/>
 
-          <!-- stops: teardrop pins, one icon per moment of the day -->
-          <g class="ow-marker" data-stop="0" tabindex="0" role="button" aria-label="หมุดที่ 1 · 07:30 · ตลาดเช้า" data-en-label="Stop 1 · 07:30 · Morning market">
+          <!-- stops: teardrop pins, hover a time to reveal its place on the left -->
+          <g class="ow-marker" data-stop="0" data-half tabindex="0" role="button" aria-label="หมุดที่ 1 · 07:00 · บุญรัตน์ติ่มซำ สาขา 1">
             <g transform="translate(180,130)">
               <circle class="ow-halo" cx="0" cy="-30" r="14"/>
               <path class="ow-pin" d="M0 0 C -6 -13, -14 -19, -14 -30 A 14 14 0 1 1 14 -30 C 14 -19, 6 -13, 0 0 Z"/>
               <use class="ow-ic" href="#i-food" x="-9" y="-36" width="18" height="18"/>
               <rect class="ow-time-bg" x="-24" y="9" width="48" height="18" rx="9"/>
-              <text class="ow-time" x="0" y="18">07:30</text>
+              <text class="ow-time" x="0" y="18">07:00</text>
             </g>
           </g>
-          <g class="ow-marker" data-stop="1" tabindex="0" role="button" aria-label="หมุดที่ 2 · 09:00 · เมืองเก่า" data-en-label="Stop 2 · 09:00 · Old town">
+          <g class="ow-marker" data-stop="1" data-half tabindex="0" role="button" aria-label="หมุดที่ 2 · 08:30 · เกาะเฮ">
             <g transform="translate(330,175)">
               <circle class="ow-halo" cx="0" cy="-30" r="14"/>
               <path class="ow-pin" d="M0 0 C -6 -13, -14 -19, -14 -30 A 14 14 0 1 1 14 -30 C 14 -19, 6 -13, 0 0 Z"/>
-              <use class="ow-ic" href="#i-bank" x="-9" y="-36" width="18" height="18"/>
+              <use class="ow-ic" href="#i-ship" x="-9" y="-36" width="18" height="18"/>
               <rect class="ow-time-bg" x="-24" y="9" width="48" height="18" rx="9"/>
-              <text class="ow-time" x="0" y="18">09:00</text>
+              <text class="ow-time" x="0" y="18">08:30</text>
             </g>
           </g>
-          <g class="ow-marker" data-stop="2" tabindex="0" role="button" aria-label="หมุดที่ 3 · 11:00 · เวิร์กช็อปผ้าบาติก" data-en-label="Stop 3 · 11:00 · Batik workshop">
+          <g class="ow-marker" data-stop="2" data-half tabindex="0" role="button" aria-label="หมุดที่ 3 · 13:00 · ร้านอาหารหมอมูดง">
             <g transform="translate(240,285)">
               <circle class="ow-halo" cx="0" cy="-30" r="14"/>
               <path class="ow-pin" d="M0 0 C -6 -13, -14 -19, -14 -30 A 14 14 0 1 1 14 -30 C 14 -19, 6 -13, 0 0 Z"/>
-              <use class="ow-ic" href="#i-palette" x="-9" y="-36" width="18" height="18"/>
+              <use class="ow-ic" href="#i-food" x="-9" y="-36" width="18" height="18"/>
               <rect class="ow-time-bg" x="-24" y="9" width="48" height="18" rx="9"/>
-              <text class="ow-time" x="0" y="18">11:00</text>
+              <text class="ow-time" x="0" y="18">13:00</text>
             </g>
           </g>
-          <g class="ow-marker" data-stop="3" tabindex="0" role="button" aria-label="หมุดที่ 4 · 13:30 · หาดลับ" data-en-label="Stop 4 · 13:30 · Hidden beach">
+          <g class="ow-marker" data-stop="3" tabindex="0" role="button" aria-label="หมุดที่ 4 · 15:00 · หาดกะตะน้อย">
             <g transform="translate(390,330)">
               <circle class="ow-halo" cx="0" cy="-30" r="14"/>
               <path class="ow-pin" d="M0 0 C -6 -13, -14 -19, -14 -30 A 14 14 0 1 1 14 -30 C 14 -19, 6 -13, 0 0 Z"/>
               <use class="ow-ic" href="#i-waves" x="-7.1" y="-36" width="18" height="18"/>
               <rect class="ow-time-bg" x="-24" y="9" width="48" height="18" rx="9"/>
-              <text class="ow-time" x="0" y="18">13:30</text>
+              <text class="ow-time" x="0" y="18">15:00</text>
             </g>
           </g>
-          <g class="ow-marker" data-stop="4" tabindex="0" role="button" aria-label="หมุดที่ 5 · 16:00 · จุดชมวิว" data-en-label="Stop 5 · 16:00 · Viewpoint">
+          <g class="ow-marker" data-stop="4" tabindex="0" role="button" aria-label="หมุดที่ 5 · 17:15 · จุดชมวิวกังหันลม">
             <g transform="translate(250,420)">
               <circle class="ow-halo" cx="0" cy="-30" r="14"/>
               <path class="ow-pin" d="M0 0 C -6 -13, -14 -19, -14 -30 A 14 14 0 1 1 14 -30 C 14 -19, 6 -13, 0 0 Z"/>
               <use class="ow-ic" href="#i-mountain" x="-9" y="-36" width="18" height="18"/>
               <rect class="ow-time-bg" x="-24" y="9" width="48" height="18" rx="9"/>
-              <text class="ow-time" x="0" y="18">16:00</text>
+              <text class="ow-time" x="0" y="18">17:15</text>
             </g>
           </g>
-          <g class="ow-marker" data-stop="5" tabindex="0" role="button" aria-label="หมุดที่ 6 · 18:30 · หมู่บ้านชาวเล" data-en-label="Stop 6 · 18:30 · Sea-gypsy village">
+          <g class="ow-marker" data-stop="5" tabindex="0" role="button" aria-label="หมุดที่ 6 · 18:00 · แหลมพรหมเทพ">
             <g transform="translate(360,480)">
               <circle class="ow-halo" cx="0" cy="-30" r="14"/>
               <path class="ow-pin" d="M0 0 C -6 -13, -14 -19, -14 -30 A 14 14 0 1 1 14 -30 C 14 -19, 6 -13, 0 0 Z"/>
-              <use class="ow-ic" href="#i-ship" x="-9" y="-36" width="18" height="18"/>
+              <use class="ow-ic" href="#i-sun" x="-9" y="-36" width="18" height="18"/>
               <rect class="ow-time-bg" x="-24" y="9" width="48" height="18" rx="9"/>
-              <text class="ow-time" x="0" y="18">18:30</text>
+              <text class="ow-time" x="0" y="18">18:00</text>
             </g>
           </g>
 
-          <!-- compass rose: small map cue, north-up -->
+          <!-- compass rose -->
           <g class="ow-compass" transform="translate(452,52)" aria-hidden="true">
             <circle class="ring" r="17"/>
             <circle class="ring-in" r="12"/>
@@ -931,13 +1020,9 @@
           </g>
         </svg>
 
+        <!-- image preview — floats on the map near the active pin (image only) -->
         <div class="ow-popup" data-ow-popup role="status" aria-live="polite" hidden>
-          <div class="ow-pop-head">
-            <span class="ow-pop-time" data-ow-time></span>
-            <span class="ow-pop-tag" data-ow-tag></span>
-          </div>
-          <h3 class="ow-pop-title" data-ow-storytitle></h3>
-          <p class="ow-pop-quote" data-ow-quote></p>
+          <div class="ow-pop-media"><img alt="" decoding="async"></div>
         </div>
       </div>
     </div>
@@ -951,7 +1036,7 @@
       <div class="sec-title">
         <p class="eyebrow" data-en="Why travel with us">ทำไมต้องเดินทางกับเรา</p>
         <h2 data-en="We know Phuket.">เรารู้จักภูเก็ต ตัวจริง</h2>
-        <p class="lead" data-en="Not just a tour company — a local team who lives here. Here's what that means for your trip.">ไม่ใช่แค่บริษัททัวร์ แต่คือทีมคนภูเก็ตที่อยู่ที่นี่จริง ๆ และนี่คือสิ่งที่คุณจะได้จากทริปของเรา</p>
+        <p class="lead" data-en="Not just a tour company — a local team who actually lives here.<br>And here's what you'll get from our trips.">ไม่ใช่แค่บริษัททัวร์ แต่คือทีมคนภูเก็ตที่อยู่ที่นี่จริง ๆ<br>และนี่คือสิ่งที่คุณจะได้จากทริปของเรา</p>
       </div>
     </div>
 
@@ -976,7 +1061,7 @@
 </section>
 
 <!-- ==================== 7. REAL PHUKET MOMENTS ==================== -->
-<section class="sf-white">
+<section class="sf-white" id="moments">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="sec-title">
@@ -1081,8 +1166,7 @@
             <span class="gmeta" data-en="from 320+ Google reviews">จาก 320+ รีวิวบน Google</span>
           </div>
         </div>
-        <!-- TODO: swap in the client's real Google Business "write a review" link (Place ID) when provided -->
-        <a class="btn btn-outline greviews-cta" href="https://www.google.com/maps/search/?api=1&amp;query=Nessy+Explores+Phuket" target="_blank" rel="noopener" data-en="Write a review on Google">
+        <a class="btn btn-outline greviews-cta" href="https://www.google.com/maps?cid=10505450246613882713" target="_blank" rel="noopener" data-en="Write a review on Google">
           <svg class="ic" aria-hidden="true"><use href="#i-star"/></svg>
           <span data-en="Write a review">เขียนรีวิว</span>
         </a>
@@ -1104,13 +1188,13 @@
     <div class="plan-inner reveal">
       <div class="plan-copy">
         <p class="eyebrow" data-en="Plan your trip">วางแผนทริปของคุณ</p>
-        <h2 data-en="Tell us where — we'll sort the rest">บอกเราว่าอยากไปไหน เดี๋ยวเราจัดให้</h2>
+        <h2 data-en="Tell us where —<br>we'll sort the rest">บอกเราว่าอยากไปไหน<br>เดี๋ยวเราจัดให้</h2>
         <p class="lead" data-en="We reply every day, 08:00–22:00. Not sure where to go?<br>Just tell us your budget — we always have options.">ตอบทุกวัน 08:00–22:00 น. ไม่แน่ใจว่าจะไปไหน<br>บอกงบมาได้ เรามีตัวเลือกให้เสมอ</p>
         <div class="plan-channels" role="list">
-          <a class="chan chan-primary" role="listitem" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" aria-label="สอบถามทาง LINE @nessyexplores" data-en-label="Chat with us on LINE @nessyexplores">
+          <a class="chan chan-line" role="listitem" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" aria-label="สอบถามทาง LINE @nessyexplores" data-en-label="Chat with us on LINE @nessyexplores">
             <svg class="ic ic-brand" aria-hidden="true"><use href="#i-line"/></svg>
           </a>
-          <a class="chan" role="listitem" href="https://wa.me/66825466162" target="_blank" rel="noopener" aria-label="สอบถามทาง WhatsApp" data-en-label="Chat with us on WhatsApp">
+          <a class="chan chan-wa" role="listitem" href="https://wa.me/message/6FWCMSE6VRA6P1" target="_blank" rel="noopener" aria-label="สอบถามทาง WhatsApp" data-en-label="Chat with us on WhatsApp">
             <svg class="ic ic-brand" aria-hidden="true"><use href="#i-whatsapp"/></svg>
           </a>
           <a class="chan" role="listitem" href="tel:+66825466162" aria-label="โทรหาเรา 082-546-6162" data-en-label="Call us 082-546-6162">
@@ -1132,9 +1216,9 @@
   <div class="wrap">
 
     <!-- Trust & payment safety (moved here from the page body) -->
-    <div class="foot-trust">
+    <div class="foot-trust" id="safety" style="scroll-margin-top:var(--s-8)">
       <div>
-        <h3 data-en="Trust &amp; credentials">ความน่าเชื่อถือ</h3>
+        <h3 data-en="Confidence in every trip">มั่นใจทุกการเดินทาง</h3>
         <ul class="foot-facts">
           <li>
             <svg class="ic" aria-hidden="true"><use href="#i-badge-check"/></svg>
@@ -1146,37 +1230,29 @@
           </li>
           <li>
             <svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>
-            <span data-en="Travel accident insurance up to ฿1,000,000 (death/dismemberment) + ฿500,000 medical, subject to policy terms">ประกันอุบัติเหตุการเดินทาง เสียชีวิต/ทุพพลภาพ วงเงิน 1,000,000 บาท + ค่ารักษาพยาบาล 500,000 บาท ตามเงื่อนไขกรมธรรม์</span>
-          </li>
-          <li>
-            <svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>
-            <span data-en="A real office — 26/1 Ratuthit 200 Pi Road, Patong, Kathu, Phuket 83150">ออฟฟิศจริง — 26/1 ถนนราษฎร์อุทิศ 200 ปี ป่าตอง กะทู้ ภูเก็ต 83150</span>
+            <span>
+              <span class="fact-head" data-en="Travel accident insurance, subject to policy terms">ประกันอุบัติเหตุการเดินทาง ตามเงื่อนไขกรมธรรม์</span>
+              <ul class="fact-list">
+                <li data-en="Death/dismemberment — ฿1,000,000">เสียชีวิต/ทุพพลภาพ วงเงิน 1,000,000 บาท</li>
+                <li data-en="Medical expenses — ฿500,000">ค่ารักษาพยาบาล 500,000 บาท</li>
+              </ul>
+            </span>
           </li>
         </ul>
       </div>
 
       <div>
-        <h3 data-en="Safe payment · Scam protection">ชำระเงินปลอดภัย · ป้องกันมิจฉาชีพ</h3>
-        <p style="color:rgba(234,242,243,.82); font-size:var(--t-sm); margin:0 0 var(--s-4); max-width:46ch" data-en="We only take payment <strong>into the company's corporate account</strong> — the account name must match the company name exactly.">
-          รับชำระผ่าน<strong>บัญชีนิติบุคคลของบริษัทเท่านั้น</strong> ชื่อบัญชีต้องตรงกับชื่อบริษัทเป๊ะ
+        <h3 data-en="Secure payment">ชำระเงินอย่างปลอดภัย</h3>
+        <p style="color:rgba(234,242,243,.82); font-size:var(--t-sm); margin:0 0 var(--s-4); max-width:46ch" data-en="For your safety, please pay only into a company bank account whose account name matches the company name.">
+          เพื่อความปลอดภัย กรุณาชำระผ่านบัญชีบริษัทที่มี<strong>ชื่อบัญชีตรงกับชื่อบริษัท</strong>เท่านั้น
         </p>
         <div class="foot-bank">
-          <span class="tag" aria-hidden="true">KBank</span>
+          <span class="tag"><img src="assets/img/kbank-logo.png" alt="KBank" width="42" height="42"></span>
           <div>
             <b data-en="Gal Shai tour">บจก. กาล-ไช ทัวร์ (Gal Shai tour)</b>
             <span data-en="Kasikornbank · Acct. no. 332-2-83353-8">ธนาคารกสิกรไทย · เลขที่ 332-2-83353-8</span>
           </div>
         </div>
-        <ul class="checklist" style="margin-top:var(--s-4)">
-          <li class="ok">
-            <svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>
-            <span data-en="Transfer only to the <strong>company-name</strong> account or a Kasikornbank payment link">โอนเข้าบัญชี<strong>ชื่อบริษัท</strong> หรือลิงก์ชำระเงินของธนาคารกสิกรไทยเท่านั้น</span>
-          </li>
-          <li class="no">
-            <svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>
-            <span data-en="We <strong>never</strong> accept transfers to a personal account, and we <strong>never</strong> ask for an OTP or password">เรา<strong>ไม่รับ</strong>โอนเข้าบัญชีบุคคล และ<strong>ไม่เคย</strong>ขอ OTP หรือรหัสผ่าน</span>
-          </li>
-        </ul>
       </div>
     </div>
 
@@ -1212,7 +1288,7 @@
       <div>
         <h3 data-en="Company">บริษัท</h3>
         <ul>
-          <li><a href="#about" data-en="About us">เกี่ยวกับเรา</a></li>
+          <li><a href="#about" data-en="Why Us">ทำไมต้องเรา</a></li>
           <li><a href="#contact" data-en="Contact &amp; trip planning">ติดต่อ &amp; วางแผนทริป</a></li>
         </ul>
       </div>
@@ -1222,15 +1298,19 @@
         <ul class="foot-contact">
           <li>
             <svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>
-            <span data-en="26/1 Ratuthit 200 Pi Road<br>Patong, Kathu, Phuket 83150">26/1 ถนนราษฎร์อุทิศ 200 ปี<br>ป่าตอง กะทู้ ภูเก็ต 83150</span>
+            <span><a href="https://www.google.com/maps/search/?api=1&amp;query=26%2F1+Ratuthit+200+Pi+Road+Patong+Kathu+Phuket+83150" target="_blank" rel="noopener" aria-label="เปิดแผนที่ Google Maps" data-en-label="Open in Google Maps" data-en="26/1 Ratuthit 200 Pi Road<br>Patong, Kathu, Phuket 83150">26/1 ถนนราษฎร์อุทิศ 200 ปี<br>ป่าตอง กะทู้ ภูเก็ต 83150</a></span>
           </li>
           <li>
-            <svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg>
-            <span>LINE OA: <a href="https://lin.ee/R05IzYR" target="_blank" rel="noopener">Nessy Explores</a></span>
+            <svg class="ic ic-brand ic-line-white" aria-hidden="true"><use href="#i-line"/></svg>
+            <span>LINE Official: <a href="https://lin.ee/R05IzYR" target="_blank" rel="noopener">Nessy Explores</a></span>
+          </li>
+          <li>
+            <svg class="ic ic-brand" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+            <span>WhatsApp: <a href="https://wa.me/message/6FWCMSE6VRA6P1" target="_blank" rel="noopener">Nessy Explores</a></span>
           </li>
           <li>
             <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
-            <span><a href="tel:+66825466162">082-546-6162</a> <span data-en="(Nessy · WhatsApp available)">(Nessy · WhatsApp ได้)</span></span>
+            <span><a href="tel:+66825466162">082-546-6162</a></span>
           </li>
           <li>
             <svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>
@@ -1263,15 +1343,21 @@
 
     <div class="foot-base">
       <p>© <span data-year>2569</span> <span data-en="GAL-SHAI TOUR CO., LTD — All rights reserved">บริษัท กาล-ไช ทัวร์ จำกัด (GAL-SHAI TOUR CO., LTD) — สงวนลิขสิทธิ์</span></p>
-      <p data-en="Sample website for presentation · Made by Sellsuki">เว็บไซต์ตัวอย่างเพื่อการนำเสนอ · จัดทำโดย Sellsuki</p>
+      <nav class="foot-legal" aria-label="ข้อกำหนดและนโยบาย" data-en-label="Policies and terms">
+        <a href="privacy.html" data-en="Privacy Policy">นโยบายความเป็นส่วนตัว</a>
+        <a href="terms.html" data-en="Terms &amp; Conditions">ข้อกำหนดและเงื่อนไข</a>
+      </nav>
     </div>
   </div>
 </footer>
 
 <!-- ============================ CONTACT DOCK ============================ -->
 <div class="dock">
-  <a class="accent" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" aria-label="สอบถามทาง LINE" data-en-label="Ask us on LINE">
+  <a class="dock-line" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" aria-label="สอบถามทาง LINE" data-en-label="Ask us on LINE">
     <svg class="ic ic-brand" aria-hidden="true"><use href="#i-line"/></svg>
+  </a>
+  <a class="dock-wa" href="https://wa.me/message/6FWCMSE6VRA6P1" target="_blank" rel="noopener" aria-label="สอบถามทาง WhatsApp" data-en-label="Ask us on WhatsApp">
+    <svg class="ic ic-brand" aria-hidden="true"><use href="#i-whatsapp"/></svg>
   </a>
   <a href="tel:+66825466162" aria-label="โทรหาเรา" data-en-label="Call us">
     <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
