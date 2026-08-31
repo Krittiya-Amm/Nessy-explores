@@ -520,52 +520,9 @@
     return { open: open, close: close, current: function () { return openEl; } };
   })();
 
-  /* ---------- tour detail modal ---------- */
-  (function () {
-    var modal = document.getElementById('tour-modal');
-    if (!modal) return;
-
-    var img   = document.getElementById('tm-img');
-    var rib   = document.getElementById('tm-ribbons');
-    var title = document.getElementById('tm-title');
-    var meta  = document.getElementById('tm-meta');
-    var desc  = document.getElementById('tm-desc');
-    var price = document.getElementById('tm-price');
-
-    var copy = function (from, to, prop) {
-      if (from) { to[prop] = from[prop]; } else { to[prop] = ''; }
-    };
-
-    // Capture phase on document → runs before each card button's bubble-phase
-    // data-loading handler; stopPropagation() neutralises that navigation so the
-    // card (and its "สอบถาม" button) opens the detail modal instead.
-    document.addEventListener('click', function (e) {
-      var card = e.target.closest('article.tour');
-      if (!card) return;
-      // let modifier / middle clicks behave normally
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
-      // clicking the "สอบถาม" CTA (or any link) must follow its href straight to
-      // LINE — don't hijack it into the detail modal
-      if (e.target.closest('a[href]')) return;
-
-      e.preventDefault();
-      e.stopPropagation();
-
-      var cImg = card.querySelector('.tour-media img');
-      img.src = cImg ? cImg.getAttribute('src') : '';
-      img.alt = cImg ? (cImg.getAttribute('alt') || '') : '';
-
-      var cRib = card.querySelector('.ribbons');
-      rib.innerHTML = cRib ? cRib.innerHTML : '';
-
-      copy(card.querySelector('h3'), title, 'innerHTML');
-      copy(card.querySelector('.tour-meta'), meta, 'innerHTML');
-      copy(card.querySelector('.tour-desc'), desc, 'innerHTML');
-      copy(card.querySelector('.tour-foot .price'), price, 'innerHTML');
-
-      Modal.open(modal);
-    }, true);
-  })();
+  /* ---------- tour detail modal (disabled) ----------
+     Clicking a tour card no longer opens a detail popup. The only actionable
+     control on each card is the "สอบถาม" CTA, which links straight to LINE. */
 
 
   /* ---------- cookie consent (localStorage, once) ---------- */
@@ -961,28 +918,28 @@
       { time: '10:00', icon: '#i-bank', img: 'assets/img/old-town.webp', pos: 'center 22%',
         th: { tag: 'เมืองเก่า', title: 'เดินเล่นเมืองเก่า', quote: 'เดินถนนถลาง ซอยรมณีย์ ถนนดีบุก ถนนพังงา แวะร้านหนังสือ แกลเลอรี และชมอาคารชิโน-โปรตุกีส' },
         en: { tag: 'Old Town', title: 'Old-town stroll', quote: 'Wander Thalang, Soi Romanee, Dibuk and Phang Nga roads — bookshops, galleries and Sino-Portuguese shophouses.' } },
-      { time: '12:00', icon: '#i-food', img: 'assets/img/one-chun.webp', fit: 'contain', bg: '#3b5a44',
+      { time: '12:00', icon: '#i-food', img: 'assets/img/one-chun.webp',
         th: { tag: 'มิชลิน', title: 'ร้านวันจันทร์ (One Chun)', quote: 'หนึ่งในร้านอาหารพื้นเมืองภูเก็ตที่โด่งดังที่สุดย่านเมืองเก่า การันตีด้วยรางวัล Michelin Bib Gourmand 8 ปีติดต่อกัน (2026)' },
         en: { tag: 'Michelin', title: 'One Chun Cafe & Restaurant', quote: 'One of Phuket’s most famous local restaurants in the Old Town — a Michelin Bib Gourmand for 8 years running (2026).' } }
     ];
 
     var FULL = [
-      { time: '07:00', icon: '#i-food', img: 'assets/img/boonrat-dimsum.webp',
+      { time: '07:00', icon: '#i-food', img: 'assets/img/boonrat-dimsum.webp', pos: 'center 72%',
         th: { tag: 'มื้อเช้า', title: 'บุญรัตน์ติ่มซำ สาขา 1', quote: 'เริ่มเช้าแบบคนภูเก็ตด้วยติ่มซำร้านดังเปิดมานาน ซาลาเปา ขนมจีบ ฮะเก๋า ร้อน ๆ กับชาจีนสักถ้วย' },
         en: { tag: 'Breakfast', title: 'Boonrat Dim Sum (Branch 1)', quote: 'Start the morning like a local with dim sum from a long-time favourite — steamed buns, dumplings and Chinese tea.' } },
-      { time: '08:30', icon: '#i-ship', img: 'assets/img/islands-sea.webp',
+      { time: '08:30', icon: '#i-ship', img: 'assets/img/koh-hey.webp',
         th: { tag: 'ทะเล', title: 'เกาะเฮ', quote: 'นั่งสปีดโบ๊ทข้ามไปเกาะเฮ น้ำใสฟ้าเทอร์ควอยซ์ เล่นน้ำ ดำน้ำตื้นดูปะการังใกล้ฝั่ง' },
         en: { tag: 'Island', title: 'Coral Island (Koh Hey)', quote: 'Speedboat across to Coral Island — turquoise water, swimming and easy snorkelling over the reef.' } },
       { time: '13:00', icon: '#i-food', img: 'assets/img/mor-mudong.webp',
         th: { tag: 'มื้อเที่ยง', title: 'ร้านอาหารหมอมูดง', quote: 'อาหารใต้พื้นบ้านแท้ ๆ ในป่าชายเลน นั่งซุ้มไม้ไผ่ส่วนตัว รสจัดจ้านถึงเครื่องแกงใต้ ร้านที่คนพื้นที่นิยมมาก' },
         en: { tag: 'Lunch', title: 'Mor Mudong', quote: 'Authentic southern-Thai food in the mangroves — private bamboo huts and bold, fiery local curries the locals love.' } },
-      { time: '15:00', icon: '#i-waves', img: 'assets/img/white-beach.webp',
+      { time: '15:00', icon: '#i-waves', img: 'assets/img/kata-noi.webp',
         th: { tag: 'คาเฟ่ริมหาด', title: 'หาดกะตะน้อย', quote: 'พักผ่อนถ่ายรูปชิค ๆ ที่คาเฟ่ริมหาดกะตะน้อย หาดเงียบ น้ำใส วิวสวยกำลังดี' },
         en: { tag: 'Beach cafe', title: 'Kata Noi Beach', quote: 'Unwind at a beachfront cafe on Kata Noi — a quiet cove, clear water and a perfect view.' } },
-      { time: '17:15', icon: '#i-mountain', img: 'assets/img/naiharn-hike.webp',
+      { time: '17:15', icon: '#i-mountain', img: 'assets/img/windmill-viewpoint.webp',
         th: { tag: 'จุดชมวิว', title: 'จุดชมวิวกังหันลม', quote: 'แวะจุดชมวิวกังหันลม มองเห็นหาดยะนุ้ยและทะเลกว้าง รับลมเย็น ๆ ก่อนพระอาทิตย์ตก' },
         en: { tag: 'Viewpoint', title: 'Windmill Viewpoint', quote: 'Stop at the Windmill Viewpoint for the sweep of Yanui Beach and the open sea in the cooling wind.' } },
-      { time: '18:00', icon: '#i-sun', img: 'assets/img/promthep-sunset.webp',
+      { time: '18:00', icon: '#i-sun', img: 'assets/img/promthep-view.webp',
         th: { tag: 'พระอาทิตย์ตก', title: 'แหลมพรหมเทพ', quote: 'ปิดท้ายวันด้วยแสงสุดท้ายที่แหลมพรหมเทพ จุดชมพระอาทิตย์ตกยอดฮิตของภูเก็ต' },
         en: { tag: 'Sunset', title: 'Promthep Cape', quote: 'End the day with the last light at Promthep Cape — Phuket’s most-loved sunset spot.' } }
     ];
