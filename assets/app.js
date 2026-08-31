@@ -28,23 +28,6 @@
   (function () {
     if (!document.body) return;
     var html =
-      '<div class="scam-alert" id="scam-modal" role="alert" aria-live="assertive" aria-hidden="true">' +
-        '<button class="scam-x" type="button" data-scam-close aria-label="ปิด" data-en-label="Close"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>' +
-        '<div class="scam-head">' +
-          '<span class="scam-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span>' +
-          '<div class="scam-heads">' +
-            '<span class="scam-flag" data-en="Scam alert">⚠ ระวังมิจฉาชีพ</span>' +
-            '<h3 id="scam-title" data-en="Before you pay, please read">ก่อนโอนเงิน อ่านสักนิด</h3>' +
-          '</div>' +
-        '</div>' +
-        '<div class="scam-body">' +
-          '<p class="scam-lead" data-en="We only take payment <strong>into the company\'s corporate account</strong> — we never accept transfers to a personal account, and never ask for an OTP or password.">รับชำระเงินผ่าน<strong>บัญชีนิติบุคคลของบริษัทเท่านั้น</strong> เราไม่รับโอนเข้าบัญชีบุคคล และไม่เคยขอ OTP หรือรหัสผ่าน</p>' +
-          '<div class="scam-actions">' +
-            '<button class="btn btn-primary btn-sm" type="button" data-scam-detail data-en="See full details">ดูรายละเอียดเพิ่มเติม</button>' +
-            '<button class="btn btn-outline btn-sm" type="button" data-scam-close data-en="Got it">รับทราบ</button>' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
       '<div class="cookie" id="cookie-banner" role="dialog" aria-live="polite" aria-label="การใช้คุกกี้" data-en-label="Cookie notice">' +
         '<p data-en="We use cookies to give you a better browsing experience. See our <a href=\'#\'>privacy policy</a>.">เว็บไซต์นี้ใช้คุกกี้เพื่อมอบประสบการณ์การใช้งานที่ดีขึ้น อ่านเพิ่มเติมได้ที่<a href="#">นโยบายความเป็นส่วนตัว</a></p>' +
         '<div class="cookie-actions">' +
@@ -561,6 +544,9 @@
       if (!card) return;
       // let modifier / middle clicks behave normally
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
+      // clicking the "สอบถาม" CTA (or any link) must follow its href straight to
+      // LINE — don't hijack it into the detail modal
+      if (e.target.closest('a[href]')) return;
 
       e.preventDefault();
       e.stopPropagation();
@@ -581,73 +567,6 @@
     }, true);
   })();
 
-  /* ---------- scam-warning alert (bottom-left toast, once per session, after
-     reaching packages) ----------
-     Reworked from a center modal into a corner alert: it slides in from the
-     bottom-left when the visitor scrolls to the packages section, without a
-     backdrop or scroll-lock, so browsing keeps flowing while the warning stays
-     visible. Auto-dismisses after a while, or on close / "รับทราบ".
-     Shows again on every page load — the `fired` flag below still keeps it to
-     a single appearance per load, so it won't re-trigger while scrolling. */
-  (function () {
-    var alertEl = document.getElementById('scam-modal');
-    if (!alertEl) return;
-
-    var hideTimer = null;
-    var dismiss = function () {
-      alertEl.classList.remove('is-open');
-      alertEl.setAttribute('aria-hidden', 'true');
-      if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
-    };
-    // close on the X and the "รับทราบ" button; "ดูรายละเอียดเพิ่มเติม" closes
-    // the toast and scrolls down to the full safety details in the footer.
-    alertEl.addEventListener('click', function (e) {
-      if (e.target.closest('[data-scam-detail]')) {
-        e.preventDefault();
-        dismiss();
-        var sect = document.getElementById('safety');
-        if (sect) {
-          var prefersReduced = window.matchMedia &&
-            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          sect.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
-        }
-        return;
-      }
-      if (e.target.closest('[data-scam-close]')) { e.preventDefault(); dismiss(); }
-    });
-
-    // Surface the warning once the visitor has scrolled into the tours &
-    // activities section far enough to actually see the first row of cards —
-    // not merely when the section heading appears. We track the first tour
-    // card and wait until it is well inside the viewport. Fall back to the
-    // section top, then to a plain scroll-depth threshold, on pages without
-    // cards.
-    var target = document.querySelector('#catalog article.tour, .grid article.tour, article.tour')
-              || document.getElementById('packages')
-              || document.getElementById('catalog');
-
-    var fired = false;
-    var trigger = function () {
-      if (fired) return;
-      var reached;
-      if (target) {
-        // fire once the first card has risen to ~70% up the viewport, i.e. the
-        // first row is comfortably in view
-        reached = target.getBoundingClientRect().top <= window.innerHeight * 0.7;
-      } else {
-        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-        reached = y >= Math.max(600, window.innerHeight * 0.6);
-      }
-      if (!reached) return;
-      fired = true;
-      window.removeEventListener('scroll', trigger);
-      alertEl.classList.add('is-open');
-      alertEl.setAttribute('aria-hidden', 'false');
-      // linger long enough to read, then slide away on its own
-      hideTimer = setTimeout(dismiss, 14000);
-    };
-    window.addEventListener('scroll', trigger, { passive: true });
-  })();
 
   /* ---------- cookie consent (localStorage, once) ---------- */
   (function () {

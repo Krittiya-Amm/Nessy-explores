@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=20260831c">
 </head>
 <body>
 <script src="assets/sprite.js"></script>
@@ -21,7 +21,7 @@
 <!-- ============================ NAV ============================ -->
 <header class="navbar">
   <div class="wrap">
-    <a class="brand" href="index.html" aria-label="Nessy Explores หน้าแรก">
+    <a class="brand" href="index.html" aria-label="Nessy Explores หน้าแรก" data-en-label="Nessy Explores home">
       <img class="brand-mark" src="assets/img/logo-mark.webp"
            width="40" height="40" alt="" decoding="async">
       <span class="brand-txt">
@@ -30,20 +30,25 @@
       </span>
     </a>
 
-    <nav aria-label="เมนูหลัก">
+    <nav aria-label="เมนูหลัก" data-en-label="Main navigation">
       <ul class="nav-links" id="nav-links" data-open="false">
-        <li><a href="index.html">หน้าแรก</a></li>
-        <li><a href="packages.html">แพ็กเกจทัวร์</a></li>
-        <li><a href="local.html">Local Phuket</a></li>
-        <li><a href="agency.html">สำหรับเอเจนซี่</a></li>
-        <li><a href="index.html#contact">ติดต่อเรา</a></li>
+        <li><a href="index.html#find" data-en="Styles">สไตล์ทริป</a></li>
+        <li><a href="index.html#trip-match" data-en="Find your trip">จับคู่ทริป</a></li>
+        <li><a href="index.html#packages" data-en="Tours">ทัวร์และกิจกรรม</a></li>
+        <li><a href="index.html#beyond" data-en="Our way">ภูเก็ตในแบบของเรา</a></li>
+        <li><a href="index.html#about" data-en="Why Us">ทำไมต้องเรา</a></li>
+        <li><a href="index.html#moments" data-en="Gallery">แกลเลอรี</a></li>
+        <li><a href="index.html#reviews" data-en="Reviews">รีวิว</a></li>
+        <li><a href="index.html#contact" data-en="Contact">ติดต่อ</a></li>
       </ul>
     </nav>
 
     <div class="nav-cta">
-      <a class="btn btn-primary btn-sm" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener">
-        <svg class="ic ic-brand" aria-hidden="true"><use href="#i-line"/></svg>สอบถามทาง LINE
-      </a>
+      <span class="lang" data-lang-switch role="group" aria-label="เลือกภาษา" data-en-label="Select language">
+        <button type="button" class="lang-btn is-active" data-set-lang="th" aria-current="true" lang="th">TH</button>
+        <button type="button" class="lang-btn" data-set-lang="en" aria-current="false" lang="en">EN</button>
+      </span>
+      <a class="btn btn-coral btn-sm" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" data-en="Book a Trip">จองทริป</a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนู">
         <svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg>
       </button>
@@ -75,72 +80,66 @@
 <section class="sf-white">
   <div class="wrap">
     <div class="legal-body">
-      <p class="legal-updated">ปรับปรุงล่าสุด: 27 สิงหาคม 2569</p>
+      <p class="legal-updated">ปรับปรุงล่าสุด: 31 สิงหาคม 2569</p>
+
+      <p>
+        nessyexplores.com (“เรา”) ให้ความสำคัญกับการคุ้มครองข้อมูลส่วนบุคคลของท่าน
+        นโยบายนี้อธิบายถึงวิธีการที่เราเก็บรวบรวม ใช้ และป้องกันข้อมูลของท่าน
+        เพื่อให้เป็นไปตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA)
+      </p>
 
       <section>
-        <h2>1. เราคือใคร</h2>
-        <p>
-          เว็บไซต์นี้ดำเนินการโดย <strong>บริษัท กาล-ไช ทัวร์ จำกัด</strong> (GAL-SHAI TOUR CO., LTD)
-          ภายใต้แบรนด์ “Nessy Explores” สำนักงานตั้งอยู่ที่ 26/1 ถนนราษฎร์อุทิศ 200 ปี ป่าตอง กะทู้ ภูเก็ต 83150
-          ใบอนุญาตนำเที่ยวเลขที่ 34/00316 ในฐานะผู้ควบคุมข้อมูลส่วนบุคคล
-        </p>
-      </section>
-
-      <section>
-        <h2>2. ข้อมูลที่เราเก็บ</h2>
+        <h2>1. ข้อมูลที่เราเก็บรวบรวม</h2>
+        <p>เราเก็บรวบรวมข้อมูลเพียงเท่าที่จำเป็นผ่านช่องทางดังนี้:</p>
         <ul>
-          <li>ข้อมูลติดต่อ เช่น ชื่อ เบอร์โทร อีเมล และบัญชี LINE/WhatsApp ที่คุณใช้ทักหาเรา</li>
-          <li>ข้อมูลการเดินทาง เช่น วันเดินทาง จำนวนผู้ร่วมทริป ความต้องการพิเศษ และข้อจำกัดด้านอาหารหรือสุขภาพที่คุณแจ้ง</li>
-          <li>ข้อมูลการจองและการชำระเงิน เช่น รายการที่จอง หลักฐานการโอน (เราไม่เก็บเลขบัตรเครดิตเต็มบนเว็บไซต์)</li>
-          <li>ข้อมูลการใช้งานเว็บไซต์ เช่น หน้าเว็บที่เข้าชมและคุกกี้ที่จำเป็น เพื่อให้เว็บทำงานได้ตามปกติ</li>
+          <li><strong>ข้อมูลที่ท่านให้เราโดยตรง:</strong> เช่น ชื่อ อีเมล หรือเบอร์โทรศัพท์ เมื่อท่านลงทะเบียนรับข่าวสาร หรือติดต่อสอบถาม</li>
+          <li><strong>ข้อมูลพฤติกรรมการใช้งาน:</strong> เก็บผ่านคุกกี้ (Cookies) และเครื่องมือวิเคราะห์ เช่น Google Analytics, Facebook Pixel เพื่อนำมาปรับปรุงเนื้อหาบนเว็บไซต์ (ข้อมูลส่วนนี้ไม่ระบุตัวตนโดยตรง)</li>
         </ul>
       </section>
 
       <section>
-        <h2>3. วัตถุประสงค์ในการใช้ข้อมูล</h2>
+        <h2>2. วัตถุประสงค์ในการประมวลผลข้อมูล</h2>
         <ul>
-          <li>ติดต่อกลับ ให้คำแนะนำ และจัดเตรียมทริปตามที่คุณสอบถามหรือจอง</li>
-          <li>ยืนยันการจอง ออกเอกสาร และดำเนินการชำระเงิน</li>
-          <li>ดูแลความปลอดภัยระหว่างเดินทาง และจัดทำประกันอุบัติเหตุการเดินทาง</li>
-          <li>ปรับปรุงบริการและแจ้งข้อมูลข่าวสารเฉพาะเมื่อคุณยินยอม</li>
+          <li>เพื่อใช้ในการสื่อสาร ตอบกลับข้อสงสัย หรือส่งข่าวสารตามที่ท่านร้องขอ</li>
+          <li>เพื่อวิเคราะห์สถิติการใช้งาน และพัฒนาประสบการณ์การเข้าชมเว็บไซต์ให้ดียิ่งขึ้น</li>
+          <li>เพื่อปฏิบัติตามกฎหมายและข้อบังคับที่เกี่ยวข้อง</li>
         </ul>
       </section>
 
       <section>
-        <h2>4. การเปิดเผยข้อมูล</h2>
+        <h2>3. การเปิดเผยข้อมูลส่วนบุคคล</h2>
+        <p>เราจะไม่นำข้อมูลของท่านไปขายให้บุคคลภายนอก เว้นแต่:</p>
+        <ul>
+          <li>ได้รับความยินยอมจากท่านเป็นลายลักษณ์อักษร</li>
+          <li>เป็นการเปิดเผยให้แก่พันธมิตรทางธุรกิจที่ช่วยดำเนินงาน (เช่น ผู้ให้บริการส่งอีเมล) ภายใต้สัญญาคุ้มครองข้อมูล</li>
+          <li>เป็นการปฏิบัติตามคำสั่งของศาลหรือหน่วยงานรัฐตามกฎหมาย</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. สิทธิของเจ้าของข้อมูล</h2>
+        <p>ท่านมีสิทธิตามกฎหมาย PDPA ดังนี้:</p>
+        <ul>
+          <li>สิทธิขอเข้าถึงและรับสำเนาข้อมูลส่วนบุคคล</li>
+          <li>สิทธิขอให้แก้ไขข้อมูลให้ถูกต้องเป็นปัจจุบัน</li>
+          <li>สิทธิขอให้ลบ หรือทำลายข้อมูล (Right to be forgotten)</li>
+          <li>สิทธิในการเพิกถอนความยินยอมเมื่อใดก็ได้</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5. ระยะเวลาจัดเก็บและมาตรการความปลอดภัย</h2>
         <p>
-          เราเปิดเผยข้อมูลเท่าที่จำเป็นให้แก่พาร์ทเนอร์ที่ให้บริการหน้างาน เช่น ผู้ให้บริการเรือ ที่พัก
-          รถรับส่ง และบริษัทประกัน เพื่อดำเนินทริปของคุณ รวมถึงหน่วยงานราชการเมื่อมีข้อกำหนดตามกฎหมาย
-          เราไม่ขายหรือให้เช่าข้อมูลส่วนบุคคลของคุณแก่บุคคลที่สามเพื่อการตลาด
+          เราจะเก็บข้อมูลของท่านไว้เท่าที่จำเป็นตามวัตถุประสงค์ที่แจ้งไว้
+          และมีมาตรการรักษาความปลอดภัยของข้อมูลอย่างเหมาะสม เพื่อป้องกันการเข้าถึงโดยไม่ได้รับอนุญาต
         </p>
       </section>
 
       <section>
-        <h2>5. การเก็บรักษาและความปลอดภัย</h2>
+        <h2>6. ติดต่อเรา</h2>
+        <p>หากท่านมีข้อสงสัยเกี่ยวกับนโยบายนี้ หรือต้องการใช้สิทธิเจ้าของข้อมูล โปรดติดต่อ:</p>
         <p>
-          เราเก็บข้อมูลของคุณเท่าที่จำเป็นต่อวัตถุประสงค์ข้างต้น และตามระยะเวลาที่กฎหมายบัญชีและภาษีกำหนด
-          พร้อมมาตรการดูแลที่เหมาะสมเพื่อป้องกันการเข้าถึงหรือเปิดเผยโดยไม่ได้รับอนุญาต
-        </p>
-      </section>
-
-      <section>
-        <h2>6. สิทธิของคุณ</h2>
-        <p>ภายใต้ PDPA คุณมีสิทธิขอเข้าถึง แก้ไข ลบ โอนย้าย คัดค้าน หรือถอนความยินยอมต่อการใช้ข้อมูลของคุณได้</p>
-        <p>หากต้องการใช้สิทธิดังกล่าว ติดต่อเราได้ที่ <a href="mailto:nessyexplores@gmail.com">nessyexplores@gmail.com</a> หรือ LINE Official ของเรา</p>
-      </section>
-
-      <section>
-        <h2>7. คุกกี้</h2>
-        <p>
-          เราใช้คุกกี้ที่จำเป็นเพื่อให้เว็บไซต์ทำงานและจดจำการตั้งค่าภาษาของคุณ
-          คุณสามารถปิดคุกกี้ได้จากการตั้งค่าเบราว์เซอร์ แต่บางฟังก์ชันอาจทำงานได้ไม่สมบูรณ์
-        </p>
-      </section>
-
-      <section>
-        <h2>8. ติดต่อเรา</h2>
-        <p>
-          บริษัท กาล-ไช ทัวร์ จำกัด — 26/1 ถนนราษฎร์อุทิศ 200 ปี ป่าตอง กะทู้ ภูเก็ต 83150<br>
+          บริษัท กาล-ไช ทัวร์ จำกัด — 26/1 ถนนราษฎร์อุทิศ 200 ปี ตำบลป่าตอง อำเภอกะทู้ จังหวัดภูเก็ต 83150<br>
           อีเมล <a href="mailto:nessyexplores@gmail.com">nessyexplores@gmail.com</a> · โทร <a href="tel:+66825466162">082-546-6162</a>
         </p>
       </section>
@@ -153,6 +152,48 @@
 <!-- ============================ FOOTER ============================ -->
 <footer>
   <div class="wrap">
+
+    <!-- Trust & payment safety -->
+    <div class="foot-trust" id="safety" style="scroll-margin-top:var(--s-8)">
+      <div>
+        <h3 data-en="Confidence in every trip">มั่นใจทุกการเดินทาง</h3>
+        <ul class="foot-facts">
+          <li>
+            <svg class="ic" aria-hidden="true"><use href="#i-badge-check"/></svg>
+            <span data-en="Registered company — GAL-SHAI TOUR CO., LTD">จดทะเบียนนิติบุคคล — บริษัท กาล-ไช ทัวร์ จำกัด (GAL-SHAI TOUR CO., LTD)</span>
+          </li>
+          <li>
+            <svg class="ic" aria-hidden="true"><use href="#i-award"/></svg>
+            <span data-en="Tourism licence no. 34/00316">ใบอนุญาตนำเที่ยว เลขที่ 34/00316</span>
+          </li>
+          <li>
+            <svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>
+            <span>
+              <span class="fact-head" data-en="Travel accident insurance, subject to policy terms">ประกันอุบัติเหตุการเดินทาง ตามเงื่อนไขกรมธรรม์</span>
+              <ul class="fact-list">
+                <li data-en="Death/dismemberment — ฿1,000,000">เสียชีวิต/ทุพพลภาพ วงเงิน 1,000,000 บาท</li>
+                <li data-en="Medical expenses — ฿500,000">ค่ารักษาพยาบาล 500,000 บาท</li>
+              </ul>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 data-en="Secure payment">ชำระเงินอย่างปลอดภัย</h3>
+        <p style="color:rgba(234,242,243,.82); font-size:var(--t-sm); margin:0 0 var(--s-4); max-width:46ch" data-en="For your safety, please pay only into a company bank account whose account name matches the company name.">
+          เพื่อความปลอดภัย กรุณาชำระผ่านบัญชีบริษัทที่มี<strong>ชื่อบัญชีตรงกับชื่อบริษัท</strong>เท่านั้น
+        </p>
+        <div class="foot-bank">
+          <span class="tag"><img src="assets/img/kbank-logo.png" alt="KBank" width="42" height="42"></span>
+          <div>
+            <b data-en="Gal Shai tour">บจก. กาล-ไช ทัวร์ (Gal Shai tour)</b>
+            <span data-en="Kasikornbank · Acct. no. 332-2-83353-8">ธนาคารกสิกรไทย · เลขที่ 332-2-83353-8</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="brand" href="index.html">
@@ -163,42 +204,39 @@
             <span class="brand-tag">Beyond the Shore</span>
           </span>
         </a>
-        <p>ทัวร์ภูเก็ตโดยทีมท้องถิ่นป่าตอง เกาะ ดำน้ำ ผจญภัย โชว์ และเส้นทาง Local ที่คนภูเก็ตไปกันเอง</p>
+        <p data-en="Phuket tours by a local Patong team — islands, diving, adventure, and the Local routes Phuket people take themselves.">ทัวร์ภูเก็ตโดยทีมท้องถิ่นป่าตอง เกาะ ดำน้ำ ผจญภัย และเส้นทาง Local ที่คนภูเก็ตไปกันเอง</p>
         <span class="license">
           <svg class="ic" aria-hidden="true"><use href="#i-award"/></svg>
-          ใบอนุญาตนำเที่ยว เลขที่ 34/00316
+          <span data-en="Tourism licence no. 34/00316">ใบอนุญาตนำเที่ยว เลขที่ 34/00316</span>
         </span>
       </div>
 
       <div>
-        <h3>แพ็กเกจ</h3>
+        <h3 data-en="Tours &amp; activities">ทัวร์และกิจกรรม</h3>
         <ul>
-          <li><a href="packages.html#sea">เกาะ &amp; ทะเล</a></li>
-          <li><a href="packages.html#dive">ดำน้ำ &amp; กิจกรรมทางน้ำ</a></li>
-          <li><a href="packages.html#adventure">ผจญภัยบนบก</a></li>
-          <li><a href="packages.html#show">โชว์ &amp; สวนสนุก</a></li>
-          <li><a href="packages.html#transfer">รถรับส่ง &amp; เรือ</a></li>
+          <li><a href="index.html#sea" data-en="Islands &amp; Sea">เกาะ &amp; ทะเล</a></li>
+          <li><a href="index.html#dive" data-en="Diving &amp; Water Activities">ดำน้ำ &amp; กิจกรรมทางน้ำ</a></li>
+          <li><a href="index.html#adventure" data-en="Land Adventures">ผจญภัยบนบก</a></li>
+          <li><a href="index.html#show" data-en="Shows &amp; Theme Parks">โชว์ &amp; สวนสนุก</a></li>
+          <li><a href="index.html#transfer" data-en="Transfers &amp; Boats">รถรับส่ง &amp; เรือ</a></li>
           <li><a href="local.html">Local Phuket</a></li>
         </ul>
       </div>
 
       <div>
-        <h3>บริษัท</h3>
+        <h3 data-en="Company">บริษัท</h3>
         <ul>
-          <li><a href="index.html#trust">ความน่าเชื่อถือ</a></li>
-          <li><a href="index.html#trust">ประกาศป้องกันมิจฉาชีพ</a></li>
-          <li><a href="agency.html">สำหรับเอเจนซี่</a></li>
-          <li><a href="brand.html">แบรนด์ &amp; CI</a></li>
-          <li><a href="index.html#contact">ติดต่อเรา</a></li>
+          <li><a href="index.html#about" data-en="Why Us">ทำไมต้องเรา</a></li>
+          <li><a href="index.html#contact" data-en="Contact &amp; trip planning">ติดต่อ &amp; วางแผนทริป</a></li>
         </ul>
       </div>
 
       <div>
-        <h3>ติดต่อ</h3>
+        <h3 data-en="Contact">ติดต่อ</h3>
         <ul class="foot-contact">
           <li>
             <svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>
-            <span><a href="https://www.google.com/maps/search/?api=1&amp;query=26%2F1+Ratuthit+200+Pi+Road+Patong+Kathu+Phuket+83150" target="_blank" rel="noopener" aria-label="เปิดแผนที่ Google Maps">26/1 ถนนราษฎร์อุทิศ 200 ปี<br>ป่าตอง กะทู้ ภูเก็ต 83150</a></span>
+            <span><a href="https://www.google.com/maps/search/?api=1&amp;query=26%2F1+Ratuthit+200+Pi+Road+Patong+Kathu+Phuket+83150" target="_blank" rel="noopener" aria-label="เปิดแผนที่ Google Maps" data-en-label="Open in Google Maps" data-en="26/1 Ratuthit 200 Pi Road<br>Patong, Kathu, Phuket 83150">26/1 ถนนราษฎร์อุทิศ 200 ปี<br>ป่าตอง กะทู้ ภูเก็ต 83150</a></span>
           </li>
           <li>
             <svg class="ic ic-brand ic-line-white" aria-hidden="true"><use href="#i-line"/></svg>
@@ -218,24 +256,34 @@
           </li>
           <li>
             <svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>
-            <span>จ.–พฤ. 11:00–20:00 · ศ. 11:00–18:00<br>ส. 19:00–22:00 · อา. 11:00–20:00</span>
+            <span data-en="Mon–Thu 11:00–20:00 · Fri 11:00–18:00<br>Sat 19:00–22:00 · Sun 11:00–20:00">จ.–พฤ. 11:00–20:00 · ศ. 11:00–18:00<br>ส. 19:00–22:00 · อา. 11:00–20:00</span>
           </li>
         </ul>
-        <div class="foot-social" role="list" aria-label="โซเชียลมีเดีย">
-          <a role="listitem" href="https://www.facebook.com/search/top?q=Phuket%20with%20Nessy%20Island%20Life%20%26%20Adventures" target="_blank" rel="noopener" aria-label="Facebook: Phuket with Nessy Island Life & Adventures"><svg class="ic ic-brand" aria-hidden="true"><use href="#i-facebook"/></svg></a>
-          <a role="listitem" href="https://www.instagram.com/nessyexplores/" target="_blank" rel="noopener" aria-label="Instagram: Nessy Explores"><svg class="ic" aria-hidden="true"><use href="#i-instagram"/></svg></a>
-          <a role="listitem" href="https://www.tiktok.com/@nessyeraaa" target="_blank" rel="noopener" aria-label="TikTok: NessyEraaa"><svg class="ic ic-brand" aria-hidden="true"><use href="#i-tiktok"/></svg></a>
-          <a role="listitem" href="https://www.youtube.com/@nessyexplores" target="_blank" rel="noopener" aria-label="YouTube: NessyExplores"><svg class="ic ic-brand" aria-hidden="true"><use href="#i-youtube"/></svg></a>
-          <a role="listitem" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" aria-label="LINE OA: Nessy Explores"><svg class="ic ic-brand" aria-hidden="true"><use href="#i-line"/></svg></a>
+        <div class="foot-social" role="list" aria-label="โซเชียลมีเดีย" data-en-label="Social media">
+          <a role="listitem" href="https://www.facebook.com/search/top?q=Phuket%20with%20Nessy%20Island%20Life%20%26%20Adventures" target="_blank" rel="noopener" aria-label="Facebook: Phuket with Nessy Island Life &amp; Adventures">
+            <svg class="ic ic-brand" aria-hidden="true"><use href="#i-facebook"/></svg>
+          </a>
+          <a role="listitem" href="https://www.instagram.com/nessyexplores/" target="_blank" rel="noopener" aria-label="Instagram: Nessy Explores">
+            <svg class="ic" aria-hidden="true"><use href="#i-instagram"/></svg>
+          </a>
+          <a role="listitem" href="https://www.tiktok.com/@nessyeraaa" target="_blank" rel="noopener" aria-label="TikTok: NessyEraaa">
+            <svg class="ic ic-brand" aria-hidden="true"><use href="#i-tiktok"/></svg>
+          </a>
+          <a role="listitem" href="https://www.youtube.com/@nessyexplores" target="_blank" rel="noopener" aria-label="YouTube: NessyExplores">
+            <svg class="ic ic-brand" aria-hidden="true"><use href="#i-youtube"/></svg>
+          </a>
+          <a role="listitem" href="https://lin.ee/R05IzYR" target="_blank" rel="noopener" aria-label="LINE OA: Nessy Explores">
+            <svg class="ic ic-brand" aria-hidden="true"><use href="#i-line"/></svg>
+          </a>
         </div>
       </div>
     </div>
 
     <div class="foot-base">
-      <p>© <span data-year>2569</span> บริษัท กาล-ไช ทัวร์ จำกัด (GAL-SHAI TOUR CO., LTD) — สงวนลิขสิทธิ์</p>
-      <nav class="foot-legal" aria-label="ข้อกำหนดและนโยบาย">
-        <a href="privacy.html" aria-current="page">นโยบายความเป็นส่วนตัว</a>
-        <a href="terms.html">ข้อกำหนดและเงื่อนไข</a>
+      <p>© <span data-year>2569</span> <span data-en="GAL-SHAI TOUR CO., LTD — All rights reserved">บริษัท กาล-ไช ทัวร์ จำกัด (GAL-SHAI TOUR CO., LTD) — สงวนลิขสิทธิ์</span></p>
+      <nav class="foot-legal" aria-label="ข้อกำหนดและนโยบาย" data-en-label="Policies and terms">
+        <a href="privacy.html" data-en="Privacy Policy" aria-current="page">นโยบายความเป็นส่วนตัว</a>
+        <a href="terms.html" data-en="Terms &amp; Conditions">ข้อกำหนดและเงื่อนไข</a>
       </nav>
     </div>
   </div>
@@ -254,6 +302,6 @@
   </a>
 </div>
 
-<script src="assets/app.js" defer></script>
+<script src="assets/app.js?v=20260831c" defer></script>
 </body>
 </html>

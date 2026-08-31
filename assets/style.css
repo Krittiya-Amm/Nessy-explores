@@ -618,6 +618,9 @@ section.tight { padding-block: var(--s-12); }
 }
 .hero-art { position: absolute; inset: -7% 0; will-change: transform; }
 .hero-art svg, .hero-art img { width: 100%; height: 100%; object-fit: cover; }
+/* portrait hero photo: pull the crop downward so the islands + open sea show,
+   not just the empty sky at the top */
+.hero-art img { object-position: center 82%; }
 /* Warm-navy wash, strongest at the bottom-left where the copy sits. Measured
    against hero-bay.webp: coral eyebrow 4.9:1, h1 white 9.1:1, Thai sub 7.8:1,
    lead 6.2:1. A brighter hero photo needs a re-check of these stops. */
@@ -1071,13 +1074,17 @@ footer .brand-tag { color: var(--sky); }
 /* Legal / policy document pages (privacy, terms) */
 .legal-body { max-width: 760px; margin: 0 auto; }
 .legal-body .legal-updated { color: var(--muted-ink); font-size: var(--t-sm); margin: 0 0 var(--s-6); }
-.legal-body section + section { margin-top: var(--s-8); }
-.legal-body h2 { font-size: var(--t-xl); margin: 0 0 var(--s-3); color: var(--charcoal); }
-.legal-body h3 { font-size: var(--t-md); margin: var(--s-5) 0 var(--s-2); color: var(--charcoal); }
-.legal-body p { margin: 0 0 var(--s-3); color: var(--muted-ink); line-height: 1.75; }
-.legal-body ul { margin: 0 0 var(--s-3); padding-left: 0; list-style: none; display: grid; gap: var(--s-2); }
-.legal-body ul li { position: relative; padding-left: var(--s-5); color: var(--muted-ink); line-height: 1.7; }
-.legal-body ul li::before { content: ""; position: absolute; left: 4px; top: .62em; width: 6px; height: 6px; border-radius: 999px; background: var(--ocean); }
+/* inner clauses must not inherit the page-level section padding-block — keep the
+   document flowing continuously, height driven only by its own content, with no
+   gap between clauses (spacing comes only from each clause's own text rhythm) */
+.legal-body section { padding-block: 0; }
+.legal-body section + section { margin-top: 0; }
+.legal-body h2 { font-size: var(--t-xl); margin: 0 0 var(--s-2); color: var(--charcoal); }
+.legal-body h3 { font-size: var(--t-md); margin: var(--s-4) 0 var(--s-2); color: var(--charcoal); }
+.legal-body p { margin: 0 0 var(--s-2); color: var(--muted-ink); line-height: 1.55; }
+.legal-body ul { margin: 0 0 var(--s-2); padding-left: 0; list-style: none; display: grid; gap: var(--s-2); }
+.legal-body ul li { position: relative; margin: 0; padding-left: var(--s-5); color: var(--muted-ink); line-height: 1.5; }
+.legal-body ul li::before { content: ""; position: absolute; left: 4px; top: .55em; width: 6px; height: 6px; border-radius: 999px; background: var(--ocean); }
 .legal-body a { color: var(--ocean-darker); }
 
 /* --------------------------------------------------------------------------
