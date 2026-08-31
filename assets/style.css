@@ -2108,6 +2108,9 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 .greview-top .gmark { margin-left: auto; width: 20px; height: 20px; flex: none; }
 .greview-stars { display: inline-flex; gap: 1px; color: var(--mango, #F5BE4F); }
 .greview-stars .ic { width: 16px; height: 16px; fill: currentColor; stroke: none; }
+/* unfilled star for ratings below 5 (overall score + per-review) */
+.gscore .gstars .ic.is-empty,
+.greview-stars .ic.is-empty { color: #d9dee2; }
 .greview p { margin: 0; line-height: 1.65; color: var(--charcoal, #192E38); font-size: .9375rem; }
 @media (max-width: 640px) { .greview { flex-basis: 280px; } }
 @media (prefers-reduced-motion: reduce) {

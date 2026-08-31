@@ -551,32 +551,39 @@
     if (!track) return;
 
     var COLORS = ['#087F83', '#F47A5B', '#F5BE4F', '#123B4A', '#017E87', '#EA4335'];
-    // Sample reviews — replace with real Google reviews when the client provides them.
+    // Real Google reviews. Review text is kept in the customer's original words
+    // (not translated) and shown in both languages; only name/meta are localised.
     var DATA = [
-      { name: 'คุณณัฐพร', nameEn: 'Nattaporn', meta: 'กรุงเทพฯ · ทริปครอบครัว 6 ท่าน', metaEn: 'Bangkok · Family of 6',
-        th: 'วันที่ไปทะเลปิด พี่เขาโทรมาบอกล่วงหน้าตั้งแต่เย็นวันก่อน แล้วช่วยย้ายเป็นทัวร์บนบกให้ฟรี ไม่ต้องตามเรื่องเอง',
-        en: 'The day the sea was closed, they called the evening before and moved us to a land tour for free — we didn\'t have to chase anything.' },
-      { name: 'Wei & Lin', nameEn: 'Wei & Lin', meta: 'สิงคโปร์ · ทริปฮันนีมูน', metaEn: 'Singapore · Honeymoon',
-        th: 'ตอนแรกกลัวโดนหลอกเพราะเคยอ่านข่าว แต่เว็บบอกชัดว่าโอนเข้าบัญชีบริษัทเท่านั้น พอเช็กชื่อบัญชีตรงกันก็สบายใจเลย',
-        en: 'I was worried about scams after reading the news, but the site clearly said to transfer only to the company account — once the name matched, I felt at ease.' },
-      { name: 'คุณกิตติ', nameEn: 'Kitti', meta: 'เชียงใหม่ · เดินทางคนเดียว', metaEn: 'Chiang Mai · Solo trip',
-        th: 'ไปทัวร์เมืองเก่ากับไกด์ที่โตที่ภูเก็ต ได้กินร้านที่ไม่มีในกูเกิล อันนี้คือของจริง ไม่ใช่ทัวร์ถ่ายรูปเช็กอิน',
-        en: 'Did the Old Town tour with a guide who grew up in Phuket and ate at places you won\'t find on Google. The real thing, not a check-in photo tour.' },
-      { name: 'Mika', nameEn: 'Mika', meta: 'โอซาก้า · กลุ่มเพื่อน 4 คน', metaEn: 'Osaka · Group of 4',
-        th: 'ดำน้ำครั้งแรกในชีวิต ไกด์ใจเย็นมาก ค่อย ๆ สอนทีละสเต็ปจนกล้าลงน้ำ ดูแลความปลอดภัยทุกจุด สนุกเกินคาด',
-        en: 'My first ever dive. The guide was so patient, walking me through every step until I felt brave enough — safe throughout and far more fun than I expected.' },
-      { name: 'คุณอรวรรณ', nameEn: 'Orawan', meta: 'ขอนแก่น · ทริปพ่อแม่', metaEn: 'Khon Kaen · With parents',
-        th: 'จองง่ายมาก ตอบไลน์ไว บอกราคาชัดเจนไม่มีบวกเพิ่มหน้างาน ประทับใจการดูแลผู้สูงอายุในกลุ่มมาก',
-        en: 'Super easy to book, quick replies on LINE, clear pricing with no surprises on the day. They looked after the older folks in our group so well.' },
-      { name: 'James', nameEn: 'James', meta: 'ออสเตรเลีย · คู่รัก', metaEn: 'Australia · Couple',
-        th: 'สปีดโบ๊ทไปพีพีจัดการดีมาก ไม่รู้สึกแออัด ไกด์รู้จุดดำน้ำเงียบ ๆ ที่คนไม่เยอะ',
-        en: 'The speedboat to Phi Phi was well organised and never felt crowded. Our guide knew the quiet snorkelling spots away from the crowds.' },
-      { name: 'คุณพิมพ์ชนก', nameEn: 'Pimchanok', meta: 'นนทบุรี · ทริปเพื่อน', metaEn: 'Nonthaburi · Friends',
-        th: 'ทีมงานคนภูเก็ตจริง แนะนำร้านอาหารถิ่นได้ดีมาก ได้กินของอร่อยที่ไม่เคยรู้มาก่อน',
-        en: 'A genuinely local Phuket team — their food picks were spot on. We ate amazing local dishes we\'d never have found ourselves.' },
-      { name: 'Sophie', nameEn: 'Sophie', meta: 'ฝรั่งเศส · เดินทางคนเดียว', metaEn: 'France · Solo traveller',
-        th: 'รู้สึกปลอดภัยตลอดการเดินทางในฐานะผู้หญิงเที่ยวคนเดียว ทุกอย่างโปร่งใส ไกด์มืออาชีพและเป็นมิตร',
-        en: 'Felt safe the whole time as a solo female traveller. Everything was transparent and the guide was professional and friendly.' }
+      { name: 'Yinon Hadar', nameEn: 'Yinon Hadar', rating: 5, meta: 'ทัวร์ 4 เกาะ · สปีดโบ๊ท', metaEn: '4 Islands tour · Speedboat',
+        th: "We booked the 4 islands tour, (actually it was 5). It was as explained and more than expected. The 3 engine speedboat was not crowded. The sea was calm, light wind, even some rain for a few minutes. Crew headed by Mou Mou was efficient, helpful and very informative. We had a great day, thanks.",
+        en: "We booked the 4 islands tour, (actually it was 5). It was as explained and more than expected. The 3 engine speedboat was not crowded. The sea was calm, light wind, even some rain for a few minutes. Crew headed by Mou Mou was efficient, helpful and very informative. We had a great day, thanks." },
+      { name: 'Avraham Shachar', nameEn: 'Avraham Shachar', rating: 5, meta: 'Siam Niramit + Hanuman World', metaEn: 'Siam Niramit + Hanuman World',
+        th: "We only booked two trips through them, but we had a great experience. We booked the Siam Niramit show and Hanuman World ziplines. The prices were cheaper or similarly priced to what we found online. You get more than what you pay for with great service and quality transport to the activities. Thank you!",
+        en: "We only booked two trips through them, but we had a great experience. We booked the Siam Niramit show and Hanuman World ziplines. The prices were cheaper or similarly priced to what we found online. You get more than what you pay for with great service and quality transport to the activities. Thank you!" },
+      { name: 'Natan Krichevski', nameEn: 'Natan Krichevski', rating: 5, meta: 'ทริปดำน้ำตื้น', metaEn: 'Snorkeling trip',
+        th: "I had an amazing experience! The team was very professional, friendly, and helpful. They gave me all the information I needed and arranged a fantastic snorkeling trip. Everything was perfectly organized — I was picked up and dropped off right on time. Excellent service and great attitude. Highly recommend!",
+        en: "I had an amazing experience! The team was very professional, friendly, and helpful. They gave me all the information I needed and arranged a fantastic snorkeling trip. Everything was perfectly organized — I was picked up and dropped off right on time. Excellent service and great attitude. Highly recommend!" },
+      { name: 'Ron Messer', nameEn: 'Ron Messer', rating: 5, meta: 'จอง 3 ทริป', metaEn: 'Booked 3 trips',
+        th: "We have booked 3 different trips with them, prices were actually cheaper than other places we checked, and we had to make changes — they changed it fast with no questions and no extra charge. Overall very good experience.",
+        en: "We have booked 3 different trips with them, prices were actually cheaper than other places we checked, and we had to make changes — they changed it fast with no questions and no extra charge. Overall very good experience." },
+      { name: 'David Ventzovski', nameEn: 'David Ventzovski', rating: 5, meta: 'เฟอร์รี่ไปกระบี่', metaEn: 'Ferry to Krabi',
+        th: "Good staff and cheap prices. A very nice girl helped us get a ferry to Krabi with a lot of smiles and great instructions.",
+        en: "Good staff and cheap prices. A very nice girl helped us get a ferry to Krabi with a lot of smiles and great instructions." },
+      { name: 'Perry Sage', nameEn: 'Perry Sage', rating: 3, meta: 'อาหาร & ทัวร์', metaEn: 'Food & tours',
+        th: "Falafel was undercooked, and people were yelling and smoking all around you to sell trips to the islands. Otherwise, good food.",
+        en: "Falafel was undercooked, and people were yelling and smoking all around you to sell trips to the islands. Otherwise, good food." },
+      { name: 'Ido Ben Gigi', nameEn: 'Ido Ben Gigi', rating: 4, meta: 'รถรับส่ง', metaEn: 'Transfer & pickup',
+        th: "Good prices. The driver arrived at the time stated to pick us up.",
+        en: "Good prices. The driver arrived at the time stated to pick us up." },
+      { name: 'Company Account', nameEn: 'Company Account', rating: 5, meta: 'อาหาร & บริการ', metaEn: 'Food & service',
+        th: "Best place ever. Best food. Best service. I'm so happy I found this place. Thank you!",
+        en: "Best place ever. Best food. Best service. I'm so happy I found this place. Thank you!" },
+      { name: 'Doron Nisenbaum', nameEn: 'Doron Nisenbaum', rating: 5, meta: 'อาหาร & กิจกรรม', metaEn: 'Food & attractions',
+        th: "Lovely staff and good food. Also good prices for attractions.",
+        en: "Lovely staff and good food. Also good prices for attractions." },
+      { name: 'D. V. Baecker Holdings', nameEn: 'D. V. Baecker Holdings', rating: 5, meta: 'ร้านอาหาร', metaEn: 'Restaurant',
+        th: "Good restaurant with friendly people. The hummus was very good.",
+        en: "Good restaurant with friendly people. The hummus was very good." }
     ];
 
     var esc = function (s) {
@@ -593,15 +600,18 @@
       var meta = en ? d.metaEn : d.meta;
       var text = en ? d.en : d.th;
       var color = COLORS[i % COLORS.length];
+      var rating = d.rating || 5;
       var stars = '';
-      for (var s = 0; s < 5; s++) stars += '<svg class="ic" aria-hidden="true"><use href="#i-star"/></svg>';
+      for (var s = 0; s < 5; s++) {
+        stars += '<svg class="ic' + (s < rating ? '' : ' is-empty') + '" aria-hidden="true"><use href="#i-star"/></svg>';
+      }
       return '<figure class="greview">' +
         '<div class="greview-top">' +
           '<span class="g-init" aria-hidden="true" style="background:' + color + '">' + esc(name.trim().charAt(0).toUpperCase()) + '</span>' +
           '<span><b>' + esc(name) + '</b><span>' + esc(meta) + '</span></span>' +
           '<svg class="gmark" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-google"/></svg>' +
         '</div>' +
-        '<span class="greview-stars" aria-label="' + (en ? 'Rated 5 out of 5' : 'ให้คะแนน 5 เต็ม 5') + '">' + stars + '</span>' +
+        '<span class="greview-stars" aria-label="' + (en ? ('Rated ' + rating + ' out of 5') : ('ให้คะแนน ' + rating + ' เต็ม 5')) + '">' + stars + '</span>' +
         '<p>' + esc(text) + '</p>' +
       '</figure>';
     };
