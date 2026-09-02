@@ -442,6 +442,12 @@ section.tight { padding-block: var(--s-12); }
 /* Every tour card shares the same 4:4.5 portrait frame so the catalog grid
    stays visually even across categories (object-fit centres each subject). */
 .tour-media svg, .tour-media img { width: 100%; height: 100%; object-fit: cover; }
+/* keep the full "C" of the Carnival Magic sign in frame */
+.tour-media img[src*="carnival-magic"] { object-position: 30% center; }
+/* the dolphin sits on the right of the frame — shift crop to keep it in view */
+.tour-media img[src*="dolphin-show"] { object-position: 70% center; }
+/* keep the performer's face and Simon Cabaret logo in the upper crop */
+.tour-media img[src*="simon-cabaret"] { object-position: center 20%; }
 .tour-media .ribbons {
   position: absolute; inset: var(--s-3) var(--s-3) auto var(--s-3);
   display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s-2);
@@ -1938,15 +1944,20 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 .modal.is-open .modal-backdrop { opacity: 1; }
 .modal-panel {
   position: relative; z-index: 1;
+  display: flex; flex-direction: column;
   width: 100%; max-width: 560px;
   max-height: calc(100dvh - var(--s-8));
-  overflow: auto;
+  overflow: hidden;
   background: var(--white);
   border-radius: var(--r-xl);
   box-shadow: var(--e-4);
   transform: translateY(12px) scale(.98);
   opacity: 0; transition: transform .24s var(--ease-out, ease), opacity .24s ease;
 }
+/* Only the body scrolls; the panel clips so the scrollbar stays inside the
+   rounded corners instead of spilling over the panel edge. */
+.modal-media { flex: none; }
+.modal-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
 .modal.is-open .modal-panel { transform: none; opacity: 1; }
 .modal-x {
   position: absolute; top: var(--s-3); right: var(--s-3); z-index: 2;
@@ -1964,10 +1975,51 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 .modal-body { padding: var(--s-6); display: flex; flex-direction: column; gap: var(--s-4); }
 .modal-body h3 { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.2; margin: 0; color: var(--charcoal, #192E38); }
 .modal-desc { margin: 0; color: var(--muted, #52616b); line-height: 1.7; }
-.modal-price { font-size: 1.25rem; }
-.modal-price .price { font-weight: 700; }
-.modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
+.modal-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; }
+.modal-foot .price { font-size: 1.25rem; font-weight: 700; }
+.modal-foot .btn { flex: none; }
+/* Trailing arrow on the modal CTA, matching the tour-card button. */
+.modal-foot .btn-primary::after {
+  content: ''; width: 15px; height: 15px; flex: none; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform var(--dur) var(--ease);
+}
+.modal-foot .btn-primary:hover::after { transform: translateX(4px); }
 .modal-note { margin: 0; font-size: .8125rem; color: var(--muted, #52616b); text-align: center; }
+
+/* per-card detail block: shown in the tour modal, never in the card grid */
+.tour-detail { display: none; }
+.modal-detail { display: flex; flex-direction: column; gap: var(--s-5); border-top: 1px solid var(--line); padding-top: var(--s-4); }
+.modal-detail[hidden] { display: none; }
+.detail-block h4 {
+  margin: 0 0 var(--s-3); font-size: var(--t-sm); font-weight: 700; color: var(--blue-darker);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-2);
+}
+.detail-cap { font-size: var(--t-xs); font-weight: 400; color: var(--muted); }
+.detail-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s-2); }
+.detail-list li { display: flex; justify-content: space-between; gap: var(--s-4); font-size: var(--t-sm); line-height: 1.45; }
+.detail-list .d-name { color: var(--muted-ink); flex: 1; }
+.detail-list .d-val { font-weight: 600; color: var(--charcoal, #192E38); text-align: right; flex: none; max-width: 52%; }
+.detail-list .d-val .d-save {
+  display: inline-block;
+  margin-top: 3px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--coral-soft, rgba(255, 97, 85, .16));
+  color: var(--coral-dark, #F5544A);
+  font-size: .72em;
+  font-weight: 800;
+  letter-spacing: .01em;
+}
+.detail-note { margin: 0; font-size: var(--t-xs); color: var(--muted); line-height: 1.5; }
+.detail-block .detail-note { margin-top: var(--s-3); }
+/* Slightly tighter note + full block width so a long transfer clause stays on one line in the capped modal */
+.detail-note--tight { font-size: 12px; max-width: none; }
+/* Bulleted footnote/condition list inside detail blocks */
+.detail-bullets { list-style: none; margin: var(--s-2) 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+.detail-bullets li { position: relative; padding-left: 16px; font-size: var(--t-xs); color: var(--muted); line-height: 1.5; }
+.detail-bullets li::before { content: ""; position: absolute; left: 3px; top: .62em; width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
 
 /* ==========================================================================
    Scam-warning alert — bottom-left corner toast
@@ -2147,7 +2199,6 @@ td code { font-family: ui-monospace, Menlo, monospace; font-size: var(--t-xs); c
 }
 
 @media (max-width: 560px) {
-  .modal-actions { grid-template-columns: 1fr; }
   .cookie { flex-direction: column; align-items: stretch; gap: var(--s-3); padding: var(--s-4); }
   .cookie-actions { width: 100%; }
   .cookie-actions .btn { flex: 1; }

@@ -520,9 +520,60 @@
     return { open: open, close: close, current: function () { return openEl; } };
   })();
 
-  /* ---------- tour detail modal (disabled) ----------
-     Clicking a tour card no longer opens a detail popup. The only actionable
-     control on each card is the "สอบถาม" CTA, which links straight to LINE. */
+  /* ---------- tour detail modal ---------- */
+  (function () {
+    var modal = document.getElementById('tour-modal');
+    if (!modal) return;
+
+    var img    = document.getElementById('tm-img');
+    var rib    = document.getElementById('tm-ribbons');
+    var title  = document.getElementById('tm-title');
+    var meta   = document.getElementById('tm-meta');
+    var desc   = document.getElementById('tm-desc');
+    var price  = document.getElementById('tm-price');
+    var detail = document.getElementById('tm-detail');
+
+    var copy = function (from, to, prop) {
+      if (from) { to[prop] = from[prop]; } else { to[prop] = ''; }
+    };
+
+    // Capture phase on document → runs before each card button's bubble-phase
+    // data-loading handler; stopPropagation() neutralises that navigation so the
+    // card (and its "สอบถาม" button) opens the detail modal instead.
+    document.addEventListener('click', function (e) {
+      var card = e.target.closest('article.tour');
+      if (!card) return;
+      // let modifier / middle clicks behave normally
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
+      // clicking the "สอบถาม" CTA (or any link) must follow its href straight to
+      // LINE — don't hijack it into the detail modal
+      if (e.target.closest('a[href]')) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      var cImg = card.querySelector('.tour-media img');
+      img.src = cImg ? cImg.getAttribute('src') : '';
+      img.alt = cImg ? (cImg.getAttribute('alt') || '') : '';
+
+      var cRib = card.querySelector('.ribbons');
+      rib.innerHTML = cRib ? cRib.innerHTML : '';
+
+      copy(card.querySelector('h3'), title, 'innerHTML');
+      copy(card.querySelector('.tour-meta'), meta, 'innerHTML');
+      copy(card.querySelector('.tour-desc'), desc, 'innerHTML');
+      copy(card.querySelector('.tour-foot .price'), price, 'innerHTML');
+
+      // optional per-card detail block (ticket types / options); hidden when absent
+      if (detail) {
+        var cDetail = card.querySelector('.tour-detail');
+        detail.innerHTML = cDetail ? cDetail.innerHTML : '';
+        detail.hidden = !cDetail;
+      }
+
+      Modal.open(modal);
+    }, true);
+  })();
 
 
   /* ---------- cookie consent (localStorage, once) ---------- */
