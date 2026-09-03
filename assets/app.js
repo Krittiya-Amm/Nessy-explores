@@ -553,7 +553,8 @@
       e.stopPropagation();
 
       var cImg = card.querySelector('.tour-media img');
-      img.src = cImg ? cImg.getAttribute('src') : '';
+      var cSrc = cImg ? cImg.getAttribute('src') : '';
+      if (cSrc) { img.src = cSrc; } else { img.removeAttribute('src'); }
       img.alt = cImg ? (cImg.getAttribute('alt') || '') : '';
 
       var cRib = card.querySelector('.ribbons');
