@@ -147,16 +147,16 @@ handoff-doc.md      ไฟล์นี้
 
 | ไฟล์ | ขนาดจริง | น้ำหนัก | ใช้ที่ |
 |---|---|---|---|
-| `logo-lockup.webp` | 760×338 | 38KB | `brand.html` เท่านั้น (โชว์ขนาดใหญ่) |
-| `logo-mark.webp` | 256×256 | 17KB | navbar + footer ทั้ง 5 หน้า (crop เป็นวงกลมด้วย `border-radius:50%`) |
-| `favicon-32.png` / `favicon-180.png` | 32 / 180 | 2.7KB / 53KB | `<link rel=icon>` + apple-touch-icon |
-| `hero-bay.webp` | 1280×1067 | 282KB | hero ของ `index.html` (**LCP** — `fetchpriority=high`) + hero ของ `brand.html` |
-| `longtail.webp` | 900×1281 | 117KB | hero ของ `packages.html` |
-| `old-town-sunset.webp` | 900×1280 | 105KB | hero ของ `local.html` |
-| `lagoon.webp` | 867×1233 | 98KB | hero ของ `agency.html` |
-| `old-town.webp` | 900×1350 | 145KB | section Local teaser ใน `index.html` |
-| `white-beach.webp` | 900×1281 | 60KB | section agency teaser ใน `index.html` |
-| `big-buddha.webp` | 900×1283 | 124KB | section ใน `local.html` |
+| `logo-lockup-nessyexplores.webp` | 760×338 | 38KB | `brand.html` เท่านั้น (โชว์ขนาดใหญ่) |
+| `logo-mark-nessyexplores.webp` | 256×256 | 17KB | navbar + footer ทั้ง 5 หน้า (crop เป็นวงกลมด้วย `border-radius:50%`) |
+| `favicon-32-nessyexplores.png` / `favicon-180-nessyexplores.png` | 32 / 180 | 2.7KB / 53KB | `<link rel=icon>` + apple-touch-icon |
+| `hero-bay-nessyexplores.webp` | 1280×1067 | 282KB | hero ของ `index.html` (**LCP** — `fetchpriority=high`) + hero ของ `brand.html` |
+| `longtail-nessyexplores.webp` | 900×1281 | 117KB | hero ของ `packages.html` |
+| `old-town-sunset-nessyexplores.webp` | 900×1280 | 105KB | hero ของ `local.html` |
+| `lagoon-nessyexplores.webp` | 867×1233 | 98KB | hero ของ `agency.html` |
+| `old-town-nessyexplores.webp` | 900×1350 | 145KB | section Local teaser ใน `index.html` |
+| `white-beach-nessyexplores.webp` | 900×1281 | 60KB | section agency teaser ใน `index.html` |
+| `big-buddha-nessyexplores.webp` | 900×1283 | 124KB | section ใน `local.html` |
 
 ภาพใน hero ใช้ `loading="eager"` + `fetchpriority="high"` และ `alt=""` (wrapper มี `aria-hidden="true"` เพราะเป็นภาพประกอบพื้นหลัง)
 ภาพใน section ใช้ `loading="lazy"` และมี `alt` บรรยายจริงเป็นภาษาไทย

@@ -974,34 +974,34 @@
     // half day (ครึ่งวัน) and full day (1 วัน) are two independent itineraries;
     // the map pins are re-labelled per mode from whichever set is active.
     var HALF = [
-      { time: '08:00', icon: '#i-food', img: 'assets/img/mee-ton-poe.webp',
+      { time: '08:00', icon: '#i-food', img: 'assets/img/mee-ton-poe-nessyexplores.webp',
         th: { tag: 'มื้อเช้า', title: 'ร้านหมี่ต้นโพธิ์', quote: 'ร้านดังระดับตำนาน เปิดมากว่า 70 ปี เมนูขึ้นชื่อคือหมี่ผัดฮกเกี้ยนใส่ไข่' },
         en: { tag: 'Breakfast', title: 'Mee Ton Poe', quote: 'A legendary noodle shop open for over 70 years — famous for Hokkien fried noodles with egg.' } },
-      { time: '10:00', icon: '#i-bank', img: 'assets/img/old-town.webp', pos: 'center 22%',
+      { time: '10:00', icon: '#i-bank', img: 'assets/img/old-town-nessyexplores.webp', pos: 'center 22%',
         th: { tag: 'เมืองเก่า', title: 'เดินเล่นเมืองเก่า', quote: 'เดินถนนถลาง ซอยรมณีย์ ถนนดีบุก ถนนพังงา แวะร้านหนังสือ แกลเลอรี และชมอาคารชิโน-โปรตุกีส' },
         en: { tag: 'Old Town', title: 'Old-town stroll', quote: 'Wander Thalang, Soi Romanee, Dibuk and Phang Nga roads — bookshops, galleries and Sino-Portuguese shophouses.' } },
-      { time: '12:00', icon: '#i-food', img: 'assets/img/one-chun.webp',
+      { time: '12:00', icon: '#i-food', img: 'assets/img/one-chun-nessyexplores.webp',
         th: { tag: 'มิชลิน', title: 'ร้านวันจันทร์ (One Chun)', quote: 'หนึ่งในร้านอาหารพื้นเมืองภูเก็ตที่โด่งดังที่สุดย่านเมืองเก่า การันตีด้วยรางวัล Michelin Bib Gourmand 8 ปีติดต่อกัน (2026)' },
         en: { tag: 'Michelin', title: 'One Chun Cafe & Restaurant', quote: 'One of Phuket’s most famous local restaurants in the Old Town — a Michelin Bib Gourmand for 8 years running (2026).' } }
     ];
 
     var FULL = [
-      { time: '07:00', icon: '#i-food', img: 'assets/img/boonrat-dimsum.webp', pos: 'center 72%',
+      { time: '07:00', icon: '#i-food', img: 'assets/img/boonrat-dimsum-nessyexplores.webp', pos: 'center 72%',
         th: { tag: 'มื้อเช้า', title: 'บุญรัตน์ติ่มซำ สาขา 1', quote: 'เริ่มเช้าแบบคนภูเก็ตด้วยติ่มซำร้านดังเปิดมานาน ซาลาเปา ขนมจีบ ฮะเก๋า ร้อน ๆ กับชาจีนสักถ้วย' },
         en: { tag: 'Breakfast', title: 'Boonrat Dim Sum (Branch 1)', quote: 'Start the morning like a local with dim sum from a long-time favourite — steamed buns, dumplings and Chinese tea.' } },
-      { time: '08:30', icon: '#i-ship', img: 'assets/img/koh-hey.webp',
+      { time: '08:30', icon: '#i-ship', img: 'assets/img/koh-hey-nessyexplores.webp',
         th: { tag: 'ทะเล', title: 'เกาะเฮ', quote: 'นั่งสปีดโบ๊ทข้ามไปเกาะเฮ น้ำใสฟ้าเทอร์ควอยซ์ เล่นน้ำ ดำน้ำตื้นดูปะการังใกล้ฝั่ง' },
         en: { tag: 'Island', title: 'Coral Island (Koh Hey)', quote: 'Speedboat across to Coral Island — turquoise water, swimming and easy snorkelling over the reef.' } },
-      { time: '13:00', icon: '#i-food', img: 'assets/img/mor-mudong.webp',
+      { time: '13:00', icon: '#i-food', img: 'assets/img/mor-mudong-nessyexplores.webp',
         th: { tag: 'มื้อเที่ยง', title: 'ร้านอาหารหมอมูดง', quote: 'อาหารใต้พื้นบ้านแท้ ๆ ในป่าชายเลน นั่งซุ้มไม้ไผ่ส่วนตัว รสจัดจ้านถึงเครื่องแกงใต้ ร้านที่คนพื้นที่นิยมมาก' },
         en: { tag: 'Lunch', title: 'Mor Mudong', quote: 'Authentic southern-Thai food in the mangroves — private bamboo huts and bold, fiery local curries the locals love.' } },
-      { time: '15:00', icon: '#i-waves', img: 'assets/img/kata-noi.webp',
+      { time: '15:00', icon: '#i-waves', img: 'assets/img/kata-noi-nessyexplores.webp',
         th: { tag: 'คาเฟ่ริมหาด', title: 'หาดกะตะน้อย', quote: 'พักผ่อนถ่ายรูปชิค ๆ ที่คาเฟ่ริมหาดกะตะน้อย หาดเงียบ น้ำใส วิวสวยกำลังดี' },
         en: { tag: 'Beach cafe', title: 'Kata Noi Beach', quote: 'Unwind at a beachfront cafe on Kata Noi — a quiet cove, clear water and a perfect view.' } },
-      { time: '17:15', icon: '#i-mountain', img: 'assets/img/windmill-viewpoint.webp',
+      { time: '17:15', icon: '#i-mountain', img: 'assets/img/windmill-viewpoint-nessyexplores.webp',
         th: { tag: 'จุดชมวิว', title: 'จุดชมวิวกังหันลม', quote: 'แวะจุดชมวิวกังหันลม มองเห็นหาดยะนุ้ยและทะเลกว้าง รับลมเย็น ๆ ก่อนพระอาทิตย์ตก' },
         en: { tag: 'Viewpoint', title: 'Windmill Viewpoint', quote: 'Stop at the Windmill Viewpoint for the sweep of Yanui Beach and the open sea in the cooling wind.' } },
-      { time: '18:00', icon: '#i-sun', img: 'assets/img/promthep-view.webp',
+      { time: '18:00', icon: '#i-sun', img: 'assets/img/promthep-view-nessyexplores.webp',
         th: { tag: 'พระอาทิตย์ตก', title: 'แหลมพรหมเทพ', quote: 'ปิดท้ายวันด้วยแสงสุดท้ายที่แหลมพรหมเทพ จุดชมพระอาทิตย์ตกยอดฮิตของภูเก็ต' },
         en: { tag: 'Sunset', title: 'Promthep Cape', quote: 'End the day with the last light at Promthep Cape — Phuket’s most-loved sunset spot.' } }
     ];
